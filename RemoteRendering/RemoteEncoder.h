@@ -1,0 +1,94 @@
+#ifndef REMOTEENCODER_H_
+#define REMOTEENCODER_H_
+
+#include "RenderSocket.h"
+#include <Windows.h>
+#include <NVEncoderAPI.h>
+#include <cuda.h>
+#include <NVEncodeDataTypes.h>
+#include <nvcuvid.h>
+#include <iostream>
+#include "types.h"
+
+
+
+#define ASPECT_WIDTH 4
+#define ASPECT_HEIGHT 3
+
+using namespace std;
+
+class RemoteEncoder
+{
+
+public:
+	RemoteEncoder(int o_width, int o_height);
+	~RemoteEncoder();
+	bool SetCBFunctions(NVVE_CallbackParams *pCB, void *pUserData);
+	//Initialize & Errorhandling
+
+
+	//Encoding
+	bool encode();
+	bool encodePB();
+	void handleCudaError(CUresult, const char* c);
+	void setDevicePtr(CUdeviceptr dptr);
+
+	unsigned char *GetCharBuf()
+	{
+		return outBuf;
+	}
+
+	FILE *GetFileOut()
+	{
+		return out;
+	}
+	void setClientTcp(RenderSocket* c)
+	{
+		client = c;
+	}
+	RenderSocket* getClient()
+	{
+		return client;
+	}
+
+
+	int getWidth() {return width;}
+	int getHeight() {return height;}
+	void setPicBuf(unsigned char* buf){m_efParams.picBuf = buf;}
+
+private:
+
+	void handleHR(HRESULT hr, const char* c);
+	void createCuda();
+	void setEncoderParams();
+	CUdevice getCudaDevice();
+	// Encoding Stuff
+	NVEncoderParams*	m_EncoderParams;
+	int width, height;
+	//out
+
+	RenderSocket* client;
+	FILE* out;
+	//unsigned char* encodedFrame;
+
+
+	//NVEncoder m_CudaEncoder;
+	void* m_CudaEncoder;
+	NVVE_CallbackParams m_cbParams;
+	NVVE_EncodeFrameParams m_efParams;
+	CUdevice m_cuDevice;
+	CUcontext m_cuContext;
+	CUvideoctxlock m_cuCtxLock;
+	CUdeviceptr dptr;
+	// Buffer
+	unsigned char* m_VideoFrame;
+	unsigned char* outBuf;
+
+	//Callbacks
+	NVVE_CallbackParams m_NVCB;
+	//void *m_pEncoder;
+	// Errorhandling
+	HRESULT errorHandling;
+};
+
+#endif
