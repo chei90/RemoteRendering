@@ -15,6 +15,7 @@
 #include <nvcuvid.h>
 #include <helper_cuda_drvapi.h>
 #include <vector>
+#include "UdpSocket.h"
 
 #include <winsock2.h>
 #include <windows.h>
