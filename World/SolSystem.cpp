@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "Util.h"
 
+#include <sstream>
 
 int programID;
 Geometry* earth;
@@ -22,20 +23,64 @@ bool culling;
 bool wireframe;
 int n;
 int viewProjLoc;
+bool keyStates[256];
+bool specialKeys[246];
 
+void printMat(glm::mat4x4 m, const char* info)
+{
+	printf(info);
+	printf("\n");
+	for(int i = 0; i < 4; ++i)
+	{
+		for(int j = 0; j < 4; ++j)
+		{
+			printf("%f ", m[i][j]);
+		}
+		printf("\n");
+	}
+	printf("\n");
+
+}
+
+void keyPressed(unsigned char key, int x, int y)
+{
+	keyStates[key] = true;
+}
+
+void keyReleased(unsigned char key, int x, int y)
+{
+	keyStates[key] = false;
+}
+void specialKeyPressed(int key, int x, int y)
+{
+	specialKeys[key] = true;
+}
+
+void specialKeyReleased(int key, int x, int y)
+{
+	specialKeys[key] = false;
+}
 
 void render()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	glUseProgram(programID);
 
-	glUniformMatrix4fv(modelLocation, 1, false, glm::value_ptr(modelMatrix));
-	earth->draw();
-	glm::mat4 viewProj = cam->getProjection() * cam->getView();
-	glUniformMatrix4fv(viewProjLoc, 16, false, glm::value_ptr(viewProj));
+	glUniformMatrix4fv(modelLocation, 1, false, glm::value_ptr(cam->getView()));
 
-	glutPostRedisplay();
+	glm::mat4 viewProj = cam->getProjection() * cam->getView();
+
+	glUniformMatrix4fv(viewProjLoc, 1, false, glm::value_ptr(viewProj));
+
+	earth->draw();
 	glutSwapBuffers();
+}
+
+void timer(int v)
+{
+	glutPostRedisplay();
+	glutTimerFunc(16, timer, v);
 }
 
 void initialize(int argc, char** argv)
@@ -49,13 +94,18 @@ void initialize(int argc, char** argv)
 	n = 2;
 
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(800, 600);
 	glutCreateWindow("Decoder!");
 	glewInit();	
 
 	glutDisplayFunc(render);
-	
+	glutTimerFunc(16, timer, 0);
+	glutKeyboardFunc(keyPressed);
+	glutKeyboardUpFunc(keyReleased);
+	glutSpecialFunc(specialKeyPressed);
+	glutSpecialUpFunc(specialKeyReleased);
+
 	glViewport(0, 0, 800, 600);
 	glPrimitiveRestartIndex(-1);
 	glEnable(GL_PRIMITIVE_RESTART);
@@ -64,21 +114,17 @@ void initialize(int argc, char** argv)
 void main(int argc, char** argv)
 {
 	initialize(argc, argv);
-	glCheckError(glGetError(), "After init");
 	programID = createShaderProgram("shader/Main_VS.glsl", "shader/VertexColor_FS.glsl");
-	glCheckError(glGetError(), "After creating Program");
 	modelLocation = glGetUniformLocation(programID, "model");
-	glCheckError(glGetError(), "After model");
 	viewProjLoc = glGetUniformLocation(programID, "viewProj");
-	glCheckError(glGetError(), "After ViewProjLoc");
-	cam->move(0.0f, 0.0f, 5.0f);
-	earth = createSphere(2, n, 2*n, "textures/earth.jpg");
+	cam->move(-5000.0f, 0.0f, 0.0f);
+	earth = createSphere(0.1f, 64, 32, "textures/earth.jpg");
 
 	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
-	glClearColor(0.1f, 0.0f, 0.0f, 1.0f);
-	glCheckError(glGetError(), "Before main Loop");
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+
 	glutMainLoop();
 	std::cin.get();
 }

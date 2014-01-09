@@ -1,5 +1,6 @@
 #include "Camera.h"
-
+#include <stdlib.h>
+#include <iostream>
 
 Camera::Camera(void)
 {
@@ -35,52 +36,43 @@ void Camera::rotate(float dPhi, float dTheta)
 	glm::mat4x4 rotY = glm::rotate(rotY, phi, glm::vec3(0, 1, 0));
 	glm::mat4x4 rot = rotX * rotY;
 
-	glm::vec4 t_side = rot * glm::vec4(1,0,0,0);
-	sideDir.x = t_side.x;
-	sideDir.y = t_side.y;
-	sideDir.z = t_side.z;
-	delete &t_side;
+	sideDir = glm::vec3(rot * glm::vec4(1,0,0,0));
+	upDir = glm::vec3(rot * glm::vec4(0,1,0,0));
+	viewDir = glm::vec3(rot * glm::vec4(0,0,1,0));
 
-	glm::vec4 t_up = rot * glm::vec4(0,1,0,0);
-	upDir.x = t_up.x;
-	upDir.y = t_up.y;
-	upDir.z = t_up.z;
-	delete &t_up;
-
-	glm::vec4 t_view = rot * glm::vec4(0,0,1,0);
-	viewDir.x = t_view.x;
-	viewDir.y = t_view.y;
-	viewDir.z = t_view.z;
-	delete &t_view;
+	this->updateView();
 }
 
 void Camera::move(float fb, float lr, float ud)
 {
+	//camPos += viewDir * fb + sideDir * lr + glm::vec3(0,1,0) * ud;
 	camPos.x += (fb * viewDir.x + lr * sideDir.x);
 	camPos.y += (fb * viewDir.y + lr * sideDir.y + ud);
 	camPos.z += (fb * viewDir.z + lr * sideDir.z);
+	printf("Campos = %f %f %f\n", camPos.x, camPos.y, camPos.z);
+
+	this->updateView();
 }
 
 void Camera::updateView()
 {
 	glm::vec3 lookAt = camPos + viewDir;
-	glm::lookAt(camPos, lookAt, upDir);
+	view = glm::lookAt(camPos, lookAt, upDir);
 }
 
 void Camera::updateProjection()
 {
-	projection = glm::frustum(-1e-2f, 1e-2f, -1e-2f, 1e-2f, 1e-2f, 1e+2f);
+	projection = glm::perspective(90.0f, 4.0f/3.0f, 0.1f, 1000.f);//glm::frustum(-1e-2f, 1e-2f, -1e-2f, 1e-2f, 1e-2f, 100.0f);//
 }
 
 glm::mat4x4 Camera::getProjection()
 {
-	this->updateProjection();
+	//this->updateProjection();
 	return projection;
 }
 
 glm::mat4x4 Camera::getView()
 {
-	this->updateView();
 	return view;
 }
 

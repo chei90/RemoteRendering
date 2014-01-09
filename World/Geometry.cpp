@@ -1,11 +1,10 @@
 #include "Geometry.h"
-
+#include <memory>
 
 Geometry::Geometry(void)
 {
 	constructed = false;
 }
-
 
 Geometry::~Geometry(void)
 {
@@ -48,10 +47,10 @@ void Geometry::construct()
 	glPrimitiveRestartIndex(-1);
 	glBindVertexArray(vaid);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibid);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount, indexValueBuffer, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * indexCount, indexValueBuffer, GL_STATIC_DRAW);
 	error = glGetError();
 	glBindBuffer(GL_ARRAY_BUFFER, vbid);
-	glBufferData(GL_ARRAY_BUFFER, vertexCount, vertexValueBuffer, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount, vertexValueBuffer, GL_STATIC_DRAW);
 	error = glGetError();
 	glEnableVertexAttribArray(ATTR_POS);
 	glEnableVertexAttribArray(ATTR_COLOR);
@@ -59,13 +58,14 @@ void Geometry::construct()
 	glVertexAttribPointer(ATTR_POS, 3, GL_FLOAT, false, 6*sizeof(GLfloat), 0);
 	glVertexAttribPointer(ATTR_COLOR, 3, GL_FLOAT, false, 6*sizeof(GLfloat), (GLvoid*) (3*sizeof(GLfloat)));
 	error = glGetError();
+	glBindVertexArray(0);
 }
 
 void Geometry::draw()
 {
 	if(!constructed)
 	{
-			construct();
+		construct();
 	}
 	glBindVertexArray(vaid);
 	glDrawElements(topology, indexCount, GL_UNSIGNED_INT, 0);
