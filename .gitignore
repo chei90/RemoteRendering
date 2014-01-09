@@ -11,6 +11,15 @@ tmp/
 *.bak
 *.swp
 *~.nib
+*.json
+*.zip
+*.sln
+*.vcxproj
+*.bak
+*.mtl
+*.py
+*.filters
+*.txt
 local.properties
 .classpath
 .settings/
