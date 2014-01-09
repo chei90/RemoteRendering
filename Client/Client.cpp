@@ -189,6 +189,9 @@ int main(int argc, char** argv)
 	m_decoder = new Decoder(m_ctx, m_lock, m_queue, m_width, m_height);
 	m_decoder->initParser();
 
+	server->Bind("192.168.178.79", DEFAULT_PORT);
+	server->setClientSocket("192.168.178.50", DEFAULT_PORT+1);
+
 	//PROCESS USER INPUT
 	char* message = new char(64);
 	char* msgStart = message;

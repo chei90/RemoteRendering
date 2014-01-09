@@ -520,7 +520,7 @@ void processKeyOps()
 
 		char* message = new char(sizeof(char));
 		memcpy(message, &SHUTDOWN_CONNECTION, sizeof(UINT8));
-		int error = client->Send(message, sizeof(UINT8));
+		int error = serverSocket->Send(message, sizeof(UINT8));
 		if(error  <= 1)
 			cout << "Fehler beim Versenden der Shutdown Nachricht" << endl;
 	}
@@ -614,19 +614,14 @@ void initCallbacks()
 
 int main(int argc, char** argv)
 {
-	serverSocket = new RenderSocket();
+	serverSocket = new UdpSocket();
 	serverSocket->Create();
-	serverSocket->Bind(DEFAULT_IP, DEFAULT_PORT);
-	serverSocket->Listen(1);
+	serverSocket->Bind("192.168.178.50", DEFAULT_PORT+1);
 
-	client = new RenderSocket();
 	cout << "Warte auf eingehende Verbindungen!" << endl;
-	if(serverSocket->Accept(*client))
-		cout << "Serververbindung fehlgeschlagen!" << endl;
-	cout << "Client erfolgreich verbunden" << endl;
 
 	char message[DEFAULT_BUFLEN];
-	client->Receive(message, DEFAULT_BUFLEN);
+	serverSocket->Receive(message, DEFAULT_BUFLEN);
 	UINT8 identifier;
 	memcpy(&identifier, message, sizeof(UINT8));
 
@@ -637,14 +632,14 @@ int main(int argc, char** argv)
 		memcpy(&width, message + sizeof(UINT8), sizeof(int));
 		memcpy(&height, message + sizeof(UINT8) + sizeof(int), sizeof(int));
 	}
-	client->SetToNonBlock();
+	serverSocket->SetToNonBlock();
 
 
 
 
 	initOpenGL(argc, argv);
 	remo = new RemoteEncoder(width, height);
-	remo->setClientTcp(client);
+	remo->setClientUdp(serverSocket);
 
 	//Initialisiere neuen RemoteEncoder
 	glClearColor(0.0, 0.0, 1.0, 1.0);
@@ -691,7 +686,7 @@ int main(int argc, char** argv)
 	while(m_continue)
 	{
 		processKeyOps();
-		client->Receive(message, DEFAULT_BUFLEN);
+		serverSocket->Receive(message, DEFAULT_BUFLEN);
 		int key;
 		memcpy(&identifier, message, sizeof(UINT8));
 		switch(identifier)

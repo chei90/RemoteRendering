@@ -110,8 +110,8 @@ DWORD lastTimeMS;
 
 FILE* f;
 
-RenderSocket* serverSocket;
-RenderSocket* client;
+UdpSocket* serverSocket;
+
 
 //Cuda Zeugs
 unsigned char* devPtr;
