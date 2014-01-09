@@ -118,7 +118,7 @@ void main(int argc, char** argv)
 	modelLocation = glGetUniformLocation(programID, "model");
 	viewProjLoc = glGetUniformLocation(programID, "viewProj");
 	cam->move(-5000.0f, 0.0f, 0.0f);
-	earth = createSphere(0.1f, 64, 32, "textures/earth.jpg");
+	earth = createSphere(1, 64, 32, "textures/earth.jpg");
 
 	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
