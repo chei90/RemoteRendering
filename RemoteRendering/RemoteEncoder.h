@@ -1,7 +1,7 @@
 #ifndef REMOTEENCODER_H_
 #define REMOTEENCODER_H_
 
-#include "RenderSocket.h"
+#include "UdpSocket.h"
 #include <Windows.h>
 #include <NVEncoderAPI.h>
 #include <cuda.h>
@@ -42,11 +42,11 @@ public:
 	{
 		return out;
 	}
-	void setClientTcp(RenderSocket* c)
+	void setClientUdp(UdpSocket* c)
 	{
 		client = c;
 	}
-	RenderSocket* getClient()
+	UdpSocket* getClient()
 	{
 		return client;
 	}
@@ -67,7 +67,7 @@ private:
 	int width, height;
 	//out
 
-	RenderSocket* client;
+	UdpSocket* client;
 	FILE* out;
 	//unsigned char* encodedFrame;
 

@@ -11,8 +11,20 @@ tmp/
 *.bak
 *.swp
 *~.nib
+<<<<<<< HEAD
 *.zip
 *.json
+=======
+*.json
+*.zip
+*.sln
+*.vcxproj
+*.bak
+*.mtl
+*.py
+*.filters
+*.txt
+>>>>>>> origin/UdpSocket
 local.properties
 .classpath
 .settings/

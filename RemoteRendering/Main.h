@@ -25,6 +25,7 @@
 #include <GL\gl.h>
 #include <GL\glu.h>
 #include <sstream>
+#include "UdpSocket.h"
 
 #include <boost\shared_ptr.hpp>
 #include <boost\regex.hpp>
@@ -109,8 +110,8 @@ DWORD lastTimeMS;
 
 FILE* f;
 
-RenderSocket* serverSocket;
-RenderSocket* client;
+UdpSocket* serverSocket;
+
 
 //Cuda Zeugs
 unsigned char* devPtr;

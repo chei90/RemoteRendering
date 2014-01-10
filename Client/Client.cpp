@@ -178,23 +178,19 @@ int main(int argc, char** argv)
 {
 	cuInit(0);
 	initGL(argc, argv);
+
 	//	SOCKET STUFF
-	RenderSocket* server = new RenderSocket();
+	UdpSocket* server = new UdpSocket();
 	server->Create();
 
 	std::auto_ptr<FrameQueue> tmp_queue(new FrameQueue);
 	m_queue = tmp_queue.release();
 
-	cout << (void*) m_queue << " Client" << endl;
-
 	m_decoder = new Decoder(m_ctx, m_lock, m_queue, m_width, m_height);
 	m_decoder->initParser();
 
-
-	cout << "Client sucht Verbindung..." << endl;
-	server->Connect(DEFAULT_IP, DEFAULT_PORT);
-	cout << "Client mit Server verbunden!" << endl;
-
+	server->Bind("192.168.178.79", DEFAULT_PORT);
+	server->setClientSocket("192.168.178.50", DEFAULT_PORT+1);
 
 	//PROCESS USER INPUT
 	char* message = new char(64);
