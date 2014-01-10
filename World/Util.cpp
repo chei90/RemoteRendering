@@ -101,8 +101,8 @@ Geometry* createSphere(float r, int n, int k, const char* imageFile)
 			vertices[counter++] = sin(u) * sin(v);
 			vertices[counter++] = cos(u);
 			vertices[counter++] = image[j * height / (n+1)][i * width / (k+1)][0];
-			vertices[counter++] = image[j * height / (n+1)][i * width / (k+1)][0];
-			vertices[counter++] = image[j * height / (n+1)][i * width / (k+1)][0];
+			vertices[counter++] = image[j * height / (n+1)][i * width / (k+1)][1];
+			vertices[counter++] = image[j * height / (n+1)][i * width / (k+1)][2];
 
 			/*vertices[counter++] = tmp.x;
 			vertices[counter++] = tmp.y;

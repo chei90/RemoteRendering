@@ -102,13 +102,9 @@ void initialize(int argc, char** argv)
 void main(int argc, char** argv)
 {
 	initialize(argc, argv);
-	glCheckError(glGetError(), "After init");
 	programID = createShaderProgram("shader/Main_VS.glsl", "shader/VertexColor_FS.glsl");
-	glCheckError(glGetError(), "After creating Program");
 	modelLocation = glGetUniformLocation(programID, "model");
-	glCheckError(glGetError(), "After model");
 	viewProjLoc = glGetUniformLocation(programID, "viewProj");
-	glCheckError(glGetError(), "After ViewProjLoc");
 	cam->move(-5.0f, 0.0f, 0.0f);
 	earth = createSphere(1, 64, 32, "textures/earth.jpg");
 
@@ -116,8 +112,6 @@ void main(int argc, char** argv)
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glCheckError(glGetError(), "Before main Loop");
 
 	glutMainLoop();
-	std::cin.get();
 } 

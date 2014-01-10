@@ -2,43 +2,25 @@
 #define MAIN_H_
 #define _USE_MATH_DEFINES // for C++
 #include <cmath>
-#include "RenderSocket.h"
+#include "UdpSocket.h"
 #include <Windows.h>
 #include <iostream>
 #include <stdlib.h>
-#include <gl\glew.h>
-#include <gl\freeglut.h>
-#include <gl\GL.h>
-#include <gl\GLU.h>
+#include <GL\glew.h>
 #include <NVEncoderAPI.h>
 #include <cuda_gl_interop.h>
 #include <cuda_runtime.h>
-#include <cuda_profiler_api.h>
 #include <nvcuvid.h>
 #include <iostream>
-#include <GL\glew.h>
-#include "glm.hpp"
+#include <glm.hpp>
 #include <gtc\matrix_inverse.hpp>
 #include <gtc\matrix_transform.hpp>
 #include <gtc\type_ptr.hpp>
 #include <GL\freeglut.h>
-#include <GL\gl.h>
-#include <GL\glu.h>
 #include <sstream>
-#include "UdpSocket.h"
-
-#include <boost\shared_ptr.hpp>
-#include <boost\regex.hpp>
-#include <boost\foreach.hpp>
-#include <boost\property_tree\ptree.hpp>
-#include <boost\property_tree\ptree_fwd.hpp>
-#include <boost\property_tree\json_parser.hpp>
-#include <boost\property_tree\json_parser.hpp>
-
-
-#include "Modell.h"
+#include "Geometry.h"
+#include "Camera.h"
 #include "Util.h"
-
 #include "RemoteEncoder.h"
 #include "RGBtoYV12.h"
 
@@ -48,20 +30,23 @@
 #define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT 8080
 #define DEFAULT_IP "127.0.0.1"
+#define MOVESPEED 0.05f
 
 
 using namespace std;
-using boost::property_tree::ptree;
 
-GLuint vaoId = 0;
-GLuint vboId = 0;
-GLuint iboId = 0;
-GLuint naoId = 0;
-GLuint nboId = 0;
-GLuint framebuffer;
-GLuint programID = 0;
-GLuint ATTR_POS;
-GLuint ATTR_NORMAL;
+int programID;
+Geometry* earth;
+int modelLocation;
+glm::mat4x4 modelMatrix;
+glm::vec3 moveDir;
+bool bContinue;
+Camera* cam;
+bool culling;
+bool wireframe;
+int n;
+int viewProjLoc;
+
 
 //Kommunikation zwischen OpenGL und CUDA
 GLuint pbo;
@@ -70,26 +55,10 @@ cudaDeviceProp prop;
 int dev;
 RemoteEncoder* remo;
 
-vector<int> vbo;
-vector<int> ibo;
-vector<int> nbo;
-vector<Modell*> part;
-
 int width = 0;
 int height = 0;
-float factor = 0.0004f;
 
-//Shader Stuff
-float translation_X = 0.0f;
-float translation_Y = 0.0f;
-float zoom = -4.0f;
-float rotationAngle_X = 18.0f;
-float rotationAngle_Y = 0.0f;
-
-bool vw = false;
 bool m_continue = true;
-
-int partID;
 
 //User Input
 bool keyStates[256];
@@ -107,8 +76,6 @@ CUdevice cuDev;
 SYSTEMTIME st;
 DWORD currentTimeMS;
 DWORD lastTimeMS;
-
-FILE* f;
 
 UdpSocket* serverSocket;
 

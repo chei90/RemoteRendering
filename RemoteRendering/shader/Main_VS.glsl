@@ -1,27 +1,14 @@
 #version 150 core
 
+uniform mat4 model;
+uniform mat4 viewProj;
 
-in vec3 vs_in_pos; 
-in vec3 vs_in_normal;
+in vec3 vs_in_pos;
+in vec3 vs_in_color;
 
+out vec3 fs_in_color;
 
-// Licht:
-uniform vec3 uAmbientColor; 
-uniform vec3 uLightingDirection; 
-uniform vec3 uDirectionalColor; 
-uniform mat4 uMVMatrix;
-uniform mat4 uPMatrix;
-uniform mat4 uNMatrix;
-
-out vec3 vLightWeighting; 
-
-void main(void) 
-{
-            gl_Position = uPMatrix  * uMVMatrix * vec4(vs_in_pos, 1.0); 
-            //BEGINN BELEUCHTUNG 
-            vec4 transformedNormal = uNMatrix * vec4(vs_in_normal, 1.0); 
-            float fDirectionalLightWeighting = max(dot(transformedNormal.xyz, -uLightingDirection), 0.0);
-            vLightWeighting = uAmbientColor + uDirectionalColor * fDirectionalLightWeighting;
-            //ENDE BELEUCHTUNG
-         } 
-    
+void main(void) {
+    gl_Position = viewProj * vec4(vs_in_pos, 1);
+	fs_in_color = vs_in_color;
+}
