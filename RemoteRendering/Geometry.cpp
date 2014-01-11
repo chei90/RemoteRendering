@@ -54,9 +54,11 @@ void Geometry::construct()
 	error = glGetError();
 	glEnableVertexAttribArray(ATTR_POS);
 	glEnableVertexAttribArray(ATTR_COLOR);
+	glEnableVertexAttribArray(ATTR_TEX_COORDS);
 	error = glGetError();
-	glVertexAttribPointer(ATTR_POS, 3, GL_FLOAT, false, 6*sizeof(GLfloat), 0);
-	glVertexAttribPointer(ATTR_COLOR, 3, GL_FLOAT, false, 6*sizeof(GLfloat), (GLvoid*) (3*sizeof(GLfloat)));
+	glVertexAttribPointer(ATTR_POS, 3, GL_FLOAT, false, 8*sizeof(GLfloat), 0);
+	glVertexAttribPointer(ATTR_COLOR, 3, GL_FLOAT, false, 8*sizeof(GLfloat), (GLvoid*) (3*sizeof(GLfloat)));
+	glVertexAttribPointer(ATTR_TEX_COORDS, 2, GL_FLOAT, false, 8*sizeof(GLfloat), (GLvoid*) (6*sizeof(GLfloat)));
 	error = glGetError();
 	glBindVertexArray(0);
 }

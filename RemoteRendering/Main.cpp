@@ -115,7 +115,14 @@ void drawScene(void)
 	cam->move(0.04 * moveDir.z, 0.04 * moveDir.x, 0.04 * moveDir.y);
 	glm::mat4 viewProj = cam->getProjection() * cam->getView();
 	glUniformMatrix4fv(viewProjLoc, 1, false, glm::value_ptr(viewProj));
+
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, earthTex);
+	glUniform1i(glGetUniformLocation(programID, "colorTex"), 0);
 	earth->draw();
+	glCheckError(glGetError(), "After drawing");
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glutSwapBuffers();
 
 	glFinish();
@@ -206,7 +213,9 @@ int main(int argc, char** argv)
 	modelLocation = glGetUniformLocation(programID, "model");
 	viewProjLoc = glGetUniformLocation(programID, "viewProj");
 	cam->move(-5.0f, 0.0f, 0.0f);
-	earth = createSphere(1, 64, 32, "textures/earth.jpg");
+	earth = createSphere(1, 64, 32);
+	glEnable(GL_TEXTURE_2D);
+	earthTex = createTexture("textures/earth.jpg");
 
 	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);

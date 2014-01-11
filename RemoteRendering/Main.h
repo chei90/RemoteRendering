@@ -46,6 +46,7 @@ bool culling;
 bool wireframe;
 int n;
 int viewProjLoc;
+GLuint earthTex;
 
 
 //Kommunikation zwischen OpenGL und CUDA
