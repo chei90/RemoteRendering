@@ -21,13 +21,13 @@ __global__ void NV12toRGB(unsigned char* nv12, unsigned char* rgba, int decodedP
 	int v = nv12[uvStart + 2 * uvAdr + 1];
 
 	// R
-	float r = y + 1.13983 * v;
+	float r = 1.164 * (y - 16) + 1.596 * (v - 128);//y + 1.13983 * v;
 	//int r = 1.164 * (y-16) + 1.1596 * (v-128);
 	// G
-	float g = y - 0.39393 * u - 0.58081 * v;
+	float g = 1.164 * (y - 16) - 0.813 * (v - 128) - 0.391 * (u - 128);//y - 0.39393 * u - 0.58081 * v;
 	//int g = 1.164 * (y-16) - 0.813 * (v - 128) - 0.391 * (u - 128);
 	// B
-	float b = y + 2.028 * u;
+	float b = 1.164 * (y - 16) + 1.596 * (v - 128);//y + 2.028 * u;
 	//int b = 1.164 * (y-16) + 2.018 * (u - 128);
 
 

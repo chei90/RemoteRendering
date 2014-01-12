@@ -65,8 +65,9 @@ int createShaderProgram(const char* vs, const char* fs)
 	std::cout << "\n FS: \n" << e_log << "\n" << std::endl;
 
 	glBindAttribLocation(programId, Geometry::ATTR_POS, "vs_in_pos");
-	glBindAttribLocation(programId, Geometry::ATTR_NORMAL, "vs_in_normal");
-	glBindAttribLocation(programId, Geometry::ATTR_COLOR, "vs_in_color");;
+	//glBindAttribLocation(programId, Geometry::ATTR_NORMAL, "vs_in_normal");
+	glBindAttribLocation(programId, Geometry::ATTR_COLOR, "vs_in_color");
+	glBindAttribLocation(programId, Geometry::ATTR_TEX_COORDS, "vs_in_texCoords");
 	
 	std::cout << "Linking Program: \n" << std::endl;
 	glLinkProgram(programId);
@@ -102,6 +103,10 @@ Geometry* createSphere(float r, int n, int k)
 			vertexInformation[counter++] = sinTheta * cosPhi;
 			vertexInformation[counter++] = cosTheta;
 			vertexInformation[counter++] = sinTheta * sinPhi;
+			float test = (2.0f * phi / M_PI);
+			float test2 = (theta / M_PI);
+			if(test > 1 || test2 > 1)
+				std::cout << "> 1" << std::endl;
 			vertexInformation[counter++] = 2.0f * phi / M_PI;
 			vertexInformation[counter++] = theta / M_PI;
 

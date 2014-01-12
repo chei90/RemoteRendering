@@ -186,7 +186,7 @@ int main(int argc, char** argv)
 {
 	serverSocket = new UdpSocket();
 	serverSocket->Create();
-	serverSocket->Bind("192.168.178.50", DEFAULT_PORT+1);
+	serverSocket->Bind(DEFAULT_IP, DEFAULT_PORT+1);
 
 	cout << "Warte auf eingehende Verbindungen!" << endl;
 
