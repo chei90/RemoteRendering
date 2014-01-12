@@ -63,6 +63,11 @@ int createShaderProgram(const char* vs, const char* fs)
 	glGetShaderiv(fsId, GL_COMPILE_STATUS, &compiled);
 	glGetShaderInfoLog(fsId, 1024, 0, e_log);
 	std::cout << "\n FS: \n" << e_log << "\n" << std::endl;
+
+	glBindAttribLocation(programId, Geometry::ATTR_POS, "vs_in_pos");
+	//glBindAttribLocation(programId, Geometry::ATTR_NORMAL, "vs_in_normal");
+	glBindAttribLocation(programId, Geometry::ATTR_COLOR, "vs_in_color");
+	glBindAttribLocation(programId, Geometry::ATTR_TEX_COORDS, "vs_in_texCoords");
 	
 	std::cout << "Linking Program: \n" << std::endl;
 	glLinkProgram(programId);
@@ -98,13 +103,8 @@ Geometry* createSphere(float r, int n, int k)
 			vertexInformation[counter++] = sinTheta * cosPhi;
 			vertexInformation[counter++] = cosTheta;
 			vertexInformation[counter++] = sinTheta * sinPhi;
-			vertexInformation[counter++] = phi / (2.0f * M_PI);
-			vertexInformation[counter++] = theta / M_PI;
-
-			float texX = phi / (2.0f * M_PI);
-			float texY = theta / M_PI;
-
-			printf("TexX: %f, TexY: %f \n", texX, texY);
+			vertexInformation[counter++] = i / (float)n;
+			vertexInformation[counter++] = j / (float)k;
 
 			phi += dPhi;
 		}
@@ -131,7 +131,29 @@ Geometry* createSphere(float r, int n, int k)
 	return sphere;
 }
 
-
+GLuint createTexture(const char* fileName)
+{
+	GLuint texID;
+	int width, height, imgFormat, internalFormat;
+	float* imgData = getImage(fileName, &height, &width, &imgFormat);
+	switch (imgFormat)
+	{
+	case GL_RED: internalFormat = GL_R8; break;
+	case GL_RG: internalFormat = GL_RG8; break;
+	case GL_RGB: internalFormat = GL_RGB8; break;
+	case GL_RGBA: internalFormat = GL_RGBA8; break;
+	default: fprintf(stderr, "\n Cannot get ImgType \n"); break;
+	}
+	glGenTextures(1, &texID);
+	glBindTexture(GL_TEXTURE_2D, texID);
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, imgFormat, GL_FLOAT, (void*) imgData);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+    glCheckError(glGetError(), "createTexture");
+	return texID;
+}
 
 float* getImage(const char* fileName, int* height, int* width, int* imgFormat)
 {
@@ -152,7 +174,7 @@ float* getImage(const char* fileName, int* height, int* width, int* imgFormat)
 	float* texImg = new float[*height * *width * 3];
 	for(int i = 0; i < *height * *width * 3; i++)
 	{
-		texImg[i] = imgData[i];
+		texImg[i] = imgData[i] / 255.0f;
 	}
 	
 	ilDeleteImages(1, &img);

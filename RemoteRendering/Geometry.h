@@ -14,9 +14,9 @@ public:
 	~Geometry(void);
 	
 	static const int ATTR_POS = 0;
-	//static const int ATTR_NORMAL = 1;
-	static const int ATTR_COLOR = 1;
-	static const int ATTR_TEX_COORDS = 2;
+	static const int ATTR_NORMAL = 1;
+	static const int ATTR_COLOR = 2;
+	static const int ATTR_TEX_COORDS = 3;
 
 	void setIndexBuffer(int* indices, int topology, int count);
 	void setVertices(float* vertices, int count);
