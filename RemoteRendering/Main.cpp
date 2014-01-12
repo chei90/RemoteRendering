@@ -39,7 +39,7 @@ void initCuda()
 GLuint createTexture(const char* fileName)
 {
 	GLuint texID;
-	int width, height, imgFormat, internalFormat;
+	int width, height, imgFormat, internalFormat = 0;
 	float* imgData = getImage(fileName, &height, &width, &imgFormat);
 	switch (imgFormat)
 	{
