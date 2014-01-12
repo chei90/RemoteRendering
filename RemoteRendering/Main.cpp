@@ -36,6 +36,31 @@ void initCuda()
 	CUDA_SAFE_CALLING(cudaMalloc((void**)&d_yuv, arraySize*sizeof(unsigned char)));
 }
 
+GLuint createTexture(const char* fileName)
+{
+	GLuint texID;
+	int width, height, imgFormat, internalFormat;
+	float* imgData = getImage(fileName, &height, &width, &imgFormat);
+	switch (imgFormat)
+	{
+	case GL_RED: internalFormat = GL_R8; break;
+	case GL_RG: internalFormat = GL_RG8; break;
+	case GL_RGB: internalFormat = GL_RGB8; break;
+	case GL_RGBA: internalFormat = GL_RGBA8; break;
+	default: fprintf(stderr, "\n Cannot get ImgType \n"); break;
+	}
+	glGenTextures(1, &texID);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texID);
+	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, imgFormat, GL_FLOAT, (void*) imgData);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glUniform1i(glGetUniformLocation(programID, "colorTex"), 0);
+	earth->draw();
+	return texID;
+}
+
 inline void processKeyOps()
 {
 	printf("MoveDir: x %f y %f z %f \n", moveDir.x, moveDir.y, moveDir.z);
@@ -115,14 +140,7 @@ void drawScene(void)
 	cam->move(0.04 * moveDir.z, 0.04 * moveDir.x, 0.04 * moveDir.y);
 	glm::mat4 viewProj = cam->getProjection() * cam->getView();
 	glUniformMatrix4fv(viewProjLoc, 1, false, glm::value_ptr(viewProj));
-
-
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, earthTex);
-	glUniform1i(glGetUniformLocation(programID, "colorTex"), 0);
 	earth->draw();
-	glCheckError(glGetError(), "After drawing");
-	glBindTexture(GL_TEXTURE_2D, 0);
 	glutSwapBuffers();
 
 	glFinish();
@@ -178,7 +196,7 @@ void initOpenGL(int argc, char** argv)
 	glutTimerFunc(16, timer, 0);
 
 	glViewport(0, 0, 800, 600);
-	glPrimitiveRestartIndex(-1);
+	glPrimitiveRestartIndex(PRIMITIVE_RESTART);
 	glEnable(GL_PRIMITIVE_RESTART);
 }
 
@@ -214,7 +232,6 @@ int main(int argc, char** argv)
 	viewProjLoc = glGetUniformLocation(programID, "viewProj");
 	cam->move(-5.0f, 0.0f, 0.0f);
 	earth = createSphere(1, 64, 32);
-	glEnable(GL_TEXTURE_2D);
 	earthTex = createTexture("textures/earth.jpg");
 
 	glEnable(GL_CULL_FACE);

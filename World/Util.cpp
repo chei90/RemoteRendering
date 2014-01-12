@@ -47,7 +47,6 @@ int createShaderProgram(const char* vs, const char* fs)
 	const char* fsContent = t_fsContent.c_str();
 
 	std::cout << "FS Source \n " << fsContent << std::endl;
-	std::cout << "VS Source \n" << vsContent << std::endl;
 
 	glShaderSource(vsId, 1, &vsContent, NULL);
 	glShaderSource(fsId, 1, &fsContent, NULL);
@@ -63,77 +62,69 @@ int createShaderProgram(const char* vs, const char* fs)
 	glGetShaderiv(fsId, GL_COMPILE_STATUS, &compiled);
 	glGetShaderInfoLog(fsId, 1024, 0, e_log);
 	std::cout << "\n FS: \n" << e_log << "\n" << std::endl;
-	
+
+	glBindAttribLocation(programId, Geometry::ATTR_POS, "vs_in_pos");
+	glBindAttribLocation(programId, Geometry::ATTR_NORMAL, "vs_in_normal");
+	glBindAttribLocation(programId, Geometry::ATTR_COLOR, "vs_in_color");;
+
 	std::cout << "Linking Program: \n" << std::endl;
 	glLinkProgram(programId);
 
 	return programId;
 }
 
-Geometry* createSphere(float r, int n, int k)
+Geometry* createSphere(float r, int n, int k, const char* imageFile)
 {
-	float dTheta = M_PI / (float)k;
-	float dPhi =  2.0f * M_PI / (float)n;
+	float dPhi = (float)(2 * M_PI / k);
+	float dTheta = (float)(M_PI / n);
 
-	std::vector<float> vertexInformation = std::vector<float>(8 * (n+1) * (k+1));
+	glm::vec4 north = glm::vec4(0.0f, r, 0.0f, 1.0f);
+
+	float* vertices = new float[5 * (n+1) * (k+1)];
+	int height, width = 0;
+	//float*** image = getImage(imageFile, &height, &width);
+
+	//glm::mat4x4 rot = glm::mat4x4(1.0f);
+	//glm::mat4x4 rotX = glm::mat4x4(1.0f);
+	//glm::mat4x4 rotY = glm::mat4x4(1.0f);
+	glm::vec4 tmp = glm::vec4();
 	int counter = 0;
 
-
-	float theta = 0;
-	for(int j = 0; j <= k; ++j)
+	for(int i = 0; i <= k; i++)
 	{
-
-		float sinTheta = sin(theta);
-		float cosTheta = cos(theta);
-		float phi = 0;
-
-		for(int i = 0; i <= n; ++i)
+		for(int j = 0; j <= n; j++)
 		{
-			float sinPhi = sin(phi);
-			float cosPhi = cos(phi);
-
-			vertexInformation[counter++] = r * sinTheta * cosPhi;
-			vertexInformation[counter++] = r * cosTheta;
-			vertexInformation[counter++] = r * sinTheta * sinPhi;
-			vertexInformation[counter++] = sinTheta * cosPhi;
-			vertexInformation[counter++] = cosTheta;
-			vertexInformation[counter++] = sinTheta * sinPhi;
-			vertexInformation[counter++] = phi / (2.0f * M_PI);
-			vertexInformation[counter++] = theta / M_PI;
-
-			float texX = phi / (2.0f * M_PI);
-			float texY = theta / M_PI;
-
-			printf("TexX: %f, TexY: %f \n", texX, texY);
-
-			phi += dPhi;
+			float u = glm::pi<float>() * i / (float)k;
+			float v = 2 * glm::pi<float>() * j / (float)n;
+			vertices[counter++] = sin(u) * cos(v);
+			vertices[counter++] = sin(u) * sin(v);
+			vertices[counter++] = cos(u);
+			vertices[counter++] = u / glm::pi<float>();
+			vertices[counter++] = v / (2 * glm::pi<float>());
 		}
-		theta += dTheta;
 	}
 
-	std::vector<int> indexInformation = std::vector<int>(k * (2 * (n+1) + 1));
+	int* indices = new int[2 * (n+2) * (k+1)];
 	counter = 0;
 
-	for(int j = 0; j < k; ++j)
+	for(int i = 0; i <= k; i++)
 	{
-		for(int i = 0; i <= n; ++i)
+		for(int j = 0; j <= n; j++)
 		{
-			indexInformation[counter++] = (j+1) * (n+1) + i;
-			indexInformation[counter++] = j * (n+1) + i;
+			indices[counter++] = (i+1) * (n+1) + j;
+			indices[counter++] = i * (n+1) +j;
 		}
-		indexInformation[counter++] = PRIMITIVE_RESTART;
+		indices[counter++] = -1;
 	}
 
 	Geometry* sphere = new Geometry();
-	sphere->setIndexBuffer(&indexInformation[0], GL_TRIANGLE_STRIP, 2 * (n+2) * (k+1));
-	sphere->setVertices(&vertexInformation[0], 8 * (n+1) * (k+1));
+	sphere->setIndexBuffer(indices, GL_TRIANGLE_STRIP, 2 * (n+2) * (k+1));
+	sphere->setVertices(vertices, 5 * (n+1) * (k+1));
 
 	return sphere;
 }
 
-
-
-float* getImage(const char* fileName, int* height, int* width, int* imgFormat)
+float* getImage(const char* fileName, int* height, int* width, int* internalFormat)
 {
 	ilInit();
 	ILuint img;
@@ -145,16 +136,23 @@ float* getImage(const char* fileName, int* height, int* width, int* imgFormat)
 
 	*height = ilGetInteger(IL_IMAGE_HEIGHT);
 	*width = ilGetInteger(IL_IMAGE_WIDTH);
-	*imgFormat = ilGetInteger(IL_IMAGE_FORMAT);
 
 	ILubyte* imgData = ilGetData();
 
 	float* texImg = new float[*height * *width * 3];
-	for(int i = 0; i < *height * *width * 3; i++)
+
+	int k = 0;
+	for(int i = 0; i < *height; i++)
 	{
-		texImg[i] = imgData[i];
+		for(int j = 0; j < *width; j++)
+		{
+
+			texImg[k] = imgData[k++] / 255.0f;
+			texImg[k] = imgData[k++] / 255.0f;
+			texImg[k] = imgData[k++] / 255.0f;
+		}
 	}
-	
+	*internalFormat = GL_RGB;
 	ilDeleteImages(1, &img);
 	std::cout << "Textures loaded!" << std::endl;
 
