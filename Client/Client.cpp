@@ -169,8 +169,9 @@ void copyFrameToTexture(CUVIDPARSERDISPINFO frame)
 
 	}
 
-	
-	cuCtxPopCurrent(NULL);
+
+
+	checkCudaErrors(cuCtxPopCurrent(NULL));
 }
 
 int main(int argc, char** argv)
@@ -224,11 +225,11 @@ int main(int argc, char** argv)
 		switch (identifyer)
 		{
 		case SHUTDOWN_CONNECTION:
-			server->SetToNonBlock();
 			m_continue = false;
 			break;
 		case FRAME_DATA:
 			int size;
+			printf("%u ms %d B\n", st.wMilliseconds - mil, size);
 			memcpy(&size, serverMessage+sizeof(UINT8), sizeof(int));
 			m_decoder->parseData((const unsigned char*)(serverMessage + sizeof(UINT8) + sizeof(int)), size);
 			if(m_queue->dequeue(&f))
@@ -297,11 +298,9 @@ int main(int argc, char** argv)
 	}
 
 	server->Close();
-	delete server;
-	delete m_queue;
-	delete [] serverMessage;
-	delete [] message;
-	delete m_decoder;
+
+	std::cin.get();
+
 }
 
 

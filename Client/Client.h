@@ -13,6 +13,7 @@
 #include "Decoder.h"
 #include <cudaGL.h>
 #include <nvcuvid.h>
+#include <helper_cuda_drvapi.h>
 #include <vector>
 #include "UdpSocket.h"
 
