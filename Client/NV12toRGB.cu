@@ -3,6 +3,11 @@
 #include "NV12toRGB.h"
 
 
+__device__ int clamp (int arg, int minVal, int maxVal)
+{
+	return max(minVal, min(arg, maxVal));
+}
+
 __global__ void NV12toRGB(unsigned char* nv12, unsigned char* rgba, int decodedPitch)
 {
 	int ix = blockIdx.x * blockDim.x + threadIdx.x;
@@ -20,14 +25,18 @@ __global__ void NV12toRGB(unsigned char* nv12, unsigned char* rgba, int decodedP
 	int u = nv12[uvStart + 2 * uvAdr];
 	int v = nv12[uvStart + 2 * uvAdr + 1];
 
+	int c = y - 16;
+	int d = u - 128;
+	int e = v - 128;
+
 	// R
-	float r = 1.164 * (y - 16) + 1.596 * (v - 128);//y + 1.13983 * v;
+	int r = clamp(( 298 * c           + 409 * e + 128) >> 8, 0, 255);
 	//int r = 1.164 * (y-16) + 1.1596 * (v-128);
 	// G
-	float g = 1.164 * (y - 16) - 0.813 * (v - 128) - 0.391 * (u - 128);//y - 0.39393 * u - 0.58081 * v;
+	int g = clamp(( 298 * c - 100 * d - 208 * e + 128) >> 8, 0, 255);
 	//int g = 1.164 * (y-16) - 0.813 * (v - 128) - 0.391 * (u - 128);
 	// B
-	float b = 1.164 * (y - 16) + 1.596 * (v - 128);//y + 2.028 * u;
+	int b = clamp(( 298 * c + 516 * d           + 128) >> 8, 0, 255);
 	//int b = 1.164 * (y-16) + 2.018 * (u - 128);
 
 

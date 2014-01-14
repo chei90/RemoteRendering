@@ -80,7 +80,7 @@ void initGL(int argc, char** argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
 	glutInitWindowSize(m_width, m_height);
-	glutCreateWindow("Decoder!");
+	glutCreateWindow("RemoteRenderingClient!");
 	glewInit();	
 	initCallbacks();
 	
@@ -178,6 +178,8 @@ int main(int argc, char** argv)
 {
 	cuInit(0);
 	initGL(argc, argv);
+	SYSTEMTIME st;
+	WORD sec = 0, mil = 0;
 
 	//	SOCKET STUFF
 	UdpSocket* server = new UdpSocket();
@@ -193,7 +195,7 @@ int main(int argc, char** argv)
 	server->setClientSocket(DEFAULT_IP, DEFAULT_PORT+1);
 
 	//PROCESS USER INPUT
-	char* message = new char(64);
+	char* message = new char[64];
 	char* msgStart = message;
 	char* serverMessage = new char[100000];
 	CUVIDPARSERDISPINFO f;
@@ -208,10 +210,16 @@ int main(int argc, char** argv)
 
 	while (m_continue)
 	{
+		GetSystemTime(&st);		
+		sec = st.wSecond; mil = st.wMilliseconds;
+
+
 		memset(serverMessage, 0, 100000);
 		msgStart = message;
-
 		server->Receive(serverMessage, 100000);
+		GetSystemTime(&st);
+	
+
 		UINT8 identifyer;
 		memcpy(&identifyer, serverMessage, sizeof(UINT8));
 		switch (identifyer)
@@ -221,6 +229,7 @@ int main(int argc, char** argv)
 			break;
 		case FRAME_DATA:
 			int size;
+			printf("%u ms %d B\n", st.wMilliseconds - mil, size);
 			memcpy(&size, serverMessage+sizeof(UINT8), sizeof(int));
 			m_decoder->parseData((const unsigned char*)(serverMessage + sizeof(UINT8) + sizeof(int)), size);
 			if(m_queue->dequeue(&f))
@@ -286,7 +295,6 @@ int main(int argc, char** argv)
 
 		glutMainLoopEvent();
 		memset(message, 0, 64); 
-	
 	}
 
 	server->Close();

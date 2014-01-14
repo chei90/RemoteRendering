@@ -49,7 +49,7 @@ static void __stdcall HandleReleaseBitStream(int nBytesInBuffer, unsigned char* 
 		cout << " Handle Release Bitstream fail!" << endl;
 	}
 
- 	if (remo && remo->GetFileOut())
+ 	if (remo)
  	{
 		char* msg = new char[sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int)];
 		memcpy(msg, &FRAME_DATA, sizeof(UINT8));
@@ -57,8 +57,6 @@ static void __stdcall HandleReleaseBitStream(int nBytesInBuffer, unsigned char* 
 		memcpy(msg + sizeof(UINT8) + sizeof(int), cb, sizeof(unsigned char) * nBytesInBuffer);
  		//fwrite(cb, 1 , nBytesInBuffer, remo->GetFileOut());
 		
-	
-
 		remo->getClient()->Send(msg, sizeof(UINT8) * nBytesInBuffer + sizeof(int));
 
 		delete [] msg;

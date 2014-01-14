@@ -105,7 +105,7 @@ void drawScene(void)
 	WORD timeDif;
 	if((timeDif = currentTimeMS - lastTimeMS) < 55)
 	{
-		Sleep(55 - timeDif);
+		//Sleep(55 - timeDif);
 	}
 
 	//GLSHIT here
@@ -157,7 +157,7 @@ void initOpenGL(int argc, char** argv)
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Decoder!");
+	glutCreateWindow("RemoteRenderingServer");
 	glewInit();
 
 	glutDisplayFunc(drawScene);

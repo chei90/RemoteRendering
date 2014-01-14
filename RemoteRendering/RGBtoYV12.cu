@@ -33,7 +33,7 @@ __global__ void RGBtoYV12(unsigned char* yuv, unsigned char* pData)
 	// nur noch zeilenweise umgedreht. die eigene ID steckt in
 	// den Zeilen und Spalten, und taucht deshalb nicht extra auf.
 
-	float y = (0.257 * r) + (0.504 * b) + (0.098 * b) + 16;//0.299 * r + 0.587 * g + 0.114 * b;
+	int y =  ((  66 * r + 129 * g +  25 * b + 128) >> 8) +  16;
 	yuv[upos - (row+1)*iwidth + col] = y;
 
 
@@ -42,11 +42,11 @@ __global__ void RGBtoYV12(unsigned char* yuv, unsigned char* pData)
 
         //YV12
  	    // U
-		float u = -1 * (0.148 * r) - (0.291 * g) + (0.439 * b) + 128;//0.493 * (b - y);
-		yuv[width - ( (iwidth/2) * ((row/2)+1) - ((col/2)+1)  )] = u;//((-38 * r - 74 * g + 112 * b + 128) >> 8) + 128;
+		int u = ((-38 * r - 74 * g + 112 * b + 128) >> 8) + 128;
+		yuv[width - ( (iwidth/2) * ((row/2)+1) - ((col/2)+1)  )] = u;
         // V
-		float v = (0.439 * r) - (0.368 * g) - (0.071 * b) + 128;//0.887 * (r - y);
-		yuv[vpos - ( (iwidth/2) * ((row/2)+1) - ((col/2)+1)  )] = v; //((112 * r - 94 * g - 18 * b + 128) >> 8) + 128;
+		int v = ((112 * r - 94 * g - 18 * b + 128) >> 8) + 128;
+		yuv[vpos - ( (iwidth/2) * ((row/2)+1) - ((col/2)+1)  )] = v; 
 
     }
 }

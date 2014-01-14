@@ -59,6 +59,7 @@ int createShaderProgram(const char* vs, const char* fs)
 	GLint compiled;
 	glGetShaderiv(vsId, GL_COMPILE_STATUS, &compiled);
 	glGetShaderInfoLog(vsId, 1024, 0, e_log);
+
 	std::cout << "\n\n Compiling\n VS: \n" << e_log << std::endl;
 	glGetShaderiv(fsId, GL_COMPILE_STATUS, &compiled);
 	glGetShaderInfoLog(fsId, 1024, 0, e_log);
