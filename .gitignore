@@ -12,6 +12,7 @@ tmp/
 *.swp
 *.exe
 *~.nib
+*.tlog
 
 local.properties
 .classpath
