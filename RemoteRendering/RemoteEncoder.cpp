@@ -361,7 +361,7 @@ void RemoteEncoder::createCuda()
 	//Setup Frameprops & Memory...
 	unsigned int widthInBytes = m_EncoderParams->iInputSize[0];
 	unsigned int height = (unsigned int)(m_EncoderParams->iInputSize[1] * 12) >> 3;
-	unsigned int cuPitch;
+	size_t cuPitch;
 	cuRes = cuMemAllocPitch(&dptr, &cuPitch, widthInBytes, height, 16);
 	handleCudaError(cuRes, "MemAllocPitch:");
 

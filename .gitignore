@@ -10,21 +10,9 @@ tmp/
 *.tmp
 *.bak
 *.swp
+*.exe
 *~.nib
-<<<<<<< HEAD
-*.zip
-*.json
-=======
-*.json
-*.zip
-*.sln
-*.vcxproj
-*.bak
-*.mtl
-*.py
-*.filters
-*.txt
->>>>>>> origin/UdpSocket
+
 local.properties
 .classpath
 .settings/
@@ -56,10 +44,6 @@ local.properties
 *.sln.docstates
 
 # Build results
-
-[Dd]ebug/
-[Rr]elease/
-x64/
 build/
 [Bb]in/
 [Oo]bj/
