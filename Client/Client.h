@@ -1,11 +1,12 @@
 #ifndef CLIENT_H_
 #define CLIENT_H_
 
-#include <string.h>
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <GL/glut.h>
 #include <cuda.h>
+#include <string>
+#include <iostream>
 #include <cuda_gl_interop.h>
 #include <cuda_runtime_api.h>
 #include "Magicnumbers.h"

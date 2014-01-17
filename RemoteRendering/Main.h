@@ -18,6 +18,7 @@
 #include <gtc\type_ptr.hpp>
 #include <GL\freeglut.h>
 #include <sstream>
+#include <string>
 #include "Geometry.h"
 #include "Camera.h"
 #include "Util.h"

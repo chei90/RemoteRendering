@@ -174,12 +174,24 @@ void copyFrameToTexture(CUVIDPARSERDISPINFO frame)
 }
 
 int main(int argc, char** argv)
-{
+{/*
+	std::string cIp, sIp;
+	int cPort, sPort;
+
+	std::cout << "Insert your IP" << std::endl;
+	std::getline(std::cin, cIp);
+	std::cout << "Insert Port" << std::endl;
+	std::cin >> cPort;
+	std::cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n'); 
+
+	std::cout << "Insert Ip to connect to" << std::endl;
+	std::getline(std::cin, sIp);
+	std::cout << "Insert serverport" << std::endl;
+	std::cin >> sPort;
+	*/
+
 	cuInit(0);
 	initGL(argc, argv);
-	SYSTEMTIME st;
-	WORD sec = 0, mil = 0;
-
 	//	SOCKET STUFF
 	UdpSocket* server = new UdpSocket();
 	server->Create();
@@ -191,7 +203,7 @@ int main(int argc, char** argv)
 	m_decoder->initParser();
 
 	server->Bind(DEFAULT_IP, DEFAULT_PORT);
-	server->setClientSocket(DEFAULT_IP, DEFAULT_PORT+1);
+	server->setClientSocket(DEFAULT_IP, DEFAULT_PORT + 1);
 
 	//PROCESS USER INPUT
 	char* message = new char[64];
@@ -207,16 +219,16 @@ int main(int argc, char** argv)
 	memset(message, 0, sizeof(UINT8) + sizeof(int) * 2);
 	cout << j << " signs sent" << endl;
 
+
+	SYSTEMTIME lst;
+	WORD ls = 0, lm = 0;
 	while (m_continue)
 	{
-		GetSystemTime(&st);		
-		sec = st.wSecond; mil = st.wMilliseconds;
-
-
+		GetSystemTime(&lst);
+		printf("%us %ums \n", lst.wSecond - ls, lst.wMilliseconds - lm);
 		memset(serverMessage, 0, 100000);
 		msgStart = message;
 		server->Receive(serverMessage, 100000);
-		GetSystemTime(&st);
 	
 
 		UINT8 identifyer;
@@ -294,6 +306,8 @@ int main(int argc, char** argv)
 
 		glutMainLoopEvent();
 		memset(message, 0, 64); 
+
+		ls = lst.wSecond; lm = lst.wMilliseconds;
 	}
 
 	server->Close();

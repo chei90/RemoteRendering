@@ -3,7 +3,8 @@
 /************************************************************************/
 /* Callbacks                                                            */
 /************************************************************************/
-
+SYSTEMTIME mst;
+WORD msec, mmil;
 static unsigned char* __stdcall HandleAquireBitStream(int* pBuffersize, void* pUserData)
 {
 	
@@ -51,6 +52,8 @@ static void __stdcall HandleReleaseBitStream(int nBytesInBuffer, unsigned char* 
 
  	if (remo)
  	{
+		GetSystemTime(&mst);
+		printf("%us %ums --- %d bytes \n", mst.wSecond - msec, mst.wMilliseconds - mmil, nBytesInBuffer);
 		char* msg = new char[sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int)];
 		memcpy(msg, &FRAME_DATA, sizeof(UINT8));
 		memcpy(msg + sizeof(UINT8), &nBytesInBuffer, sizeof(int));
@@ -60,6 +63,8 @@ static void __stdcall HandleReleaseBitStream(int nBytesInBuffer, unsigned char* 
 		remo->getClient()->Send(msg, sizeof(UINT8) * nBytesInBuffer + sizeof(int));
 
 		delete [] msg;
+
+		mmil = mst.wMilliseconds; msec = mst.wSecond;
 		//remo->getClient()->Send((char*)cb, nBytesInBuffer);
  	}
 }
@@ -89,6 +94,7 @@ bool RemoteEncoder::SetCBFunctions(NVVE_CallbackParams *pCB, void *pUserData)
 
 RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 {
+	msec = mmil = 0;
 	//m_CudaEncoder = this;
 	m_EncoderParams = new NVEncoderParams;
 
@@ -144,8 +150,8 @@ RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 	m_EncoderParams->iUseDeviceMem = 1;
 
 	//Frames
-	m_EncoderParams->iFrameRate[0] = 60000;
-	m_EncoderParams->iFrameRate[1] = 60000;
+	m_EncoderParams->iFrameRate[0] = 300000;
+	m_EncoderParams->iFrameRate[1] = 300000;
 	m_EncoderParams->iSurfaceFormat = 2;
 	m_EncoderParams->iPictureType = 3;
 	m_EncoderParams->iDisableCabac = FALSE;
