@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server", "RemoteRendering\RemoteRendering.vcxproj", "{453A446A-04BA-430F-81F2-EC8313669383}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DCF5D732-FB6B-479E-9CDC-23A1694E7F12} = {DCF5D732-FB6B-479E-9CDC-23A1694E7F12}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Client\Client.vcxproj", "{4032A52A-4E17-4EAA-B01D-4D3FEEFBF18D}"
 EndProject

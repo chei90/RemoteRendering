@@ -301,7 +301,7 @@ bool RemoteEncoder::encode()
 	errorHandling = NVEncodeFrame(m_CudaEncoder, &m_efParams, 0, (void*) dptr);
 	if(errorHandling != S_OK)
 	{
-		handleHR(errorHandling, "FrameEncoding:");
+		//handleHR(errorHandling, "FrameEncoding:");
 		return false;
 	}
 
@@ -313,7 +313,7 @@ bool RemoteEncoder::encodePB()
 	errorHandling = NVEncodeFrame(m_CudaEncoder, &m_efParams, 0, NULL);
 	if(errorHandling != S_OK)
 	{
-		handleHR(errorHandling, "FrameEncoding:");
+		//handleHR(errorHandling, "FrameEncoding:");
 		return false;
 	}
 

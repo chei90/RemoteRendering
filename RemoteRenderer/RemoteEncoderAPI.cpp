@@ -68,26 +68,44 @@ void CM_API RRSetSource(void* ptr)
 	{
 		ID3D11Resource* d11resource = (ID3D11Resource*) ptr;
 		cudaGraphicsD3D11RegisterResource(&g_res, d11resource, cudaGraphicsRegisterFlagsNone);
+		printf("Mode D3D\n");
 	}
 	else
 	{
-		GLuint pbo = (GLuint) ptr;
-		cudaGraphicsGLRegisterBuffer(&g_res, pbo, cudaGraphicsRegisterFlagsReadOnly);
+		printf("Mode: GL\n");
+		GLuint pbo = *((GLuint*) ptr);
+		printf("API PBO: %d\n", pbo);
+		cuCtxPushCurrent(g_cuCtx);
+		cudaError_t res = cudaGraphicsGLRegisterBuffer(&g_res, pbo, cudaGraphicsRegisterFlagsReadOnly);
+		if(res != cudaSuccess)
+		{
+			printf("error occured due registering %u\n", res);
+		}
+		cuCtxPopCurrent(NULL);
 	}
 }
 
 void CM_API RREncode(void)
 {
+	cuCtxPushCurrent(g_cuCtx);
 	unsigned char* devPtr;
-	cudaGraphicsMapResources(1, &g_res, NULL);
-	cudaGraphicsResourceGetMappedPointer((void**)&devPtr, NULL, g_res);
+	cudaError_t res = cudaGraphicsMapResources(1, &g_res, NULL);
+	if(res != cudaSuccess)
+	{
+		//printf("Something went wrong due mapping");
+	}
+	res = cudaGraphicsResourceGetMappedPointer((void**)&devPtr, NULL, g_res);
+	if(res == cudaSuccess)
+	{
+		//printf("Something went wrong at creating pointer");
+	}
 	callKernel(g_desc.w,g_desc.h,g_dyuv, devPtr);
 	cudaDeviceSynchronize();
 	cudaGraphicsUnmapResources(1, &g_res, NULL);
 	cudaMemcpy( &g_yuv[0], g_dyuv,  g_yuv.size(), cudaMemcpyDeviceToHost);
-
 	g_encoder->setPicBuf(&g_yuv[0]);
 	g_encoder->encodePB();
+	cuCtxPopCurrent(NULL);
 }
 
 const RREncoderDesc& RRGetDesc(void)

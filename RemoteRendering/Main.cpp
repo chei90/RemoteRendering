@@ -5,35 +5,18 @@
 
 void initCuda()
 {
-	//Creating Cuda Basics
-	cout << "\n\nTrying to initialize Cuda\n" << endl;
-	CUresult cuRes = cuInit(0);
-	remo->handleCudaError(cuRes, "Init Cuda:");
-	cuRes = cuDeviceGet(&cuDev, 0);
-	remo->handleCudaError(cuRes, "Creating Cuda Device:");	
-	cuRes = cuCtxCreate(&cuCtx, CU_CTX_BLOCKING_SYNC, cuDev);	
-	remo->handleCudaError(cuRes, "Creating Cuda Context:");
-
-	memset( &prop, 0, sizeof(cudaDeviceProp));
-	prop.major = 1;
-	prop.minor = 0;
-	cudaChooseDevice(&cuDev, &prop);
-	cudaGLSetGLDevice(cuDev);
-
-
 	//Speziell für PixelBuffer
+	printf("GL ERROR bef: %d\n", glGetError());
 	glGenBuffers(1, &pbo);
 	glBindBuffer(GL_PIXEL_PACK_BUFFER, pbo); //könnte auch arraybuffer sein
 	glBufferData(GL_PIXEL_PACK_BUFFER, width * height * 4, NULL, GL_DYNAMIC_DRAW);//GL_STREAM_READ);
+	printf("GL ERROR: %d\n", glGetError());
+
 	/*glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);*/
 
 	// Cuda Device setzen
-	cudaError_t error = cudaGraphicsGLRegisterBuffer(&resource, pbo, cudaGraphicsRegisterFlagsReadOnly);
-	if(error == cudaSuccess)
-	{
-		std::cout << "Registering Cuda Resource: OK" << std::endl;
-	}
-	CUDA_SAFE_CALLING(cudaMalloc((void**)&d_yuv, arraySize*sizeof(unsigned char)));
+	printf("PBO is %d \n", pbo);
+	RRSetSource((void*) &pbo);
 }
 
 inline void processKeyOps()
@@ -111,24 +94,11 @@ void drawScene(void)
 
 	glFinish();
 	//Buffer bei Cuda anmelden
-
 	glReadBuffer(GL_BACK);
 	glBindBuffer(GL_PIXEL_PACK_BUFFER, pbo);
 	glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
-	cudaError_t r = cudaSuccess;
-	
-
-	CUDA_SAFE_CALLING(cudaGraphicsMapResources(1, &resource, NULL));
-	CUDA_SAFE_CALLING(cudaGraphicsResourceGetMappedPointer((void**)&devPtr, NULL, resource));
-	callKernel(width,height,d_yuv, devPtr);
-	CUDA_SAFE_CALLING(cudaDeviceSynchronize());
-	CUDA_SAFE_CALLING(cudaGraphicsUnmapResources(1, &resource, NULL));
-	CUDA_SAFE_CALLING(cudaMemcpy( &yuv[0], d_yuv,  yuv.size(), cudaMemcpyDeviceToHost));
-
-	remo->setPicBuf(&yuv[0]);
-	remo->encodePB();
-
+	RREncode();
 
 	glutPostRedisplay();
 	glFinish();
@@ -168,33 +138,17 @@ int main(int argc, char** argv)
 	std:cin >> port;
 	*/
 
-	RREnoderDesc rdesc;
-	RRInit(&rdesc);
-
-	serverSocket = new UdpSocket();
-	serverSocket->Create();
-	serverSocket->Bind(DEFAULT_IP, DEFAULT_PORT+1);
-
-	cout << "Warte auf eingehende Verbindungen!" << endl;
-
-	char message[DEFAULT_BUFLEN];
-	serverSocket->Receive(message, DEFAULT_BUFLEN);
-	UINT8 identifier;
-	memcpy(&identifier, message, sizeof(UINT8));
-
-	cout << "Identifyer is: " << identifier << endl;
-
-	if(identifier == WINDOW_SIZE) 
-	{
-		memcpy(&width, message + sizeof(UINT8), sizeof(int));
-		memcpy(&height, message + sizeof(UINT8) + sizeof(int), sizeof(int));
-	}
-	serverSocket->SetToNonBlock();
-
+	RREncoderDesc rdesc;
+	rdesc.gfxapi = GL;
+	rdesc.w = 800;
+	rdesc.h = 600;
+	rdesc.ip = "127.0.0.1";
+	rdesc.port = 8081;
+ 
+	RRInit(rdesc);
+	RRWaitForConnection();
 
 	initOpenGL(argc, argv);
-	remo = new RemoteEncoder(width, height);
-	remo->setClientUdp(serverSocket);
 
 	programID = createShaderProgram("shader/Main_VS.glsl", "shader/VertexColor_FS.glsl");
 	modelLocation = glGetUniformLocation(programID, "model");
@@ -213,56 +167,11 @@ int main(int argc, char** argv)
 	glClearColor(0.3f, 0, 0, 1.0f);
 
 
-
-
-	//init cuda datenfelder
-	devPtr = NULL;
-	arraySize = width * height* 1.5;
-	yuv = vector<unsigned char>(arraySize); 
-	d_yuv = new unsigned char[arraySize];
-
-	memset(&yuv[0], 0.0, yuv.size());
-
+	printf("Before cuda\n");
 	initCuda();
-
+	printf("After Cuda\n");
 	while(m_continue)
 	{
-		processKeyOps();
-		serverSocket->Receive(message, DEFAULT_BUFLEN);
-		int key;
-		memcpy(&identifier, message, sizeof(UINT8));
-		switch(identifier)
-		{
-		case KEY_PRESSED:
-			memcpy(&key, message+sizeof(UINT8), sizeof(int));
-			cout << "KEY HIT: " << key << endl;
-			if(key <= 256)
-				keyStates[key] = true;
-			break;
-		case KEY_RELEASED:
-			memcpy(&key, message+sizeof(UINT8), sizeof(int));
-			cout << "KEY RELASED!" << key << endl;
-			if(key <= 256)
-				keyStates[key] = false;
-			break;
-		case SPECIAL_KEY_PRESSED:
-			memcpy(&key, message+sizeof(UINT8), sizeof(int));
-			cout << "SPECIAL KEY Pressed!" << key << endl;
-			if(key <= 246)
-				keySpecialStates[key] = true;
-			break;
-		case SPECIAL_KEY_RELEASED:
-			memcpy(&key, message+sizeof(UINT8), sizeof(int));
-			cout << "SPECIAL KEY RELASED!" << key << endl;
-			if(key <= 246)
-				keySpecialStates[key] = false;
-			break;
-		default:
-			break;
-		}
-
-		identifier = 0;
-		memset(message, 0, DEFAULT_BUFLEN);
 
 		glutMainLoopEvent();
 	}
