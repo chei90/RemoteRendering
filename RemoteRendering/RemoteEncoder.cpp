@@ -122,6 +122,7 @@ RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 	// Fragwürdig:
 	m_EncoderParams->iP_Interval = 3;
 	m_EncoderParams->iIDR_Period = 15;
+	m_EncoderParams->iDynamicGOP = 1;
 	m_EncoderParams->RCType =  RC_VBR;
 	m_EncoderParams->iQP_Level_InterB = 31;
 	m_EncoderParams->iQP_Level_InterP = 28;
@@ -143,8 +144,8 @@ RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 	m_EncoderParams->iUseDeviceMem = 1;
 
 	//Frames
-	m_EncoderParams->iFrameRate[0] = 18000;
-	m_EncoderParams->iFrameRate[1] = 1001;
+	m_EncoderParams->iFrameRate[0] = 60000;
+	m_EncoderParams->iFrameRate[1] = 60000;
 	m_EncoderParams->iSurfaceFormat = 2;
 	m_EncoderParams->iPictureType = 3;
 	m_EncoderParams->iDisableCabac = FALSE;

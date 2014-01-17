@@ -99,14 +99,6 @@ inline void processKeyOps()
 void drawScene(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	
-	GetSystemTime(&st);
-	currentTimeMS = st.wMilliseconds; 
-	WORD timeDif;
-	if((timeDif = currentTimeMS - lastTimeMS) < 55)
-	{
-		//Sleep(55 - timeDif);
-	}
 
 	//GLSHIT here
 	glUseProgram(programID);
@@ -140,8 +132,6 @@ void drawScene(void)
 
 	glutPostRedisplay();
 	glFinish();
-
-	lastTimeMS = st.wMilliseconds;
 }
 
 void initOpenGL(int argc, char** argv)

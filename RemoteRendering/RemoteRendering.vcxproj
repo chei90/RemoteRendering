@@ -85,9 +85,11 @@
     <Link>
       <AdditionalDependencies>glew32.lib;freeglut.lib;cuda.lib;cudart.lib;nvcuvid.lib;DevIL.lib;nvcuvenc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\lib</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>../inc</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
