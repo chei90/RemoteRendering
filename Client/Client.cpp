@@ -219,6 +219,7 @@ int main(int argc, char** argv)
 	memset(message, 0, sizeof(UINT8) + sizeof(int) * 2);
 	cout << j << " signs sent" << endl;
 
+	server->SetToNonBlock();
 
 	SYSTEMTIME lst;
 	WORD ls = 0, lm = 0;

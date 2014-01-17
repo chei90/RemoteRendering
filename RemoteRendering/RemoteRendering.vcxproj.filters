@@ -48,6 +48,9 @@
     <ClInclude Include="Geometry.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="RemoteRendererAPI.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RenderSocket.cpp">
@@ -69,6 +72,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Geometry.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="RemoteRendererAPI.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
