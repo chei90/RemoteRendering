@@ -29,7 +29,7 @@
 std::string textFileRead(const char* filePath);
 int createShaderProgram(const char* vs, const char* fs);
 Geometry* createSphere(float r, int n, int k);
-GLuint createTexture(const char* fileName);
-float* getImage(const char* fileName, int* height, int* width, int* imgFormat);
+GLuint createTexture(const wchar_t* fileName);
+float* getImage(const wchar_t* fileName, int* height, int* width, int* imgFormat);
 void glCheckError(GLenum error, const char* msg);
 

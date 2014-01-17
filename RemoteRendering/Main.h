@@ -22,8 +22,6 @@
 #include "Geometry.h"
 #include "Camera.h"
 #include "Util.h"
-#include "RemoteEncoder.h"
-#include "RGBtoYV12.h"
 #include "RemoteEncoderAPI.h"
 
 
@@ -56,7 +54,6 @@ GLuint pbo;
 cudaGraphicsResource *resource;
 cudaDeviceProp prop;
 int dev;
-RemoteEncoder* remo;
 
 int width = 0;
 int height = 0;

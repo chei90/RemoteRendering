@@ -25,7 +25,8 @@ MouseHandler g_mouseHandler;
 bool CM_API RRInit(RREncoderDesc& desc)
 {
 	//Register UdpSocket
-	g_encoder = new RemoteEncoder(desc.w, desc.h);
+	g_desc = desc;
+	//g_encoder = new RemoteEncoder(desc.w, desc.h);
 	g_mouseHandler = desc.mouseHandler;
 	g_keyHandler = desc.keyHandler;
 	//Init Cuda for GL
@@ -34,22 +35,25 @@ bool CM_API RRInit(RREncoderDesc& desc)
 	g_cuDevice = 0;
 	if(g_desc.gfxapi == GL)
 	{
-		cudaGLSetGLDevice(g_cuDevice);
+		cudaError_t res = cudaGLSetGLDevice(g_cuDevice);
+		printf("After cudevice %d\n", res);
 	}
 	else
 	{
 		cudaSetDevice(g_cuDevice);
 	} 
-	cuCtxCreate(&g_cuCtx, CU_CTX_BLOCKING_SYNC, g_cuDevice);	
+	//cuCtxCreate(&g_cuCtx, CU_CTX_BLOCKING_SYNC, g_cuDevice);	
+
+
 
 	//Allocating Buffers
 	g_yuv = std::vector<unsigned char>(g_desc.w * g_desc.h * 3 / 2);
-	cudaMalloc((void**) &g_dyuv, g_desc.w * g_desc.h * 3 /  2 * sizeof(char));
-
+	cudaError_t res = cudaMalloc((void**) &g_dyuv, g_desc.w * g_desc.h * 3 /  2 * sizeof(char));
+	printf("ERROR CODE %d\n", res);
 	g_serverSock = new UdpSocket();
 	g_serverSock->Create();
 	g_serverSock->Bind(desc.ip, desc.port);
-	g_encoder->setClientUdp(g_serverSock);
+	//g_encoder->setClientUdp(g_serverSock);
 
 	return true;
 }
@@ -75,19 +79,16 @@ void CM_API RRSetSource(void* ptr)
 		printf("Mode: GL\n");
 		GLuint pbo = *((GLuint*) ptr);
 		printf("API PBO: %d\n", pbo);
-		cuCtxPushCurrent(g_cuCtx);
 		cudaError_t res = cudaGraphicsGLRegisterBuffer(&g_res, pbo, cudaGraphicsRegisterFlagsReadOnly);
 		if(res != cudaSuccess)
 		{
 			printf("error occured due registering %u\n", res);
 		}
-		cuCtxPopCurrent(NULL);
 	}
 }
 
 void CM_API RREncode(void)
 {
-	cuCtxPushCurrent(g_cuCtx);
 	unsigned char* devPtr;
 	cudaError_t res = cudaGraphicsMapResources(1, &g_res, NULL);
 	if(res != cudaSuccess)
@@ -105,7 +106,6 @@ void CM_API RREncode(void)
 	cudaMemcpy( &g_yuv[0], g_dyuv,  g_yuv.size(), cudaMemcpyDeviceToHost);
 	g_encoder->setPicBuf(&g_yuv[0]);
 	g_encoder->encodePB();
-	cuCtxPopCurrent(NULL);
 }
 
 const RREncoderDesc& RRGetDesc(void)
@@ -113,7 +113,7 @@ const RREncoderDesc& RRGetDesc(void)
 	return g_desc;
 }
 
-void RRWaitForConnection()
+void CM_API RRWaitForConnection()
 {
 	char message[64];
 	g_serverSock->Receive(message, 64);
@@ -130,7 +130,7 @@ void RRWaitForConnection()
 	g_serverSock->SetToNonBlock();
 }
 
-void RRQueryClientEvents()
+void CM_API RRQueryClientEvents()
 {
 	static char msg[64];
 	memset(msg, 0, 64);

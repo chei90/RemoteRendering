@@ -8,12 +8,11 @@ void initCuda()
 	//Speziell für PixelBuffer
 	printf("GL ERROR bef: %d\n", glGetError());
 	glGenBuffers(1, &pbo);
-	glBindBuffer(GL_PIXEL_PACK_BUFFER, pbo); //könnte auch arraybuffer sein
-	glBufferData(GL_PIXEL_PACK_BUFFER, width * height * 4, NULL, GL_DYNAMIC_DRAW);//GL_STREAM_READ);
-	printf("GL ERROR: %d\n", glGetError());
+	glBindBuffer(GL_ARRAY_BUFFER, pbo); //könnte auch arraybuffer sein
+	glBufferData(GL_ARRAY_BUFFER, 800 * 600 * 4, NULL, GL_DYNAMIC_DRAW);//GL_STREAM_READ);
 
 	/*glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);*/
-
+	printf("GL ERROR after pbo: %d\n", glGetError());
 	// Cuda Device setzen
 	printf("PBO is %d \n", pbo);
 	RRSetSource((void*) &pbo);
@@ -142,25 +141,40 @@ int main(int argc, char** argv)
 	rdesc.gfxapi = GL;
 	rdesc.w = 800;
 	rdesc.h = 600;
-	rdesc.ip = "127.0.0.1";
+	rdesc.ip = std::string("127.0.0.1");
 	rdesc.port = 8081;
  
-	RRInit(rdesc);
-	RRWaitForConnection();
 
 	initOpenGL(argc, argv);
+
+	GLuint pb;
+	glGenBuffers(1, &pb);
+	glBindBuffer(GL_PIXEL_PACK_BUFFER, pb);
+	glBufferData(GL_PIXEL_PACK_BUFFER, 10, NULL, GL_STATIC_DRAW);
+	cudaGraphicsResource_t cres;
+	glCheckError(glGetError(), "jalds");
+	cuInit(0);
+	int dev;
+	cudaGetDevice(&dev);
+	cudaGLSetGLDevice(dev);
+	cudaError_t err = cudaGraphicsGLRegisterBuffer(&cres, pb, 0);
+
+	RRInit(rdesc);
+
+	//RRWaitForConnection();
 
 	programID = createShaderProgram("shader/Main_VS.glsl", "shader/VertexColor_FS.glsl");
 	modelLocation = glGetUniformLocation(programID, "model");
 	viewProjLoc = glGetUniformLocation(programID, "viewProj");
 	cam->move(-5.0f, 0.0f, 0.0f);
 	earth = createSphere(1, 64, 32);
-
-    glBindTexture(GL_TEXTURE_2D, createTexture("textures/earth.jpg"));
+	printf("bef %d\n", glGetError());
+    glBindTexture(GL_TEXTURE_2D, createTexture(L"textures/earth.jpg"));
+	printf("bind %d\n", glGetError());
     glActiveTexture(GL_TEXTURE0);
-
-    glUniform1i(glGetUniformLocation(programID, "colorTex"), 0);
-
+	printf("active %d\n", glGetError());
+    //glUniform1i(glGetUniformLocation(programID, "colorTex"), 0);
+	printf("tex %d\n", glGetError());
 	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);

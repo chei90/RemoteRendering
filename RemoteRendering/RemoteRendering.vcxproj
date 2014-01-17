@@ -39,6 +39,7 @@
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PlatformToolset>v110</PlatformToolset>
@@ -92,7 +93,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
       <AdditionalDependencies>RemoteRenderer.lib;glew32.lib;freeglut.lib;cuda.lib;cudart.lib;nvcuvid.lib;DevIL.lib;nvcuvenc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\lib;..\x64\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\lib;..\x64\Release</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <ClCompile>
@@ -112,29 +113,15 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Geometry.h" />
-    <ClInclude Include="MagicNumbers.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Modell.h" />
-    <ClInclude Include="RemoteEncoder.h" />
-    <ClInclude Include="RenderSocket.h" />
-    <ClInclude Include="RGBtoYV12.h" />
-    <ClInclude Include="types.h" />
-    <ClInclude Include="UdpSocket.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Geometry.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="RemoteEncoder.cpp" />
-    <ClCompile Include="RenderSocket.cpp" />
-    <ClCompile Include="UdpSocket.cpp" />
     <ClCompile Include="Util.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <CudaCompile Include="RGBtoYV12.cu">
-      <FileType>Document</FileType>
-    </CudaCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -132,7 +132,7 @@ Geometry* createSphere(float r, int n, int k)
 	return sphere;
 }
 
-GLuint createTexture(const char* fileName)
+GLuint createTexture(const wchar_t* fileName)
 {
 	GLuint texID;
 	int width, height, imgFormat, internalFormat = 0;
@@ -156,7 +156,7 @@ GLuint createTexture(const char* fileName)
 	return texID;
 }
 
-float* getImage(const char* fileName, int* height, int* width, int* imgFormat)
+float* getImage(const wchar_t* fileName, int* height, int* width, int* imgFormat)
 {
 	ilInit();
 	ILuint img;

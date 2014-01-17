@@ -15,28 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="RemoteEncoder.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderSocket.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="MagicNumbers.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="types.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Main.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Modell.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="RGBtoYV12.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="UdpSocket.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="Util.h">
@@ -50,16 +32,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RenderSocket.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="RemoteEncoder.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="UdpSocket.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Util.cpp">
@@ -71,10 +44,5 @@
     <ClCompile Include="Geometry.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <CudaCompile Include="RGBtoYV12.cu">
-      <Filter>Quelldateien</Filter>
-    </CudaCompile>
   </ItemGroup>
 </Project>

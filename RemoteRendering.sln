@@ -8,11 +8,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server", "RemoteRendering\R
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Client\Client.vcxproj", "{4032A52A-4E17-4EAA-B01D-4D3FEEFBF18D}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ApiTest", "ApiTest\ApiTest.vcxproj", "{90018122-E4BC-4BC7-83D1-3D1F6D2BCD48}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DCF5D732-FB6B-479E-9CDC-23A1694E7F12} = {DCF5D732-FB6B-479E-9CDC-23A1694E7F12}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RemoteRenderer", "RemoteRenderer\RemoteRenderer.vcxproj", "{DCF5D732-FB6B-479E-9CDC-23A1694E7F12}"
 EndProject
 Global
@@ -49,22 +44,12 @@ Global
 		{4032A52A-4E17-4EAA-B01D-4D3FEEFBF18D}.Release|Win32.Build.0 = Release|Win32
 		{4032A52A-4E17-4EAA-B01D-4D3FEEFBF18D}.Release|x64.ActiveCfg = Release|x64
 		{4032A52A-4E17-4EAA-B01D-4D3FEEFBF18D}.Release|x64.Build.0 = Release|x64
-		{90018122-E4BC-4BC7-83D1-3D1F6D2BCD48}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
-		{90018122-E4BC-4BC7-83D1-3D1F6D2BCD48}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{90018122-E4BC-4BC7-83D1-3D1F6D2BCD48}.Debug|Win32.ActiveCfg = Debug|Win32
-		{90018122-E4BC-4BC7-83D1-3D1F6D2BCD48}.Debug|Win32.Build.0 = Debug|Win32
-		{90018122-E4BC-4BC7-83D1-3D1F6D2BCD48}.Debug|x64.ActiveCfg = Debug|Win32
-		{90018122-E4BC-4BC7-83D1-3D1F6D2BCD48}.Release|Mixed Platforms.ActiveCfg = Release|Win32
-		{90018122-E4BC-4BC7-83D1-3D1F6D2BCD48}.Release|Mixed Platforms.Build.0 = Release|Win32
-		{90018122-E4BC-4BC7-83D1-3D1F6D2BCD48}.Release|Win32.ActiveCfg = Release|Win32
-		{90018122-E4BC-4BC7-83D1-3D1F6D2BCD48}.Release|Win32.Build.0 = Release|Win32
-		{90018122-E4BC-4BC7-83D1-3D1F6D2BCD48}.Release|x64.ActiveCfg = Release|x64
-		{90018122-E4BC-4BC7-83D1-3D1F6D2BCD48}.Release|x64.Build.0 = Release|x64
 		{DCF5D732-FB6B-479E-9CDC-23A1694E7F12}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{DCF5D732-FB6B-479E-9CDC-23A1694E7F12}.Debug|Mixed Platforms.Build.0 = Debug|Win32
 		{DCF5D732-FB6B-479E-9CDC-23A1694E7F12}.Debug|Win32.ActiveCfg = Debug|Win32
 		{DCF5D732-FB6B-479E-9CDC-23A1694E7F12}.Debug|Win32.Build.0 = Debug|Win32
-		{DCF5D732-FB6B-479E-9CDC-23A1694E7F12}.Debug|x64.ActiveCfg = Debug|Win32
+		{DCF5D732-FB6B-479E-9CDC-23A1694E7F12}.Debug|x64.ActiveCfg = Debug|x64
+		{DCF5D732-FB6B-479E-9CDC-23A1694E7F12}.Debug|x64.Build.0 = Debug|x64
 		{DCF5D732-FB6B-479E-9CDC-23A1694E7F12}.Release|Mixed Platforms.ActiveCfg = Release|Win32
 		{DCF5D732-FB6B-479E-9CDC-23A1694E7F12}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{DCF5D732-FB6B-479E-9CDC-23A1694E7F12}.Release|Win32.ActiveCfg = Release|Win32
