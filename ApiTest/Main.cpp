@@ -2,7 +2,7 @@
 
 #include "RemoteRendererAPI.h"
 #include <iostream>
-#pragma comment(lib, "Server.lib")
+#pragma comment(lib, "RemoteRenderer.lib")
 
 void doNothing(int key, bool pressed)
 {

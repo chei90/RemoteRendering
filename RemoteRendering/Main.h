@@ -24,6 +24,7 @@
 #include "Util.h"
 #include "RemoteEncoder.h"
 #include "RGBtoYV12.h"
+#include "RemoteEncoderAPI.h"
 
 
 

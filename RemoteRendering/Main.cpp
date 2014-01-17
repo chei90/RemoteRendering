@@ -167,6 +167,10 @@ int main(int argc, char** argv)
 	std::cout << "Insert Port: " << std::endl;
 	std:cin >> port;
 	*/
+
+	RREnoderDesc rdesc;
+	RRInit(&rdesc);
+
 	serverSocket = new UdpSocket();
 	serverSocket->Create();
 	serverSocket->Bind(DEFAULT_IP, DEFAULT_PORT+1);

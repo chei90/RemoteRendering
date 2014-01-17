@@ -15,10 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="RemoteEncoderAPI.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="RGBtoYV12.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
     <ClInclude Include="RemoteEncoder.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="RenderSocket.h">
+    <ClInclude Include="UdpSocket.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="MagicNumbers.h">
@@ -27,54 +33,21 @@
     <ClInclude Include="types.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Main.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Modell.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="RGBtoYV12.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="UdpSocket.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Util.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="RenderSocket.cpp">
+    <ClCompile Include="RemoteEncoderAPI.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="RemoteEncoder.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="UdpSocket.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Util.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Geometry.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CudaCompile Include="RGBtoYV12.cu">
+    <None Include="RGBtoYV12.cu">
       <Filter>Quelldateien</Filter>
-    </CudaCompile>
+    </None>
   </ItemGroup>
 </Project>
