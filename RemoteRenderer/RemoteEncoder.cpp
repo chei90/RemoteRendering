@@ -3,8 +3,6 @@
 /************************************************************************/
 /* Callbacks                                                            */
 /************************************************************************/
-SYSTEMTIME mst;
-WORD msec, mmil;
 static unsigned char* __stdcall HandleAquireBitStream(int* pBuffersize, void* pUserData)
 {
 
@@ -52,20 +50,15 @@ static void __stdcall HandleReleaseBitStream(int nBytesInBuffer, unsigned char* 
 
 	if (remo)
 	{
-		GetSystemTime(&mst);
-		printf("%us %ums --- %d bytes \n", mst.wSecond - msec, mst.wMilliseconds - mmil, nBytesInBuffer);
 		char* msg = new char[sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int)];
 		memcpy(msg, &FRAME_DATA, sizeof(UINT8));
 		memcpy(msg + sizeof(UINT8), &nBytesInBuffer, sizeof(int));
 		memcpy(msg + sizeof(UINT8) + sizeof(int), cb, sizeof(unsigned char) * nBytesInBuffer);
-		//fwrite(cb, 1 , nBytesInBuffer, remo->GetFileOut());
 
-		remo->getClient()->Send(msg, sizeof(UINT8) * nBytesInBuffer + sizeof(int));
+		int numBytes = remo->getClient()->Send(msg, sizeof(UINT8) * nBytesInBuffer + sizeof(int));
+		printf("%d bytes sent\n", numBytes);
 
 		delete [] msg;
-
-		mmil = mst.wMilliseconds; msec = mst.wSecond;
-		//remo->getClient()->Send((char*)cb, nBytesInBuffer);
 	}
 }
 
@@ -94,7 +87,6 @@ bool RemoteEncoder::SetCBFunctions(NVVE_CallbackParams *pCB, void *pUserData)
 
 RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 {
-	msec = mmil = 0;
 	//m_CudaEncoder = this;
 	m_EncoderParams = new NVEncoderParams;
 
@@ -313,7 +305,7 @@ bool RemoteEncoder::encodePB()
 	errorHandling = NVEncodeFrame(m_CudaEncoder, &m_efParams, 0, NULL);
 	if(errorHandling != S_OK)
 	{
-		//handleHR(errorHandling, "FrameEncoding:");
+		handleHR(errorHandling, "FrameEncoding:");
 		return false;
 	}
 
