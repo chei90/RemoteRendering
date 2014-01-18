@@ -219,12 +219,8 @@ int main(int argc, char** argv)
 	memset(message, 0, sizeof(UINT8) + sizeof(int) * 2);
 	cout << j << " signs sent" << endl;
 
-	SYSTEMTIME lst;
-	WORD ls = 0, lm = 0;
 	while (m_continue)
 	{
-		GetSystemTime(&lst);
-		printf("%us %ums \n", lst.wSecond - ls, lst.wMilliseconds - lm);
 		memset(serverMessage, 0, 100000);
 		msgStart = message;
 		server->Receive(serverMessage, 100000);
@@ -305,8 +301,6 @@ int main(int argc, char** argv)
 
 		glutMainLoopEvent();
 		memset(message, 0, 64); 
-
-		ls = lst.wSecond; lm = lst.wMilliseconds;
 	}
 
 	server->Close();

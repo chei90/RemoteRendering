@@ -56,7 +56,6 @@ static void __stdcall HandleReleaseBitStream(int nBytesInBuffer, unsigned char* 
 		memcpy(msg + sizeof(UINT8) + sizeof(int), cb, sizeof(unsigned char) * nBytesInBuffer);
 
 		int numBytes = remo->getClient()->Send(msg, sizeof(UINT8) * nBytesInBuffer + sizeof(int));
-		printf("%d bytes sent\n", numBytes);
 
 		delete [] msg;
 	}

@@ -84,12 +84,22 @@ void drawScene(void)
 	//Buffer bei Cuda anmelden
 	glReadBuffer(GL_BACK);
 	glBindBuffer(GL_PIXEL_PACK_BUFFER, pbo);
-	glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+	glReadPixels(0, 0, 800, 600, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
 	RREncode();
 	glutSwapBuffers();
 	glutPostRedisplay();
 	glFinish();
+}
+
+void RRKeyCallback(int key, bool pressed)
+{
+	std::string tmp = pressed ? "pressed" : "released";
+	printf("Key %d %s \n", key, tmp);
+	if(pressed)
+		keyStates[key] = true;
+	else
+		keyStates[key] = false;
 }
 
 void initOpenGL(int argc, char** argv)
@@ -132,6 +142,7 @@ int main(int argc, char** argv)
 	rdesc.h = 600;
 	rdesc.ip = "127.0.0.1";
 	rdesc.port = 8081;
+	rdesc.keyHandler = RRKeyCallback;
  
 
 	initOpenGL(argc, argv);
@@ -142,7 +153,7 @@ int main(int argc, char** argv)
 
 	
 	RRInit(rdesc);
-//	RRWaitForConnection();
+	RRWaitForConnection();
 	RRSetSource((void*) &pbo);
 
 
@@ -163,7 +174,9 @@ int main(int argc, char** argv)
 
 	while(m_continue)
 	{
+		RRQueryClientEvents();
 		glutMainLoopEvent();
+		processKeyOps();
 	}
 	return 0;
 }

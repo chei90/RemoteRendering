@@ -139,25 +139,21 @@ void CM_API RRQueryClientEvents()
 	{
 	case KEY_PRESSED:
 		memcpy(&key, msg+sizeof(UINT8), sizeof(int));
-		cout << "KEY HIT: " << key << endl;
 		if(key <= 256)
 			g_keyHandler(key, true);
 		break;
 	case KEY_RELEASED:
 		memcpy(&key, msg+sizeof(UINT8), sizeof(int));
-		cout << "KEY RELASED!" << key << endl;
 		if(key <= 256)
 			g_keyHandler(key, false);
 		break;
 	case SPECIAL_KEY_PRESSED:
 		memcpy(&key, msg+sizeof(UINT8), sizeof(int));
-		cout << "SPECIAL KEY Pressed!" << key << endl;
 		if(key <= 246)
 			//keySpecialStates[key] = true;
 				break;
 	case SPECIAL_KEY_RELEASED:
 		memcpy(&key, msg+sizeof(UINT8), sizeof(int));
-		cout << "SPECIAL KEY RELASED!" << key << endl;
 		if(key <= 246)
 			//keySpecialStates[key] = false;
 				break;
