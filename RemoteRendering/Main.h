@@ -2,7 +2,7 @@
 #define MAIN_H_
 #define _USE_MATH_DEFINES // for C++
 #include <cmath>
-#include "UdpSocket.h"
+#include "RemoteEncoderAPI.h"
 #include <Windows.h>
 #include <iostream>
 #include <stdlib.h>
@@ -22,7 +22,7 @@
 #include "Geometry.h"
 #include "Camera.h"
 #include "Util.h"
-#include "RemoteEncoderAPI.h"
+
 
 
 
@@ -54,7 +54,6 @@ GLuint pbo;
 cudaGraphicsResource *resource;
 cudaDeviceProp prop;
 int dev;
-
 int width = 0;
 int height = 0;
 
@@ -76,8 +75,6 @@ CUdevice cuDev;
 SYSTEMTIME st;
 DWORD currentTimeMS;
 DWORD lastTimeMS;
-
-UdpSocket* serverSocket;
 
 
 //Cuda Zeugs

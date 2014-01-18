@@ -6,15 +6,12 @@
 void initCuda()
 {
 	//Speziell für PixelBuffer
-	printf("GL ERROR bef: %d\n", glGetError());
+
 	glGenBuffers(1, &pbo);
 	glBindBuffer(GL_ARRAY_BUFFER, pbo); //könnte auch arraybuffer sein
 	glBufferData(GL_ARRAY_BUFFER, 800 * 600 * 4, NULL, GL_DYNAMIC_DRAW);//GL_STREAM_READ);
 
-	/*glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);*/
-	printf("GL ERROR after pbo: %d\n", glGetError());
 	// Cuda Device setzen
-	printf("PBO is %d \n", pbo);
 	RRSetSource((void*) &pbo);
 }
 
@@ -67,14 +64,6 @@ inline void processKeyOps()
 	}
 	if(keySpecialStates[GLUT_KEY_F12])
 	{
-		m_continue = false;
-		cout << "Shutting down" << endl;
-
-		char* message = new char(sizeof(char));
-		memcpy(message, &SHUTDOWN_CONNECTION, sizeof(UINT8));
-		int error = serverSocket->Send(message, sizeof(UINT8));
-		if(error  <= 1)
-			cout << "Fehler beim Versenden der Shutdown Nachricht" << endl;
 	}
 }
 
@@ -89,7 +78,7 @@ void drawScene(void)
 	glm::mat4 viewProj = cam->getProjection() * cam->getView();
 	glUniformMatrix4fv(viewProjLoc, 1, false, glm::value_ptr(viewProj));
 	earth->draw();
-	glutSwapBuffers();
+
 
 	glFinish();
 	//Buffer bei Cuda anmelden
@@ -98,7 +87,7 @@ void drawScene(void)
 	glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
 	RREncode();
-
+	glutSwapBuffers();
 	glutPostRedisplay();
 	glFinish();
 }
@@ -127,8 +116,8 @@ void initOpenGL(int argc, char** argv)
 }
 
 int main(int argc, char** argv)
-{
-	/*std::string ip;
+{/*
+	std::string ip;
 	int port; 
 
 	std::cout << "Insert Ip:" << std::endl;
@@ -141,7 +130,7 @@ int main(int argc, char** argv)
 	rdesc.gfxapi = GL;
 	rdesc.w = 800;
 	rdesc.h = 600;
-	rdesc.ip = std::string("127.0.0.1");
+	rdesc.ip = "127.0.0.1";
 	rdesc.port = 8081;
  
 
@@ -153,7 +142,7 @@ int main(int argc, char** argv)
 
 	
 	RRInit(rdesc);
-	RRWaitForConnection();
+//	RRWaitForConnection();
 	RRSetSource((void*) &pbo);
 
 
@@ -162,15 +151,15 @@ int main(int argc, char** argv)
 	viewProjLoc = glGetUniformLocation(programID, "viewProj");
 	cam->move(-5.0f, 0.0f, 0.0f);
 	earth = createSphere(1, 64, 32);
-    glBindTexture(GL_TEXTURE_2D, createTexture(L"textures/earth.jpg"));
-    glActiveTexture(GL_TEXTURE0);
-    glUniform1i(glGetUniformLocation(programID, "colorTex"), 0);
+	glBindTexture(GL_TEXTURE_2D, createTexture(L"textures/earth.jpg"));
+	glActiveTexture(GL_TEXTURE0);
+	glUniform1i(glGetUniformLocation(programID, "colorTex"), 0);
 	glEnable(GL_CULL_FACE);
 	glFrontFace(GL_CCW);
 	glCullFace(GL_BACK);
 	glClearColor(0.3f, 0, 0, 1.0f);
 
-
+	
 
 	while(m_continue)
 	{
