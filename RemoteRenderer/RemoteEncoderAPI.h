@@ -10,8 +10,9 @@
 
 #include <string>
 
+
 typedef void (*KeyBoardHandler)(int key, bool pressed);
-typedef void (*MouseHandler)(int dx, int dy, int button);
+typedef void (*MouseHandler)(int dx, int dy, int button, int state);
 
 enum GFX_API
 {

@@ -49,6 +49,8 @@ bool m_firstFrame = true;
 bool m_updateCSC = true;
 
 int m_width = 800, m_height = 600;
+int mouseDx = 0, mouseDy = 0;
+bool pressed, tmpPressed;
 
 CUcontext m_ctx;
 CUvideoctxlock m_lock;

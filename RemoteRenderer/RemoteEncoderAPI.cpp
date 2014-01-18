@@ -133,7 +133,7 @@ void CM_API RRQueryClientEvents()
 	memset(msg, 0, 64);
 	g_serverSock->Receive(msg, 64);
 
-	int key = 0, identifyer = 0;
+	int key = 0, identifyer = 0, dx = 0, dy = 0;
 	memcpy(&identifyer, msg, sizeof(UINT8));
 	switch(identifyer)
 	{
@@ -157,6 +157,14 @@ void CM_API RRQueryClientEvents()
 		if(key <= 246)
 			//keySpecialStates[key] = false;
 				break;
+	case MOUSE_PRESSED:
+		memcpy(&dx, msg + sizeof(UINT8), sizeof(int));
+		memcpy(&dy, msg + sizeof(UINT8) + sizeof(int), sizeof(int));
+		g_mouseHandler(dx, dy, 0, 1);
+		break;
+	case MOUSE_RELEASED:
+		g_mouseHandler(0, 0, 0, 0);
+		break;
 	default:
 		break;
 	}

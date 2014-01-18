@@ -9,7 +9,7 @@ void initCuda()
 
 	glGenBuffers(1, &pbo);
 	glBindBuffer(GL_ARRAY_BUFFER, pbo); //könnte auch arraybuffer sein
-	glBufferData(GL_ARRAY_BUFFER, 800 * 600 * 4, NULL, GL_DYNAMIC_DRAW);//GL_STREAM_READ);
+	glBufferData(GL_ARRAY_BUFFER, width * height * 4, NULL, GL_DYNAMIC_DRAW);//GL_STREAM_READ);
 
 	// Cuda Device setzen
 	RRSetSource((void*) &pbo);
@@ -84,7 +84,7 @@ void drawScene(void)
 	//Buffer bei Cuda anmelden
 	glReadBuffer(GL_BACK);
 	glBindBuffer(GL_PIXEL_PACK_BUFFER, pbo);
-	glReadPixels(0, 0, 800, 600, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+	glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, 0);
 
 	RREncode();
 	glutSwapBuffers();
@@ -114,13 +114,13 @@ void initOpenGL(int argc, char** argv)
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH);
-	glutInitWindowSize(800, 600);
+	glutInitWindowSize(width, height);
 	glutCreateWindow("RemoteRenderingServer");
 	glewInit();
 
 	glutDisplayFunc(drawScene);
 
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, width, height);
 	glPrimitiveRestartIndex(PRIMITIVE_RESTART);
 	glEnable(GL_PRIMITIVE_RESTART);
 }
@@ -136,10 +136,17 @@ int main(int argc, char** argv)
 	std:cin >> port;
 	*/
 
+	//Der Rest wird nicht unterstützt! Noch nicht.
+	width = 800;
+	height = 600;
+	assert(width == 800);
+	assert(height == 600);
+
+
 	RREncoderDesc rdesc;
 	rdesc.gfxapi = GL;
-	rdesc.w = 800;
-	rdesc.h = 600;
+	rdesc.w = width;
+	rdesc.h = height;
 	rdesc.ip = "127.0.0.1";
 	rdesc.port = 8081;
 	rdesc.keyHandler = RRKeyCallback;
@@ -149,7 +156,7 @@ int main(int argc, char** argv)
 
 	glGenBuffers(1, &pbo);
 	glBindBuffer(GL_PIXEL_PACK_BUFFER, pbo);
-	glBufferData(GL_PIXEL_PACK_BUFFER, 800 * 600 * 4, NULL, GL_STATIC_DRAW);
+	glBufferData(GL_PIXEL_PACK_BUFFER, width * height * 4, NULL, GL_STATIC_DRAW);
 
 	
 	RRInit(rdesc);

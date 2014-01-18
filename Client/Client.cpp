@@ -21,6 +21,20 @@ void specialKeyReleased(int key, int x, int y)
 	keySpecialStates[key] = false;
 }
 
+void motionFunc(int x, int y)
+{
+	mouseDx = x - mouseDx;
+	mouseDy = y - mouseDy;
+}
+
+void mouseFunc(int button, int state, int dx, int dy)
+{
+	if(button == GLUT_LEFT_BUTTON)
+	{
+		pressed = !state;
+	}
+}
+
 void render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -48,6 +62,8 @@ void initCallbacks()
 	glutKeyboardUpFunc(keyReleased);
 	glutSpecialFunc(specialKeyPressed);
 	glutSpecialUpFunc(specialKeyReleased);
+	glutMotionFunc(motionFunc);
+	glutMouseFunc(mouseFunc);
 	glutDisplayFunc(render);
 }
 
@@ -222,9 +238,8 @@ int main(int argc, char** argv)
 	while (m_continue)
 	{
 		memset(serverMessage, 0, 100000);
-		msgStart = message;
 		server->Receive(serverMessage, 100000);
-	
+		message = msgStart;
 
 		UINT8 identifyer;
 		memcpy(&identifyer, serverMessage, sizeof(UINT8));
@@ -299,8 +314,33 @@ int main(int argc, char** argv)
 			int i = server->Send(msgStart, size);
 		}
 
-		glutMainLoopEvent();
+		message = msgStart;
 		memset(message, 0, 64); 
+
+		if(pressed)
+		{
+			tmpPressed = true;
+			memcpy(message, &MOUSE_PRESSED, sizeof(UINT8));
+			message++;
+			memcpy(message, &mouseDx, sizeof(int));
+			message += sizeof(int);
+			memcpy(message, &mouseDy, sizeof(int));
+			message += sizeof(int);
+		}
+		if(!pressed && tmpPressed)
+		{
+			tmpPressed = false;
+			memcpy(message, &MOUSE_RELEASED, sizeof(UINT8));
+			message++;
+		}
+		size = message - msgStart;
+		if(size > 0)
+		{
+			server->Send(msgStart, size);
+		}
+
+		memset(message, 0, 64);
+		glutMainLoopEvent();	
 	}
 
 	server->Close();
