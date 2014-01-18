@@ -26,6 +26,7 @@ bool CM_API RRInit(RREncoderDesc& desc)
 {
 	//Register UdpSocket
 	g_desc = desc;
+
 	g_encoder = new RemoteEncoder(desc.w, desc.h);
 	g_mouseHandler = desc.mouseHandler;
 	g_keyHandler = desc.keyHandler;

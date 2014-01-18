@@ -24,7 +24,7 @@ struct RREncoderDesc
 	GFX_API gfxapi;
 	unsigned int w;
 	unsigned int h;
-	std::string ip;
+	const char* ip;
 	int port;
 	KeyBoardHandler keyHandler;
 	MouseHandler mouseHandler;
