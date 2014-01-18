@@ -2,19 +2,6 @@
 #include "device_launch_parameters.h"
 
 
-
-void initCuda()
-{
-	//Speziell für PixelBuffer
-
-	glGenBuffers(1, &pbo);
-	glBindBuffer(GL_ARRAY_BUFFER, pbo); //könnte auch arraybuffer sein
-	glBufferData(GL_ARRAY_BUFFER, width * height * 4, NULL, GL_DYNAMIC_DRAW);//GL_STREAM_READ);
-
-	// Cuda Device setzen
-	RRSetSource((void*) &pbo);
-}
-
 inline void processKeyOps()
 {
 	if(keyStates['w'] || keyStates['W'])
@@ -102,6 +89,12 @@ void RRKeyCallback(int key, bool pressed)
 		keyStates[key] = false;
 }
 
+void RRMouseDummy(int dx, int dy, int button, int state)
+{
+	std::string tmp = state == 0 ? "released" : "pressed";
+	printf("Pos: %d,%d; Button: %d, %s \n", dx, dy, button, tmp);
+}
+
 void initOpenGL(int argc, char** argv)
 {
 	modelMatrix = glm::mat4x4();
@@ -150,6 +143,7 @@ int main(int argc, char** argv)
 	rdesc.ip = "127.0.0.1";
 	rdesc.port = 8081;
 	rdesc.keyHandler = RRKeyCallback;
+	rdesc.mouseHandler = RRMouseDummy;
  
 
 	initOpenGL(argc, argv);
@@ -178,7 +172,6 @@ int main(int argc, char** argv)
 	glClearColor(0.3f, 0, 0, 1.0f);
 
 	
-
 	while(m_continue)
 	{
 		RRQueryClientEvents();
