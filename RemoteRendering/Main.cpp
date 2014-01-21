@@ -140,7 +140,7 @@ int main(int argc, char** argv)
 	rdesc.gfxapi = GL;
 	rdesc.w = width;
 	rdesc.h = height;
-	rdesc.ip = DEFAULT_IP;
+	rdesc.ip = "192.168.178.50";
 	rdesc.port = 8081;
 	rdesc.keyHandler = RRKeyCallback;
 	rdesc.mouseHandler = RRMouseDummy;

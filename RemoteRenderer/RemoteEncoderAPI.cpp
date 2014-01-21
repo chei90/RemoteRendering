@@ -8,7 +8,6 @@
 #include <cuda_gl_interop.h>
 #include <cuda_d3d11_interop.h>
 #include <vector>
-#include <thread>
 #include "MagicNumbers.h"
 
 RREncoderDesc g_desc;
@@ -19,7 +18,6 @@ cudaGraphicsResource_t g_res;
 unsigned char* g_dyuv;
 std::vector<unsigned char> g_yuv;
 UdpSocket* g_serverSock; 
-std::thread g_keyRecThread;
 
 KeyBoardHandler g_keyHandler;
 MouseHandler g_mouseHandler;
@@ -57,8 +55,6 @@ bool CM_API RRInit(RREncoderDesc& desc)
 	g_serverSock->Create();
 	g_serverSock->Bind(g_desc.ip, g_desc.port);
 	g_encoder->setClientUdp(g_serverSock);
-
-	g_keyRecThread = std::thread(RRQueryClientEvents);
 
 	return true;
 }
@@ -133,8 +129,6 @@ void CM_API RRWaitForConnection()
 
 void CM_API RRQueryClientEvents()
 {
-	while(true)
-	{
 	static char msg[64];
 	memset(msg, 0, 64);
 	g_serverSock->Receive(msg, 64);
@@ -173,6 +167,5 @@ void CM_API RRQueryClientEvents()
 		break;
 	default:
 		break;
-	}
 	}
 }
