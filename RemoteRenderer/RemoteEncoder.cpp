@@ -118,7 +118,7 @@ RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 
 	// Fragwürdig:
 	m_EncoderParams->iP_Interval = 3;
-	m_EncoderParams->iIDR_Period = 15;
+	m_EncoderParams->iIDR_Period = 1;
 	m_EncoderParams->iDynamicGOP = 1;
 	m_EncoderParams->RCType =  RC_VBR;
 	m_EncoderParams->iQP_Level_InterB = 31;

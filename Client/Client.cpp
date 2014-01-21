@@ -218,8 +218,8 @@ int main(int argc, char** argv)
 	m_decoder = new Decoder(m_ctx, m_lock, m_queue, m_width, m_height);
 	m_decoder->initParser();
 
-	server->Bind(DEFAULT_IP, DEFAULT_PORT);
-	server->setClientSocket(DEFAULT_IP, DEFAULT_PORT + 1);
+	server->Bind("131.173.195.173", 8080);
+	server->setClientSocket("131.173.32.150", 8081);
 
 	//PROCESS USER INPUT
 	char* message = new char[64];
@@ -238,7 +238,8 @@ int main(int argc, char** argv)
 	while (m_continue)
 	{
 		memset(serverMessage, 0, 100000);
-		server->Receive(serverMessage, 100000);
+		int i = server->Receive(serverMessage, 100000);
+		printf("%d bytes received \n", i);
 		message = msgStart;
 
 		UINT8 identifyer;

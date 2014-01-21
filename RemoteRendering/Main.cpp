@@ -119,10 +119,10 @@ void initOpenGL(int argc, char** argv)
 }
 
 int main(int argc, char** argv)
-{/*
+{
 	std::string ip;
 	int port; 
-
+	/*
 	std::cout << "Insert Ip:" << std::endl;
 	std::getline(cin, ip);
 	std::cout << "Insert Port: " << std::endl;
