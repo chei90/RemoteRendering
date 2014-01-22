@@ -23,6 +23,21 @@ bool g_keyStates[256];
 KeyBoardHandler g_keyHandler;
 MouseHandler g_mouseHandler;
 
+
+typedef void (*deviePtrCB)(cudaGraphicsResource_t r, void** devptr);
+
+deviePtrCB g_getDevicepointer;
+
+void encodeD3D(cudaGraphicsResource_t r, void** devptr)
+{
+    
+}
+
+void encodeGL(void)
+{
+
+}
+
 bool CM_API RRInit(RREncoderDesc& desc)
 {
 	//Register UdpSocket
@@ -38,10 +53,12 @@ bool CM_API RRInit(RREncoderDesc& desc)
 	if(g_desc.gfxapi == GL)
 	{
 		cudaError_t res = cudaGLSetGLDevice(g_cuDevice);
-	}
+        //g_getDevicepointer = encodeGL;
+    }
 	else
 	{
 		cudaSetDevice(g_cuDevice);
+        //g_getDevicepointer = encodeD3D;
 	} 
 	cuCtxCreate(&g_cuCtx, CU_CTX_BLOCKING_SYNC, g_cuDevice);	
 
@@ -71,11 +88,16 @@ bool CM_API RRDelete(void)
 void CM_API RRSetSource(void* ptr)
 {
 	cuCtxPushCurrent(g_cuCtx);
-	if(g_desc.gfxapi = D3D)
+	if(g_desc.gfxapi == D3D)
 	{
 		ID3D11Resource* d11resource = (ID3D11Resource*) ptr;
-		cudaGraphicsD3D11RegisterResource(&g_res, d11resource, cudaGraphicsRegisterFlagsNone);
-		printf("Mode D3D\n");
+		cudaError_t e = cudaGraphicsD3D11RegisterResource(&g_res, d11resource, cudaGraphicsRegisterFlagsNone);
+
+        char msg[2048];
+        memset(msg, 0, 2048);
+
+        sprintf_s(msg, "%d\n", e);
+        OutputDebugStringA(msg);
 	}
 	else
 	{
@@ -91,17 +113,30 @@ void CM_API RRSetSource(void* ptr)
 
 void CM_API RREncode(void)
 {
-	cuCtxPushCurrent(g_cuCtx);
-	unsigned char* devPtr;
-	cudaError_t res = cudaGraphicsMapResources(1, &g_res, NULL);
-	res = cudaGraphicsResourceGetMappedPointer((void**)&devPtr, NULL, g_res);
-	callKernel(800,600,g_dyuv, devPtr);
-	res = cudaDeviceSynchronize();
-	res = cudaGraphicsUnmapResources(1, &g_res, NULL);
-	res = cudaMemcpy( &g_yuv[0], g_dyuv,  g_yuv.size(), cudaMemcpyDeviceToHost);
-	g_encoder->setPicBuf(&g_yuv[0]);
-	g_encoder->encodePB();
-	cuCtxPopCurrent(NULL);
+    cuCtxPushCurrent(g_cuCtx);
+    unsigned char* devPtr = NULL;
+    cudaError_t res = cudaGraphicsMapResources(1, &g_res, NULL);
+
+    //res = cudaGraphicsResourceGetMappedPointer((void**)&devPtr, NULL, g_res);
+    cudaArray_t devptr = NULL;
+
+    cudaGraphicsSubResourceGetMappedArray((cudaArray_t*)&devptr, g_res, 0, 0);
+
+    bindTexture((cudaArray_t)devptr);
+
+    callKernel(800, 600, g_dyuv, devPtr);
+
+    res = cudaDeviceSynchronize();
+
+    res = cudaGraphicsUnmapResources(1, &g_res, NULL);
+
+    res = cudaMemcpy(&g_yuv[0], g_dyuv, g_yuv.size(), cudaMemcpyDeviceToHost);
+
+    g_encoder->setPicBuf(&g_yuv[0]);
+
+    g_encoder->encodePB();
+
+    cuCtxPopCurrent(NULL);
 }
 
 const RREncoderDesc& RRGetDesc(void)

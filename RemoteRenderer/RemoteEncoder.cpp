@@ -132,8 +132,8 @@ RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 
 
 	//Bitrates
-	m_EncoderParams->iAvgBitrate =  1000000;
-	m_EncoderParams->iPeakBitrate = 2500000;
+	m_EncoderParams->iAvgBitrate =  4*100000;
+	m_EncoderParams->iPeakBitrate = 4*250000;
 
 	//Hardwarestuff
 	m_EncoderParams->GPUOffloadLevel = NVVE_GPU_OFFLOAD_ALL;
@@ -141,8 +141,8 @@ RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 	m_EncoderParams->iUseDeviceMem = 1;
 
 	//Frames
-	m_EncoderParams->iFrameRate[0] = 300000;
-	m_EncoderParams->iFrameRate[1] = 300000;
+	m_EncoderParams->iFrameRate[0] = 30000;
+	m_EncoderParams->iFrameRate[1] = 30000;
 	m_EncoderParams->iSurfaceFormat = 2;
 	m_EncoderParams->iPictureType = 3;
 	m_EncoderParams->iDisableCabac = FALSE;
