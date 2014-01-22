@@ -218,9 +218,9 @@ int main(int argc, char** argv)
 	m_decoder = new Decoder(m_ctx, m_lock, m_queue, m_width, m_height);
 	m_decoder->initParser();
 
-	server->Bind("131.173.195.173", 8080);
+	server->Bind("131.173.194.111", 8080);
 	server->setClientSocket("131.173.32.150", 8081);
-
+	server->SetToNonBlock();
 	//PROCESS USER INPUT
 	char* message = new char[64];
 	char* msgStart = message;

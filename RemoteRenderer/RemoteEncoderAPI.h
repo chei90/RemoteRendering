@@ -105,3 +105,8 @@ CM_DLL_API void CM_API RRWaitForConnection();
  *			Calls API Callbacks if Input was sent                  
 */
 CM_DLL_API void CM_API RRQueryClientEvents();
+
+/**
+ *                                                                      
+*/
+CM_DLL_API bool CM_API RRIsKeyDown(char key);

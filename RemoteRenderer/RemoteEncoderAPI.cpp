@@ -18,6 +18,7 @@ cudaGraphicsResource_t g_res;
 unsigned char* g_dyuv;
 std::vector<unsigned char> g_yuv;
 UdpSocket* g_serverSock; 
+bool g_keyStates[256];
 
 KeyBoardHandler g_keyHandler;
 MouseHandler g_mouseHandler;
@@ -140,12 +141,18 @@ void CM_API RRQueryClientEvents()
 	case KEY_PRESSED:
 		memcpy(&key, msg+sizeof(UINT8), sizeof(int));
 		if(key <= 256)
+		{
 			g_keyHandler(key, true);
+			g_keyStates[key] = true;	
+		}
 		break;
 	case KEY_RELEASED:
 		memcpy(&key, msg+sizeof(UINT8), sizeof(int));
 		if(key <= 256)
+		{
 			g_keyHandler(key, false);
+			g_keyStates[key] = false;
+		}
 		break;
 	case SPECIAL_KEY_PRESSED:
 		memcpy(&key, msg+sizeof(UINT8), sizeof(int));
@@ -168,4 +175,9 @@ void CM_API RRQueryClientEvents()
 	default:
 		break;
 	}
+}
+
+bool CM_API RRIsKeyDown(char key)
+{
+	return g_keyStates[key];
 }
