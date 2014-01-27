@@ -1,0 +1,184 @@
+<Level>
+
+<Actor>
+		<PhysicComponent>
+			<Shape>plane</Shape>
+			<Material>static</Material>
+			<MeshFile>plane.obj</MeshFile>
+		</PhysicComponent>
+		<TransformComponent>
+			<Position x="0.0" y="0.0" z="0.0" />
+		</TransformComponent>
+		
+		<RenderComponent>
+			<MeshFile>plane.obj</MeshFile>
+		</RenderComponent>
+	</Actor>
+	
+	<Actor>
+		<TransformComponent>
+			<Position x="-20" y="10" z="0.0" />
+		</TransformComponent>
+		<LightComponent>
+			<Type>Point</Type>
+			<Color r="255" g="192" b="203" />
+			<Radius>50</Radius>
+		</LightComponent>
+	</Actor>
+
+	<Actor>
+	<!--
+		<PhysicComponent>
+			<Shape>sphere</Shape>
+			<Material>dynamic</Material>
+			<Dimensions radius="1" />
+		</PhysicComponent> -->
+		<TransformComponent>
+			<Position x="20" y="10" z="0.0" />
+		</TransformComponent>
+		<LightComponent>
+			<Type>Point</Type>
+			<Color r="0" g="255" b="0" />
+			<Radius>50</Radius>
+		</LightComponent>
+	</Actor>
+	
+	<Actor>
+		<TransformComponent>
+			<Position x="0" y="30" z="0.0" />
+		</TransformComponent>
+		<LightComponent>
+			<Type>Point</Type>
+			<Color r="160" g="32" b="240" />
+			<Radius>50</Radius>
+		</LightComponent>
+	</Actor>
+
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="1.0" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="1.0" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="1.0" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="1.0" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="1.0" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="1.0" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="1.0" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="1.0" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="1.0" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="1.0" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="1.0" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="1.0" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="1.0" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="1.0" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="1.0" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="1.0" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="1.0" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="1.0" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="1.0" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="1.0" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="1.0" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="1.0" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="1.0" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="1.0" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="1.0" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="3.2" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="3.2" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="3.2" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="3.2" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="3.2" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="3.2" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="3.2" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="3.2" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="3.2" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="3.2" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="3.2" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="3.2" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="3.2" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="3.2" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="3.2" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="3.2" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="3.2" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="3.2" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="3.2" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="3.2" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="3.2" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="3.2" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="3.2" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="3.2" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="3.2" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="5.4" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="5.4" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="5.4" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="5.4" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="5.4" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="5.4" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="5.4" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="5.4" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="5.4" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="5.4" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="5.4" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="5.4" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="5.4" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="5.4" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="5.4" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="5.4" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="5.4" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="5.4" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="5.4" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="5.4" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="5.4" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="5.4" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="5.4" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="5.4" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="5.4" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="7.6000004" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="7.6000004" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="7.6000004" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="7.6000004" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="7.6000004" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="7.6000004" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="7.6000004" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="7.6000004" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="7.6000004" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="7.6000004" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="7.6000004" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="7.6000004" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="7.6000004" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="7.6000004" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="7.6000004" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="7.6000004" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="7.6000004" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="7.6000004" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="7.6000004" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="7.6000004" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="7.6000004" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="7.6000004" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="7.6000004" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="7.6000004" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="7.6000004" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="9.8" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="9.8" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="9.8" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="9.8" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="9.8" z="-5.5" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="9.8" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="9.8" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="9.8" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="9.8" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="9.8" z="-3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="9.8" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="9.8" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="9.8" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="9.8" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="9.8" z="-1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="9.8" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="9.8" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="9.8" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="9.8" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="9.8" z="1.1" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-5.5" y="9.8" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-3.3000002" y="9.8" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "-1.1" y="9.8" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "1.1" y="9.8" z="3.3000002" /></TransformComponent></Actor>
+<Actor><RenderComponent><MeshFile>box.obj</MeshFile></RenderComponent><TransformComponent><Position x= "3.3000002" y="9.8" z="3.3000002" /></TransformComponent></Actor>
+
+
+</Level>

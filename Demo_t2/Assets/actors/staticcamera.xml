@@ -1,0 +1,15 @@
+<Actor>
+    <TransformComponent>
+        <Position x="0.0" y="5.0" z="-4.0" />
+    </TransformComponent>
+    <CameraComponent>
+        <Settings fov="90.0" aspect="-1.0" viewAxis="2.0" near="0.01" far="1000.0" /> <!-- 0=x,1=y,2=z, aspect=-1 (let app decide)-->
+		<Type>FPSStatic</Type>
+    </CameraComponent>
+	<!--<PhysicComponent>
+		<Shape>character</Shape>
+	</PhysicComponent>-->
+	<!--<RenderComponent>
+		<Type>camera_debug</Type>
+	</RenderComponent>-->
+</Actor>

@@ -1,0 +1,138 @@
+<?xml version="1.0" ?>
+<Level>
+    <Actor>
+        <PhysicComponent>
+            <Material>static</Material>
+            <Shape>plane</Shape>
+            <MeshFile>plane.obj</MeshFile>
+            <Dimension x="1" y="1" z="1" />
+        </PhysicComponent>
+        <RenderComponent>
+            <MeshFile>plane.obj</MeshFile>
+        </RenderComponent>
+        <TransformComponent>
+            <Position x="0" y="0" z="0" />
+            <Rotation x="0" y="0" z="0" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <Shape>box</Shape>
+            <MeshFile>plane.obj</MeshFile>
+            <Dimension x="1" y="1" z="1" />
+        </PhysicComponent>
+        <RenderComponent>
+            <MeshFile>box.obj</MeshFile>
+        </RenderComponent>
+        <PickableComponent />
+        <TransformComponent>
+            <Position x="8.36403" y="1.43496" z="7.74416" />
+            <Rotation x="2.87871e-013" y="45" z="-3.95039e-006" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <LightComponent>
+            <Type>Point</Type>
+            <Color r="127.819" g="271.214" b="176.793" />
+            <Radius>10</Radius>
+        </LightComponent>
+        <PickableComponent />
+        <TransformComponent>
+            <Position x="3.94604" y="3.40103" z="21.8291" />
+            <Rotation x="0" y="0" z="0" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <Shape>box</Shape>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <MeshFile>box.obj</MeshFile>
+        </RenderComponent>
+        <PickableComponent />
+        <TransformComponent>
+            <Position x="5.02068" y="1.16845" z="6.31109" />
+            <Rotation x="180" y="-2.72368e-013" z="-3.95039e-006" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <Shape>sphere</Shape>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <MeshFile>sphere.obj</MeshFile>
+        </RenderComponent>
+        <PickableComponent />
+        <TransformComponent>
+            <Position x="6.40106" y="1.52875" z="22.3225" />
+            <Rotation x="180" y="-2.72368e-013" z="-3.95039e-006" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <LightComponent>
+            <Type>Point</Type>
+            <Color r="127.819" g="271.214" b="176.793" />
+            <Radius>10</Radius>
+        </LightComponent>
+        <PickableComponent />
+        <TransformComponent>
+            <Position x="8.50371" y="1.72248" z="19.0165" />
+            <Rotation x="0" y="0" z="0" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <LightComponent>
+            <Type>Point</Type>
+            <Color r="216.824" g="355.97" b="337.324" />
+            <Radius>10</Radius>
+        </LightComponent>
+        <PickableComponent />
+        <TransformComponent>
+            <Position x="8.44298" y="1.44267" z="4.96159" />
+            <Rotation x="0" y="0" z="0" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <LightComponent>
+            <Type>Point</Type>
+            <Color r="127.819" g="271.214" b="176.793" />
+            <Radius>10</Radius>
+        </LightComponent>
+        <PickableComponent />
+        <TransformComponent>
+            <Position x="9.30789" y="3.74475" z="25.9501" />
+            <Rotation x="0" y="0" z="0" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <LightComponent>
+            <Type>Point</Type>
+            <Color r="333.729" g="276.677" b="249.868" />
+            <Radius>10</Radius>
+        </LightComponent>
+        <PickableComponent />
+        <TransformComponent>
+            <Position x="5.28585" y="2.21331" z="2.54192" />
+            <Rotation x="0" y="0" z="0" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <LightComponent>
+            <Type>Point</Type>
+            <Color r="216.824" g="355.97" b="337.324" />
+            <Radius>10</Radius>
+        </LightComponent>
+        <PickableComponent />
+        <TransformComponent>
+            <Position x="3.36929" y="3.5008" z="11.2754" />
+            <Rotation x="0" y="0" z="0" />
+        </TransformComponent>
+    </Actor>
+</Level>

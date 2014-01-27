@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<Level>
+    <Actor>
+        <PhysicComponent>
+            <Material>static</Material>
+            <Shape>plane</Shape>
+            <MeshFile>plane.obj</MeshFile>
+            <Dimension x="1" y="1" z="1" />
+        </PhysicComponent>
+        <RenderComponent>
+            <MeshFile>plane.obj</MeshFile>
+        </RenderComponent>
+        <TransformComponent>
+            <Position x="0" y="0" z="0" />
+            <Rotation x="0" y="0" z="0" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <LightComponent>
+            <Type>Point</Type>
+            <Color r="216.824" g="355.97" b="337.324" />
+            <Radius>50</Radius>
+        </LightComponent>
+        <PickableComponent />
+        <TransformComponent>
+            <Position x="-0.890245" y="2.28775" z="4.20594" />
+            <Rotation x="0" y="0" z="0" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <Shape>box</Shape>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <MeshFile>box.obj</MeshFile>
+        </RenderComponent>
+        <PickableComponent />
+        <TransformComponent>
+            <Position x="7.03151" y="1.45585" z="3.92526" />
+            <Rotation x="0" y="0" z="180" />
+        </TransformComponent>
+    </Actor>
+</Level>

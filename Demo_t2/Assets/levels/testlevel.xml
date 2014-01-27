@@ -1,0 +1,382 @@
+<?xml version="1.0" ?>
+<Level>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+        <TransformComponent>
+            <Position x="-0.832424" y="2.77463" z="-3.02931" />
+            <Rotation x="180" y="-2.72368e-013" z="-3.95039e-006" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>dynamic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="9.08383" y="0.999992" z="-2.7879" />
+            <Rotation x="179.998" y="49.7331" z="-90.0027" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>dynamic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="8.0404" y="0.999991" z="-0.359022" />
+            <Rotation x="89.9995" y="-0.00164266" z="79.8821" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>dynamic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="13.5826" y="0.999994" z="-9.25114" />
+            <Rotation x="0.00131755" y="23.4272" z="-89.9992" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>dynamic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="-2.3806" y="0.999995" z="-6.31953" />
+            <Rotation x="89.9984" y="-0.000482809" z="175.442" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>dynamic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="-19.0316" y="0.999995" z="-56.5487" />
+            <Rotation x="0.003999" y="-74.9789" z="-0.00301046" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>dynamic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="-9.92999" y="0.999994" z="-9.26049" />
+            <Rotation x="0.00244821" y="63.4883" z="90.0012" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>dynamic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="-4.78193" y="0.999993" z="-11.7159" />
+            <Rotation x="90.0017" y="0.000565198" z="-34.7105" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>dynamic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="-0.887835" y="0.999994" z="-13.4569" />
+            <Rotation x="179.997" y="72.3503" z="89.9976" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>dynamic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="-16.2896" y="0.999996" z="-9.61407" />
+            <Rotation x="0.00129413" y="-12.7323" z="180" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>sphere</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>sphere.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="-5.8616" y="1.27616" z="-34.6922" />
+            <Rotation x="3.95039e-006" y="5.44737e-013" z="-3.95039e-006" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>dynamic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="-2.7048" y="0.999994" z="-50.8133" />
+            <Rotation x="0.00292669" y="69.0747" z="-179.998" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="11.6398" y="1.9257" z="-0.769128" />
+            <Rotation x="-180" y="0" z="180" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="11.6917" y="0.0621285" z="6.012" />
+            <Rotation x="0" y="0" z="180" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="11.7216" y="0.47455" z="3.81865" />
+            <Rotation x="0" y="0" z="180" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="11.6519" y="0.997694" z="1.6453" />
+            <Rotation x="0" y="0" z="180" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="27.1077" y="2.97714" z="3.87179" />
+            <Rotation x="0" y="0" z="0" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="28.1697" y="3.01291" z="3.9435" />
+            <Rotation x="0" y="0" z="180" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="-11.5474" y="5.40271" z="5.88021" />
+            <Rotation x="0" y="0" z="180" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="4.56399" y="2.77385" z="-10.8794" />
+            <Rotation x="0" y="0" z="180" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>sphere</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>sphere.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="26.5687" y="1.59753" z="-7.77213" />
+            <Rotation x="-3.95039e-006" y="-8.17106e-013" z="180" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>sphere</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>sphere.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="10.0319" y="1.1861" z="51.8533" />
+            <Rotation x="0" y="0" z="180" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <PhysicComponent>
+            <Material>kinematic</Material>
+            <ShapeStyle>box</ShapeStyle>
+            <MeshFile>unknown</MeshFile>
+            <Dimension x="2" y="2" z="2" />
+        </PhysicComponent>
+        <RenderComponent>
+            <Resource>box.obj</Resource>
+        </RenderComponent>
+
+        <TransformComponent>
+            <Position x="11.6639" y="-0.702684" z="8.76115" />
+            <Rotation x="0" y="0" z="0" />
+        </TransformComponent>
+    </Actor>
+    <Actor>
+        <TransformComponent>
+            <Position x="0.0" y="5.0" z="0.0" />
+            <Scale x="10" y="1" z="1"/>
+        </TransformComponent>
+        <LightComponent>
+            <Type>point</Type>
+            <Color r="1" g="0.1" b="0.7" />
+            <Intensity>0.7</Intensity>
+            <Activate />
+        </LightComponent>
+    </Actor>
+</Level>

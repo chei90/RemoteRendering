@@ -1,0 +1,46 @@
+# Blender MTL File: 'fassade.blend'
+# Material Count: 4
+newmtl Material_treppe
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.358376 0.330745 0.286701
+Ks 0.100000 0.100000 0.100000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd treppe.png
+
+
+newmtl blau_treppe_gelaender
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.081152 0.147069 0.377778
+Ks 0.300000 0.300000 0.300000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd treppe_gelaender.png
+
+
+newmtl steinfussboden_treppe
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.320000 0.097030 0.032000
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd treppe.png
+
+
+newmtl wand_treppe
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.400000 0.375708 0.331700
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd treppe.png
+
+

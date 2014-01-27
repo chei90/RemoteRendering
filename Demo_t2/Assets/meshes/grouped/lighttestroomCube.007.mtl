@@ -1,0 +1,14 @@
+# Blender MTL File: 'lighttestroom.blend'
+# Material Count: 1
+newmtl terrainMat
+Ns 96.078431
+Ka 0.200000 0.200000 0.200000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 0
+map_Kd rocktut.jpg
+map_Kn normal/rocktutn.jpg
+
+

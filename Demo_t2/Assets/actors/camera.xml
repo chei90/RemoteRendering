@@ -1,0 +1,18 @@
+<Actor name = "HumanCameraController">
+    <TransformComponent>
+        <Position x="0.0" y="10.0" z="-2.0" />
+    </TransformComponent>
+    <CameraComponent>
+        <Settings fov="90.0" aspect="-1.0" viewAxis="2.0" near="0.01" far="1000.0" /> <!-- 0=x,1=y,2=z, aspect=-1 (let app decide)-->
+		<Type>FPSShakeCharacter</Type>
+        <Activate/>
+    </CameraComponent>
+	<ControllerComponent>
+		<Activate/>
+		<Speed min="4" max="10"/>
+	</ControllerComponent>
+	<PhysicComponent>
+		<ShapeStyle>character</ShapeStyle>
+	</PhysicComponent>
+    <!--<Actor name="FlashLight" file="spotlight.xml" />-->
+</Actor>
