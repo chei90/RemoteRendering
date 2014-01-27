@@ -42,13 +42,13 @@ void render()
 	glBegin(GL_QUADS);
 		
 		//Unten links
-		glTexCoord2f(0.0f, 1.0f); glVertex2f(-1.0f, -1.0f);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(-1.0f, -1.0f);
 		//Unten rechts
-		glTexCoord2f(1.0f, 1.0f); glVertex2f(1.0f, -1.0f);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f(1.0f, -1.0f);
 		//Oben rechts
-		glTexCoord2f(1.0f, 0.0f); glVertex2f(1.0f, 1.0f);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f(1.0f, 1.0f);
 		//Oben links
-		glTexCoord2f(0.0f, 0.0f); glVertex2f(-1.0f, 1.0f);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(-1.0f, 1.0f);
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -220,7 +220,6 @@ int main(int argc, char** argv)
 
 	server->Bind("131.173.194.111", 8080);
 	server->setClientSocket("131.173.32.150", 8081);
-	server->SetToNonBlock();
 	//PROCESS USER INPUT
 	char* message = new char[64];
 	char* msgStart = message;

@@ -13,12 +13,16 @@ tmp/
 *.exe
 *~.nib
 *.tlog
-*.obj
 *.zip
 *.deps
 *.idb
 *.lastbuildstate
 *.unsuccessfulbuild
+/x64/Release/
+/x64/Debug/
+/RemoteRenderer/x64/
+/Client/x64/
+/RemoteRendering/x64/
 
 local.properties
 .classpath
@@ -63,7 +67,6 @@ build/
 *_p.c
 *.ilk
 *.meta
-*.obj
 *.pch
 *.pdb
 *.pgc
