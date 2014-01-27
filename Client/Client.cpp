@@ -190,21 +190,15 @@ void copyFrameToTexture(CUVIDPARSERDISPINFO frame)
 }
 
 int main(int argc, char** argv)
-{/*
-	std::string cIp, sIp;
-	int cPort, sPort;
+{
 
-	std::cout << "Insert your IP" << std::endl;
-	std::getline(std::cin, cIp);
-	std::cout << "Insert Port" << std::endl;
-	std::cin >> cPort;
-	std::cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n'); 
+	ConfigFile cf("config.ini");
 
-	std::cout << "Insert Ip to connect to" << std::endl;
-	std::getline(std::cin, sIp);
-	std::cout << "Insert serverport" << std::endl;
-	std::cin >> sPort;
-	*/
+	std::string sIp = cf.Value("server", "ip");
+	int sPort = cf.Value("server", "port");
+
+	std::string cIp = cf.Value("client", "ip");
+	int cPort = cf.Value("client", "port");
 
 	cuInit(0);
 	initGL(argc, argv);
@@ -218,8 +212,8 @@ int main(int argc, char** argv)
 	m_decoder = new Decoder(m_ctx, m_lock, m_queue, m_width, m_height);
 	m_decoder->initParser();
 
-	server->Bind("131.173.194.111", 8080);
-	server->setClientSocket("131.173.32.150", 8081);
+	server->Bind(cIp, cPort);
+	server->setClientSocket(sIp, sPort);
 	//PROCESS USER INPUT
 	char* message = new char[64];
 	char* msgStart = message;

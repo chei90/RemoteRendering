@@ -111,7 +111,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Chameleon.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="ConfigFile.h" />
     <ClInclude Include="Decoder.h" />
     <ClInclude Include="FrameQueue.h" />
     <ClInclude Include="Magicnumbers.h" />
@@ -120,7 +122,9 @@
     <ClInclude Include="UdpSocket.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Chameleon.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="ConfigFile.cpp" />
     <ClCompile Include="Decoder.cpp" />
     <ClCompile Include="FrameQueue.cpp" />
     <ClCompile Include="RenderSocket.cpp" />
