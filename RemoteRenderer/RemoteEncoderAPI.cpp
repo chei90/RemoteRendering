@@ -62,8 +62,6 @@ bool CM_API RRInit(RREncoderDesc& desc)
 	} 
 	cuCtxCreate(&g_cuCtx, CU_CTX_BLOCKING_SYNC, g_cuDevice);	
 
-
-
 	//Allocating Buffers
 	cuCtxPushCurrent(g_cuCtx);
 	g_yuv = std::vector<unsigned char>(g_desc.w * g_desc.h * 3 / 2);

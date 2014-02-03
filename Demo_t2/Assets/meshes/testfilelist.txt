@@ -1,9 +1,0 @@
-testCube.002.obj
-testCube.000.obj
-testGrid.obj
-testCube.012.obj
-testCube.009.obj
-testCube.007.obj
-testCube.006.obj
-testCube.005.obj
-testCube.001.obj
