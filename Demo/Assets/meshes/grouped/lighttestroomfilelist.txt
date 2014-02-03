@@ -1,0 +1,11 @@
+lighttestroomCube.004.obj
+lighttestroomCube.003.obj
+lighttestroomCube.002.obj
+lighttestroomCube.000.obj
+lighttestroomGrid.obj
+lighttestroomCube.012.obj
+lighttestroomCube.009.obj
+lighttestroomCube.007.obj
+lighttestroomCube.006.obj
+lighttestroomCube.005.obj
+lighttestroomCube.001.obj

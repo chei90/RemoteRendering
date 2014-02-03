@@ -1,0 +1,68 @@
+# Blender MTL File: 'moebel.blend'
+# Material Count: 6
+newmtl beige_cafe_bar
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 1.273901 1.205664 1.162649
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd cafe_bar.png
+
+
+newmtl dark_wood_cafe_bar
+Ns 23.529412
+Ka 0.000000 0.000000 0.000000
+Kd 0.658650 0.503084 0.315383
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd cafe_bar.png
+
+
+newmtl metall_bar_rohr
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.086290 0.086290 0.086290
+Ks 1.000000 1.000000 1.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd bar_rohr.png
+
+
+newmtl metall_bar_rohr2
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.086290 0.086290 0.086290
+Ks 1.000000 1.000000 1.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd bar_rohr2.png
+
+
+newmtl metall_bar_rohr3
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.086290 0.086290 0.086290
+Ks 1.000000 1.000000 1.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd bar_rohr3.png
+
+
+newmtl stoff_rosa_cafe_sitzkissen
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 1.242552 1.035878 1.105239
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd cafe_sitzkissen.png
+
+

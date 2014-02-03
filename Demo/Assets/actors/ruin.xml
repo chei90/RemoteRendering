@@ -1,0 +1,15 @@
+<Actor name = "StaticPlane">
+    <TransformComponent>
+        <Position x="0.0" y="0.01" z="15.0" />
+        <Scale x="100.0" y="100.0" z="100.0" />
+    </TransformComponent>
+    <RenderComponent>
+		<Resource>city_test.obj</Resource>
+    </RenderComponent>
+	<!--<PhysicComponent>
+		<ShapeStyle>mesh</ShapeStyle>
+        <ShapeType>concave</ShapeType>
+        <MeshFile>CITY.obj</MeshFile>
+        <Material>static</Material>
+	</PhysicComponent>-->
+</Actor>

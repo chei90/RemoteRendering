@@ -1,0 +1,11 @@
+<Actor name = "StaticPlane">
+    <TransformComponent>
+        <Position x="0.0" y="0.0" z="0.0" />
+    </TransformComponent>
+    <RenderComponent>
+		<Resource>plane.obj</Resource>
+    </RenderComponent>
+	<PhysicComponent>
+		<ShapeStyle>plane</ShapeStyle>
+	</PhysicComponent>
+</Actor>
