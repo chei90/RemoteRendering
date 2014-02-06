@@ -120,14 +120,11 @@ void initOpenGL(int argc, char** argv)
 
 int main(int argc, char** argv)
 {
-	std::string ip;
-	int port; 
-	/*
-	std::cout << "Insert Ip:" << std::endl;
-	std::getline(cin, ip);
-	std::cout << "Insert Port: " << std::endl;
-	std:cin >> port;
-	*/
+	ConfigFile cf("serverConfig.ini");
+
+	std::string sIp = cf.Value("server", "ip");
+	int port = cf.Value("server", "port");
+
 
 	//Der Rest wird nicht unterstützt! Noch nicht.
 	width = 800;
@@ -140,8 +137,8 @@ int main(int argc, char** argv)
 	rdesc.gfxapi = GL;
 	rdesc.w = width;
 	rdesc.h = height;
-	rdesc.ip = "192.168.178.50";
-	rdesc.port = 8081;
+	rdesc.ip = sIp.c_str();
+	rdesc.port = port;
 	rdesc.keyHandler = RRKeyCallback;
 	rdesc.mouseHandler = RRMouseDummy;
  

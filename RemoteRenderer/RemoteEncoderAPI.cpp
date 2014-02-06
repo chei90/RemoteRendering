@@ -115,15 +115,19 @@ void CM_API RREncode(void)
 	unsigned char* devPtr = NULL;
 	cudaError_t res = cudaGraphicsMapResources(1, &g_res, NULL);
 
-	//res = cudaGraphicsResourceGetMappedPointer((void**)&devPtr, NULL, g_res);
-	cudaArray_t devptr = NULL;
+	if(g_desc.gfxapi == D3D)
+	{
+		cudaArray_t devptr = NULL;
 
-	cudaGraphicsSubResourceGetMappedArray((cudaArray_t*)&devptr, g_res, 0, 0);
-
-	bindTexture((cudaArray_t)devptr);
-
-	callKernel(800, 600, g_dyuv, devPtr);
-
+		cudaGraphicsSubResourceGetMappedArray((cudaArray_t*)&devptr, g_res, 0, 0);
+		bindTexture((cudaArray_t)devptr);
+		callKernelD3D(800, 600, g_dyuv);
+	}
+	else
+	{
+		res = cudaGraphicsResourceGetMappedPointer((void**)&devPtr, NULL, g_res);
+		callKernelGL(800, 600, g_dyuv, devPtr);
+	}
 	res = cudaDeviceSynchronize();
 
 	res = cudaGraphicsUnmapResources(1, &g_res, NULL);
