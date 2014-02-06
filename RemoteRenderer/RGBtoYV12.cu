@@ -68,7 +68,7 @@ __global__ void RGBtoYV12D3D(unsigned char* yuv)
 }
 
 
-__global__ void RGBtoYV12GL(unsigned char* yuv, unsigned char* pData)
+__global__ void RGBtoYV12(unsigned char* yuv, unsigned char* pData)
 {
 
 	int i = blockIdx.x * blockDim.x + threadIdx.x;
@@ -108,13 +108,13 @@ __global__ void RGBtoYV12GL(unsigned char* yuv, unsigned char* pData)
     }
 }
 
-extern void callKernelGL(int width, int height, unsigned char* yuv, unsigned char* devPtr)
+/*extern void callKernel(int width, int height, unsigned char* yuv, unsigned char* devPtr)
 {
-	RGBtoYV12GL<<<width, height>>>(yuv, devPtr);
+	RGBtoYV12<<<width, height>>>(yuv, devPtr);
     cudaDeviceSynchronize();
-}
+}*/
 
-extern void callKernelD3D(int width, int height, unsigned char* yuv)
+extern void callKernel(int width, int height, unsigned char* yuv, unsigned char* devPtr)
 {
 	RGBtoYV12D3D<<<width, height>>>(yuv);
     cudaDeviceSynchronize();

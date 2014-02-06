@@ -5,8 +5,7 @@
 #include <cuda_runtime.h>
 
 
-extern void callKernelD3D(int width, int height, unsigned char* yuv);
-extern void callKernelGL(int width, int height, unsigned char* yuv,  unsigned char* pixels);
+extern void callKernel(int width, int height, unsigned char* yuv,  unsigned char* pixels);
 
 extern "C" void bindTexture(cudaArray* array);
 

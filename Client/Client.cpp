@@ -192,7 +192,7 @@ void copyFrameToTexture(CUVIDPARSERDISPINFO frame)
 int main(int argc, char** argv)
 {
 
-	ConfigFile cf("config.ini");
+	ConfigFile cf("clientConfig.ini");
 
 	std::string sIp = cf.Value("server", "ip");
 	int sPort = cf.Value("server", "port");
