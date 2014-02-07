@@ -20,22 +20,26 @@ std::vector<unsigned char> g_yuv;
 UdpSocket* g_serverSock; 
 bool g_keyStates[256];
 
+typedef void (*encodeCB)(void);
+
+encodeCB g_encodeCB;
 KeyBoardHandler g_keyHandler;
 MouseHandler g_mouseHandler;
 
-
-typedef void (*deviePtrCB)(cudaGraphicsResource_t r, void** devptr);
-
-deviePtrCB g_getDevicepointer;
-
-void encodeD3D(cudaGraphicsResource_t r, void** devptr)
+void encodeD3D()
 {
-	
+	cudaArray_t devptr = NULL;
+
+	cudaGraphicsSubResourceGetMappedArray((cudaArray_t*)&devptr, g_res, 0, 0);
+	bindTexture((cudaArray_t)devptr);
+	callKernelD3D(800, 600, g_dyuv);
 }
 
-void encodeGL(void)
+void encodeGL()
 {
-
+	unsigned char* devPtr = NULL;
+	cudaGraphicsResourceGetMappedPointer((void**)&devPtr, NULL, g_res);
+	callKernelGL(800, 600, g_dyuv, devPtr);
 }
 
 bool CM_API RRInit(RREncoderDesc& desc)
@@ -53,12 +57,12 @@ bool CM_API RRInit(RREncoderDesc& desc)
 	if(g_desc.gfxapi == GL)
 	{
 		cudaError_t res = cudaGLSetGLDevice(g_cuDevice);
-		//g_getDevicepointer = encodeGL;
+		g_encodeCB = encodeGL;
 	}
 	else
 	{
 		cudaSetDevice(g_cuDevice);
-		//g_getDevicepointer = encodeD3D;
+		g_encodeCB = encodeD3D;
 	} 
 	cuCtxCreate(&g_cuCtx, CU_CTX_BLOCKING_SYNC, g_cuDevice);	
 
@@ -114,7 +118,7 @@ void CM_API RREncode(void)
 	cuCtxPushCurrent(g_cuCtx);
 	unsigned char* devPtr = NULL;
 	cudaError_t res = cudaGraphicsMapResources(1, &g_res, NULL);
-
+	/*
 	if(g_desc.gfxapi == D3D)
 	{
 		cudaArray_t devptr = NULL;
@@ -128,6 +132,9 @@ void CM_API RREncode(void)
 		res = cudaGraphicsResourceGetMappedPointer((void**)&devPtr, NULL, g_res);
 		callKernelGL(800, 600, g_dyuv, devPtr);
 	}
+	*/
+	g_encodeCB();
+
 	res = cudaDeviceSynchronize();
 
 	res = cudaGraphicsUnmapResources(1, &g_res, NULL);
