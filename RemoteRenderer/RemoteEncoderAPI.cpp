@@ -19,6 +19,7 @@ unsigned char* g_dyuv;
 std::vector<unsigned char> g_yuv;
 UdpSocket* g_serverSock; 
 bool g_keyStates[256];
+int width, height;
 
 typedef void (*encodeCB)(void);
 
@@ -32,20 +33,22 @@ void encodeD3D()
 
 	cudaGraphicsSubResourceGetMappedArray((cudaArray_t*)&devptr, g_res, 0, 0);
 	bindTexture((cudaArray_t)devptr);
-	callKernelD3D(800, 600, g_dyuv);
+	callKernelD3D(width, height, g_dyuv);
 }
 
 void encodeGL()
 {
 	unsigned char* devPtr = NULL;
 	cudaGraphicsResourceGetMappedPointer((void**)&devPtr, NULL, g_res);
-	callKernelGL(800, 600, g_dyuv, devPtr);
+	callKernelGL(width, height, g_dyuv, devPtr);
 }
 
 bool CM_API RRInit(RREncoderDesc& desc)
 {
 	//Register UdpSocket
 	g_desc = desc;
+	width = g_desc.w;
+	height = g_desc.h;
 
 	g_encoder = new RemoteEncoder(desc.w, desc.h);
 	g_mouseHandler = desc.mouseHandler;
@@ -117,34 +120,13 @@ void CM_API RREncode(void)
 {
 	cuCtxPushCurrent(g_cuCtx);
 	unsigned char* devPtr = NULL;
-	cudaError_t res = cudaGraphicsMapResources(1, &g_res, NULL);
-	/*
-	if(g_desc.gfxapi == D3D)
-	{
-		cudaArray_t devptr = NULL;
-
-		cudaGraphicsSubResourceGetMappedArray((cudaArray_t*)&devptr, g_res, 0, 0);
-		bindTexture((cudaArray_t)devptr);
-		callKernelD3D(800, 600, g_dyuv);
-	}
-	else
-	{
-		res = cudaGraphicsResourceGetMappedPointer((void**)&devPtr, NULL, g_res);
-		callKernelGL(800, 600, g_dyuv, devPtr);
-	}
-	*/
+	cudaGraphicsMapResources(1, &g_res, NULL);
 	g_encodeCB();
-
-	res = cudaDeviceSynchronize();
-
-	res = cudaGraphicsUnmapResources(1, &g_res, NULL);
-
-	res = cudaMemcpy(&g_yuv[0], g_dyuv, g_yuv.size(), cudaMemcpyDeviceToHost);
-
+	cudaDeviceSynchronize();
+	cudaGraphicsUnmapResources(1, &g_res, NULL);
+	cudaMemcpy(&g_yuv[0], g_dyuv, g_yuv.size(), cudaMemcpyDeviceToHost);
 	g_encoder->setPicBuf(&g_yuv[0]);
-
 	g_encoder->encodePB();
-
 	cuCtxPopCurrent(NULL);
 }
 
@@ -164,11 +146,15 @@ void CM_API RRWaitForConnection()
 
 	std::cout << "Client connected" << std::endl;
 
+	/*
 	if(identifier == WINDOW_SIZE) 
 	{
-		// later
-	}
+		memcpy(&width, message + sizeof(UINT8), sizeof(int));
+		memcpy(&height, message + sizeof(UINT8) + sizeof(int), sizeof(int));
 
+		printf("WindowSize is: %d * %d \n", width, height);
+	}
+	*/
 	g_serverSock->SetToNonBlock();
 }
 

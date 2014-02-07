@@ -92,7 +92,8 @@ void RRKeyCallback(int key, bool pressed)
 void RRMouseDummy(int dx, int dy, int button, int state)
 {
 	std::string tmp = state == 0 ? "released" : "pressed";
-	printf("Pos: %d,%d; Button: %d, %s \n", dx, dy, button, tmp);
+	
+	("Pos: %d,%d; Button: %d, %s \n", dx, dy, button, tmp);
 }
 
 void initOpenGL(int argc, char** argv)
@@ -127,10 +128,8 @@ int main(int argc, char** argv)
 
 
 	//Der Rest wird nicht unterstützt! Noch nicht.
-	width = 800;
-	height = 600;
-	assert(width == 800);
-	assert(height == 600);
+	width = cf.Value("resolution", "width");
+	height = cf.Value("resolution", "height");
 
 
 	RREncoderDesc rdesc;

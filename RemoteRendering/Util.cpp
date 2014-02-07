@@ -23,8 +23,6 @@ std::string textFileRead(const char *filePath)
 	{
 		std::getline(fileStream, line);
 		content.append(line + "\n");
-
-
 	}
 	fileStream.close();
 	return content;
@@ -45,9 +43,6 @@ int createShaderProgram(const char* vs, const char* fs)
 
 	const char* vsContent = t_vsContent.c_str();
 	const char* fsContent = t_fsContent.c_str();
-
-	std::cout << "FS Source \n " << fsContent << std::endl;
-	std::cout << "VS Source \n" << vsContent << std::endl;
 
 	glShaderSource(vsId, 1, &vsContent, NULL);
 	glShaderSource(fsId, 1, &fsContent, NULL);

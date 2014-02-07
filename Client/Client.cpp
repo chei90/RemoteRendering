@@ -199,6 +199,10 @@ int main(int argc, char** argv)
 	std::string cIp = cf.Value("client", "ip");
 	int cPort = cf.Value("client", "port");
 
+	m_width = cf.Value("resolution", "width");
+	m_height = cf.Value("resolution", "height");
+
+
 	cuInit(0);
 	initGL(argc, argv);
 	//	SOCKET STUFF
