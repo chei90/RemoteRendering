@@ -16,13 +16,10 @@ tmp/
 *.zip
 *.deps
 *.idb
+*.obj
 *.lastbuildstate
 *.unsuccessfulbuild
-/x64/Release/
-/x64/Debug/
-/RemoteRenderer/x64/
-/Client/x64/
-/RemoteRendering/x64/
+
 
 local.properties
 .classpath
