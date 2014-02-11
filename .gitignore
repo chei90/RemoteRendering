@@ -16,6 +16,7 @@ tmp/
 *.zip
 *.deps
 *.idb
+*.obj
 *.lastbuildstate
 *.unsuccessfulbuild
 
