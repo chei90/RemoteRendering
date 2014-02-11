@@ -1,4 +1,7 @@
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.net.DatagramPacket;
+import java.nio.ByteBuffer;
 
 
 public class Main
@@ -15,6 +18,10 @@ public class Main
 		
 		byte [] msg = new String("Hi!").getBytes();		
 		sock.sentTo(msg);
+		
+		msg = new byte[100];
+		msg[1] = 1;
+		int key = 's';
 		
 		
 		while(true)

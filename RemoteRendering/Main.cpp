@@ -131,7 +131,6 @@ int main(int argc, char** argv)
 	width = cf.Value("resolution", "width");
 	height = cf.Value("resolution", "height");
 
-
 	RREncoderDesc rdesc;
 	rdesc.gfxapi = GL;
 	rdesc.w = width;
