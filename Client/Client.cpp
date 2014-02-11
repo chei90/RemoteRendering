@@ -156,31 +156,17 @@ void copyFrameToTexture(CUVIDPARSERDISPINFO frame)
 		unsigned int width = 0, height = 0, decodedPitch = 0;
 
 		m_decoder->mapFrame(frame.picture_index, &decodedFrame[active], &decodedPitch, &procParams);
-		
-		//////////////// Test Stuff
-		//std::vector<unsigned char> nv = std::vector<unsigned char>(800 * 600 * 3 / 2);
-		//std::vector<unsigned char> rgba = std::vector<unsigned char>(800 * 600 * 4);
-		//cudaMemcpy(&nv[0], (void*)decodedFrame[active], 800 * 600 * 3 / 2, cudaMemcpyDeviceToHost);
-		//gpuErrchk(cudaGetLastError());
 		cudaError_t res, error;
 		res = cudaGraphicsMapResources(1, &cudaTex);
 		{
-			//res = cudaMemset(globalMem, 60, 800 * 600 * 4);
-			//gpuErrchk(cudaGetLastError());
 			cudaArray_t cudaTexData;
 			error = cudaGraphicsSubResourceGetMappedArray(&cudaTexData, cudaTex, 0, 0);
-			//gpuErrchk(cudaGetLastError());
 			callDecode(m_width, m_height, (unsigned char*)decodedFrame[active], globalMem, decodedPitch);
 			cudaMemcpyToArray(cudaTexData, 0, 0, globalMem, m_width * m_height * sizeof(unsigned char) * 4, cudaMemcpyDeviceToDevice);
-			//gpuErrchk(cudaGetLastError());
-			//cudaMemcpy(&rgba[0], globalMem, 800 * 600 * 4, cudaMemcpyDeviceToHost);
-
 			cudaFree(cudaTexData);
 		}
 		cudaGraphicsUnmapResources(1, &cudaTex);
-
 		m_decoder->unmapFrame(decodedFrame[active]);
-
 		m_queue->releaseFrame(&frame);
 
 	}

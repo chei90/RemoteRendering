@@ -137,24 +137,12 @@ const RREncoderDesc& RRGetDesc(void)
 
 void CM_API RRWaitForConnection()
 {
-	std::cout << "Waiting for connection" << std::endl;
-		 
+	std::cout << "Waiting for connection" << std::endl;	 
 	char message[64];
 	g_serverSock->Receive(message, 64);
 	UINT8 identifier;
 	memcpy(&identifier, message, sizeof(UINT8));
-
 	std::cout << "Client connected" << std::endl;
-
-	/*
-	if(identifier == WINDOW_SIZE) 
-	{
-		memcpy(&width, message + sizeof(UINT8), sizeof(int));
-		memcpy(&height, message + sizeof(UINT8) + sizeof(int), sizeof(int));
-
-		printf("WindowSize is: %d * %d \n", width, height);
-	}
-	*/
 	g_serverSock->SetToNonBlock();
 }
 
