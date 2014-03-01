@@ -1,3 +1,4 @@
+package com.christoph.remoterenderer;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -38,11 +39,14 @@ public class UdpSocket
 	public boolean sentTo(byte [] msg)
 	{
 		DatagramPacket packet = new DatagramPacket(msg, msg.length, serverIp, serverPort);
+		System.out.println(m_sock == null);
 		try
 		{
 			m_sock.send(packet);
 		} catch (IOException e)
 		{
+			e.printStackTrace();
+			System.err.println(e.getMessage());
 			return false;
 		}
 		return true;

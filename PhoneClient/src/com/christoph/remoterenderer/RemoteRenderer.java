@@ -10,33 +10,8 @@ public class RemoteRenderer implements Renderer
 {
 	private int m_windowWidth;
 	private int m_windowHeight;
-	private int m_program;
-	private ScreenQuad m_quad;
-	
-	
-	private final String vertexShaderCode =
-		    "attribute vec4 vPosition;" +
-		    "void main() {" +
-		    "  gl_Position = vPosition;" +
-		    "}";
+	private UdpSocket m_renderSock;
 
-	private final String fragmentShaderCode =
-		    "precision mediump float;" +
-		    "uniform vec4 vColor;" +
-		    "void main() {" +
-		    "  gl_FragColor = vColor;" +
-		    "}";
-	
-	public static int loadShader(int type, String shaderCode)
-	{
-		int shader = GLES20.glCreateShader(type);
-
-		GLES20.glShaderSource(shader, shaderCode);
-		GLES20.glCompileShader(shader);
-
-		return shader;
-	}
-	
 	
 	@Override
 	public void onDrawFrame(GL10 arg0)
@@ -59,16 +34,6 @@ public class RemoteRenderer implements Renderer
 	{
 		// TODO Auto-generated method stub
 		GLES20.glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
-		
-		m_quad = new ScreenQuad(400,400);
-		
-		int vertexShader = loadShader(GLES20.GL_VERTEX_SHADER, vertexShaderCode);
-		int fragmentShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentShaderCode);
-		
-		m_program = GLES20.glCreateProgram();
-		GLES20.glAttachShader(m_program, fragmentShader);
-		GLES20.glAttachShader(m_program, vertexShader);
-		GLES20.glLinkProgram(m_program);
 	}
 	
 	public int getWindowHeight()
@@ -79,5 +44,10 @@ public class RemoteRenderer implements Renderer
 	public int getWindowWidth()
 	{
 		return m_windowWidth;
+	}
+
+	public void addUdpSocket(UdpSocket m_renderSock)
+	{
+		this.m_renderSock = m_renderSock;		
 	}
 }

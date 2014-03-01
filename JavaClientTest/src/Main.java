@@ -3,6 +3,9 @@ import java.io.ByteArrayOutputStream;
 import java.net.DatagramPacket;
 import java.nio.ByteBuffer;
 
+import com.christoph.remoterenderer.ShutdownThread;
+import com.christoph.remoterenderer.UdpSocket;
+
 public class Main
 {
 

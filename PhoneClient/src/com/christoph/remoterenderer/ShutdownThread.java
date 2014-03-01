@@ -1,3 +1,5 @@
+package com.christoph.remoterenderer;
+
 
 public class ShutdownThread extends Thread
 {
