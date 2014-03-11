@@ -84,7 +84,7 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 			m_renderSock = new UdpSocket("192.168.178.45", 8080, "192.168.178.50", 8081);
 			
 			ByteBuffer bBuffer = ByteBuffer.allocateDirect(64);
-			bBuffer.put(InputSender.WINDOW_SIZE);
+			bBuffer.put(MagicNumbers.WINDOW_SIZE);
 			bBuffer.putInt(800);
 			bBuffer.putInt(600);
 			m_renderSock.sentTo(bBuffer.array());
@@ -119,7 +119,7 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 				b.order(ByteOrder.nativeOrder());
 				byte identifyer = b.get();
 				
-				if(identifyer == InputSender.FRAME_DATA)
+				if(identifyer == MagicNumbers.FRAME_DATA)
 				{
 					frameSize = b.getInt();
 					System.out.println(frameSize);
