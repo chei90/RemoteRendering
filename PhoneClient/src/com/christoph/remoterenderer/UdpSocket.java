@@ -6,6 +6,9 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
+
+import android.content.IntentSender.SendIntentException;
 
 public class UdpSocket
 {
@@ -69,4 +72,5 @@ public class UdpSocket
 	{
 		m_sock.close();
 	}
+	
 }

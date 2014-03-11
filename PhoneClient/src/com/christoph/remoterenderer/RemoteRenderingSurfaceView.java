@@ -15,7 +15,7 @@ public class RemoteRenderingSurfaceView extends GLSurfaceView
 		
 		setEGLContextClientVersion(2);
 		m_renderSock = new UdpSocket("192.168.178.45", 8080, "192.168.178.50", 8081);
-		m_renderer = new RemoteRenderer(m_renderSock);
+		m_renderer = new RemoteRenderer(m_renderSock, this);
 		setRenderer(m_renderer);
 		Runtime.getRuntime().addShutdownHook(new ShutdownThread(m_renderSock));		
 	}
