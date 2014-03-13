@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.media.MediaCodec;
 import android.media.MediaCodec.BufferInfo;
 import android.media.MediaExtractor;
@@ -28,6 +29,7 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 		super.onCreate(savedInstanceState);
 		SurfaceView sv = new SurfaceView(this);
 		sv.getHolder().addCallback(this);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(sv);
 	}
 
@@ -98,9 +100,6 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 			format.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 100000);
 			format.setInteger(MediaFormat.KEY_WIDTH, 800);
 			format.setInteger(MediaFormat.KEY_HEIGHT, 600);
-			format.setInteger("max-width", 800);
-			format.setInteger("max-height", 600);
-			format.setInteger("push-blank-buffers-on-shutdown", 1);
 			
 			codec.configure(format, surface, null, 0);
 			codec.start();
@@ -122,23 +121,24 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 				if(identifyer == MagicNumbers.FRAME_DATA)
 				{
 					frameSize = b.getInt();
-					System.out.println(frameSize);
 					
 					frameData = new byte[frameSize];
 					b.get(frameData);
-
 				}
 				
 				
 				int inIndex = codec.dequeueInputBuffer(10000);
 				if(inIndex >= 0)
 				{
-					ByteBuffer tmp = ByteBuffer.wrap(frameData);
-					codecInputBuffers[inIndex] = tmp;
+					ByteBuffer inputBuffer = codecInputBuffers[inIndex];
+					inputBuffer.clear();
+					inputBuffer.put(frameData);
+					
 					codec.queueInputBuffer(inIndex, 0, frameSize, 33, 0);
 				}
 				
-				int outIndex = codec.dequeueOutputBuffer(null, 10000);
+				BufferInfo buffInfo = new MediaCodec.BufferInfo();
+				int outIndex = codec.dequeueOutputBuffer(buffInfo, 10000);
 	
 				switch(outIndex)
 				{
