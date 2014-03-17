@@ -13,6 +13,7 @@ import android.media.MediaFormat;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -20,8 +21,10 @@ import android.view.SurfaceView;
 public class PhoneClient extends Activity implements SurfaceHolder.Callback
 {
 	private DisplayThread remoteRenderer = null;
-	private int m_windowWidth;
-	private int m_windowHeight;
+	
+	protected int touchId = -1;
+	protected final int TOUCHED = 1;
+	protected final int RELEASED = 2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -45,10 +48,7 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 
 	@Override
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height)
-	{
-		m_windowWidth = width;
-		m_windowHeight = height;
-		
+	{		
 		System.out.println("Width: " + width + " Height: " + height);
 		
 		if (remoteRenderer == null)
@@ -65,6 +65,25 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 		{
 			remoteRenderer.interrupt();
 		}
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent e)
+	{
+		if(e.getAction() == MotionEvent.ACTION_DOWN)
+		{
+			System.out.println("TouchPressed");
+			touchId = TOUCHED;
+		}
+		if(e.getAction() == MotionEvent.ACTION_UP)
+		{
+			System.out.println("TouchReleased");
+			touchId = RELEASED;
+		}
+		
+		
+		
+		return true;
 	}
 
 	private class DisplayThread extends Thread
@@ -87,8 +106,8 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 			
 			ByteBuffer bBuffer = ByteBuffer.allocateDirect(64);
 			bBuffer.put(MagicNumbers.WINDOW_SIZE);
-			bBuffer.putInt(800);
-			bBuffer.putInt(600);
+			bBuffer.putInt(960);
+			bBuffer.putInt(540);
 			m_renderSock.sentTo(bBuffer.array());
 			
 			
@@ -98,8 +117,8 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 			MediaFormat format = new MediaFormat();
 			format.setString(MediaFormat.KEY_MIME, "video/avc");
 			format.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 100000);
-			format.setInteger(MediaFormat.KEY_WIDTH, 800);
-			format.setInteger(MediaFormat.KEY_HEIGHT, 600);
+			format.setInteger(MediaFormat.KEY_WIDTH, 960);
+			format.setInteger(MediaFormat.KEY_HEIGHT, 540);
 			
 			codec.configure(format, surface, null, 0);
 			codec.start();
@@ -155,6 +174,22 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 				default:
 					ByteBuffer buffer = codecOutputBuffers[outIndex];
 					codec.releaseOutputBuffer(outIndex, true);
+				}
+				
+				if(touchId >= 0)
+				{
+					ByteBuffer keyMsg = ByteBuffer.allocateDirect(64);
+					
+					if(touchId == TOUCHED)
+						keyMsg.put(MagicNumbers.KEY_PRESSED);
+					if(touchId == RELEASED)
+						keyMsg.put(MagicNumbers.KEY_RELEASED);
+					
+					keyMsg.put((byte) 'w');
+					
+					m_renderSock.sentTo(keyMsg.array());
+					
+					touchId = -1;
 				}
 			}
 			
