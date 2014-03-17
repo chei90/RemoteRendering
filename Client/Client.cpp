@@ -42,13 +42,13 @@ void render()
 	glBegin(GL_QUADS);
 		
 		//Unten links
-		glTexCoord2f(0.0f, 0.0f); glVertex2f(-1.0f, -1.0f);
+		glTexCoord2f(0.0f, 1.0f); glVertex2f(-1.0f, -1.0f);
 		//Unten rechts
-		glTexCoord2f(1.0f, 0.0f); glVertex2f(1.0f, -1.0f);
+		glTexCoord2f(1.0f, 1.0f); glVertex2f(1.0f, -1.0f);
 		//Oben rechts
-		glTexCoord2f(1.0f, 1.0f); glVertex2f(1.0f, 1.0f);
+		glTexCoord2f(1.0f, 0.0f); glVertex2f(1.0f, 1.0f);
 		//Oben links
-		glTexCoord2f(0.0f, 1.0f); glVertex2f(-1.0f, 1.0f);
+		glTexCoord2f(0.0f, 0.0f); glVertex2f(-1.0f, 1.0f);
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, 0);
 

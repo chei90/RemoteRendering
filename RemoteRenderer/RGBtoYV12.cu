@@ -25,8 +25,8 @@ __global__ void RGBtoYV12D3D(unsigned char* yuv)
 	int i = iy * gridWidth + ix;
 	int globalBufferSize = gridDim.x * blockDim.x * gridDim.y * blockDim.y * 1.5;
  	int rgbID = i * 4;
-    int upos = blockDim.x * gridDim.x * blockDim.y * gridDim.y;
-    int vpos = upos + upos / 4;
+    int vpos = blockDim.x * gridDim.x * blockDim.y * gridDim.y;
+    int upos = vpos + vpos / 4;
 
     float4 color = tex2D(g_d3dSurface, ix, iy);
     color = clamp(color, 0, 1);
@@ -34,16 +34,16 @@ __global__ void RGBtoYV12D3D(unsigned char* yuv)
 
 
 	int y =  ((  66 * r + 129 * g +  25 * b + 128) >> 8) +  16;
-	yuv[upos - (iy+1)*gridWidth + ix] = y;
+	yuv[iy*gridWidth + ix] = y;
 
     if (!((i/gridWidth)%2) && !(i%2))
     {
  	    // U
 		int u = ((-38 * r - 74 * g + 112 * b + 128) >> 8) + 128;
-		yuv[globalBufferSize - ((gridWidth/2) * ((iy/2)+1) - ((ix/2)+1))] = u;
+		yuv[upos + ix / 2 + iy / 2 * gridWidth / 2] = u;
         // V
 		int v = ((112 * r - 94 * g - 18 * b + 128) >> 8) + 128;
-		yuv[vpos - ((gridWidth/2) * ((iy/2)+1) - ((ix/2)+1))] = v; 
+		yuv[vpos + ix / 2 + iy / 2 * gridWidth / 2] = v; 
     }
 }
 
@@ -56,22 +56,22 @@ __global__ void RGBtoYV12GL(unsigned char* yuv, unsigned char* pData)
 	int i = iy * gridWidth + ix;
 	int globalBufferSize = gridDim.x * blockDim.x * gridDim.y * blockDim.y * 1.5;
  	int rgbID = i * 4;
-    int upos = blockDim.x * gridDim.x * blockDim.y * gridDim.y;
-    int vpos = upos + upos / 4;
+    int vpos = blockDim.x * gridDim.x * blockDim.y * gridDim.y;
+    int upos = vpos + vpos / 4;
  	int r = pData[rgbID], g = pData[rgbID+1], b = pData[rgbID+2];
 
 
 	int y =  ((  66 * r + 129 * g +  25 * b + 128) >> 8) +  16;
-	yuv[upos - (iy+1)*gridWidth + ix] = y;
+	yuv[iy*gridWidth + ix] = y;
 
     if (!((i/gridWidth)%2) && !(i%2))
     {
  	    // U
 		int u = ((-38 * r - 74 * g + 112 * b + 128) >> 8) + 128;
-		yuv[globalBufferSize - ((gridWidth/2) * ((iy/2)+1) - ((ix/2)+1))] = u;
+		yuv[upos + ix / 2 + iy / 2 * gridWidth / 2] = u;
         // V
 		int v = ((112 * r - 94 * g - 18 * b + 128) >> 8) + 128;
-		yuv[vpos - ((gridWidth/2) * ((iy/2)+1) - ((ix/2)+1))] = v; 
+		yuv[vpos + ix / 2 + iy / 2 * gridWidth / 2] = v; 
     }
 }
 
