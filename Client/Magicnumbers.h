@@ -20,5 +20,6 @@ const UINT8 MOUSE_RELEASED = 9;
 
 //Identifyer to send Data over TCP connection: UINT8 FRAME_DATA; INT SIZE; SIZE * sizeof(UINT8) char;
 const UINT8 FRAME_DATA = 6;
+const UINT8 FRAME_DATA_MEASURE = 10;
 
 #endif

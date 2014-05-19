@@ -59,6 +59,13 @@ FrameQueue* m_queue = 0;
 CUdevice m_device;
 Decoder* m_decoder;
 
+bool measure;
+int picNum;
+SYSTEMTIME st;
+DWORD sec, msec;
+UINT8 picId, remotePicId;
+
+
 GLuint currentFrameTex;
 cudaGraphicsResource_t cudaTex;
 unsigned char* globalMem;

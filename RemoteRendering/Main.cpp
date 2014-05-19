@@ -82,7 +82,8 @@ void drawScene(void)
 void RRKeyCallback(int key, bool pressed)
 {
 	std::string tmp = pressed ? "pressed" : "released";
-	printf("Key %d %s \n", key, tmp);
+	SYSTEMTIME st;
+	GetSystemTime(&st);
 	if(pressed)
 		keyStates[key] = true;
 	else

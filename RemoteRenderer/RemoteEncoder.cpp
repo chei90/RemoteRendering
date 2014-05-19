@@ -50,13 +50,34 @@ static void __stdcall HandleReleaseBitStream(int nBytesInBuffer, unsigned char* 
 
 	if (remo)
 	{
-		char* msg = new char[sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int)];
-		memcpy(msg, &FRAME_DATA, sizeof(UINT8));
-		memcpy(msg + sizeof(UINT8), &nBytesInBuffer, sizeof(int));
-		memcpy(msg + sizeof(UINT8) + sizeof(int), cb, sizeof(unsigned char) * nBytesInBuffer);
+		if(remo->getMeasure())
+		{
+			SYSTEMTIME st;
+			GetLocalTime(&st);
 
-		int numBytes = remo->getClient()->Send(msg, sizeof(UINT8) * nBytesInBuffer + sizeof(int));
-		delete [] msg;
+			UINT8 id = remo->getPicId();
+			char* msg = new char[sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int) + sizeof(DWORD) * 2];
+			memcpy(msg, &FRAME_DATA_MEASURE, sizeof(UINT8));
+			memcpy(msg + sizeof(UINT8), &nBytesInBuffer, sizeof(int));
+			memcpy(msg + sizeof(UINT8) + sizeof(int), cb, sizeof(unsigned char) * nBytesInBuffer);
+			memcpy(msg + sizeof(UINT8) + sizeof(int) + nBytesInBuffer * sizeof(unsigned char), &(st.wSecond), sizeof(DWORD));
+			memcpy(msg + sizeof(UINT8) + sizeof(int) + nBytesInBuffer * sizeof(unsigned char) + sizeof(DWORD), &id, sizeof(UINT8));
+
+			remo->incPicID();
+
+			int numBytes = remo->getClient()->Send(msg, sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int) + sizeof(DWORD) * 2);
+			delete [] msg;
+		}
+		else
+		{
+			char* msg = new char[sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int)];
+			memcpy(msg, &FRAME_DATA, sizeof(UINT8));
+			memcpy(msg + sizeof(UINT8), &nBytesInBuffer, sizeof(int));
+			memcpy(msg + sizeof(UINT8) + sizeof(int), cb, sizeof(unsigned char) * nBytesInBuffer);
+
+			int numBytes = remo->getClient()->Send(msg, sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int));
+			delete [] msg;
+		}
 	}
 }
 
@@ -87,7 +108,8 @@ RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 {
 	//m_CudaEncoder = this;
 	m_EncoderParams = new NVEncoderParams;
-
+	latencyMeasure = false;
+	picId = 0;
 
 	//outbuffer usw. nur um encode in eine datei zu schreiben
 	outBuf = new unsigned char[o_width*o_height*3/2]; //passt nocht nicht muss * 3/2 oder so sein

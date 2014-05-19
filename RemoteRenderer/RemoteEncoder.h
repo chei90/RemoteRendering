@@ -51,7 +51,25 @@ public:
 		return client;
 	}
 
+	void setMeasure(bool measure)
+	{
+		this->latencyMeasure = measure;
+	}
 
+	bool getMeasure()
+	{
+		return this->latencyMeasure;
+	}
+
+	void incPicID()
+	{
+		picId = (picId++) % 256;
+	}
+
+	UINT8 getPicId()
+	{
+		return picId;
+	}
 	int getWidth() {return width;}
 	int getHeight() {return height;}
 	void setPicBuf(unsigned char* buf){m_efParams.picBuf = buf;}
@@ -66,6 +84,7 @@ private:
 	NVEncoderParams*	m_EncoderParams;
 	int width, height;
 	//out
+	UINT8 picId;
 
 	UdpSocket* client;
 	FILE* out;
@@ -89,6 +108,7 @@ private:
 	//void *m_pEncoder;
 	// Errorhandling
 	HRESULT errorHandling;
+	bool latencyMeasure;
 };
 
 #endif

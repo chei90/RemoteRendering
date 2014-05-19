@@ -4,6 +4,11 @@
 void keyPressed(unsigned char key, int x, int y)
 {
 	keyStates[key] = true;
+
+	measure = true;
+	GetLocalTime(&st);
+	sec = st.wSecond;
+	msec = st.wMilliseconds;
 }
 
 void keyReleased(unsigned char key, int x, int y)
@@ -51,9 +56,19 @@ void render()
 		glTexCoord2f(0.0f, 0.0f); glVertex2f(-1.0f, 1.0f);
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, 0);
-
 	glutSwapBuffers();
 	glutPostRedisplay();
+
+	if(picId == remotePicId && picNum++ == 1)
+	{
+		picNum = 0;
+		picId = (picId++) % 256;
+		GetLocalTime(&st);
+		DWORD tmpmsec = st.wMilliseconds;
+		if((st.wSecond - sec) > 0)
+			tmpmsec += 1000;
+		printf("Latency: %d ms", tmpmsec - msec);
+	}
 }
 
 void initCallbacks()
@@ -188,6 +203,8 @@ int main(int argc, char** argv)
 	m_width = cf.Value("resolution", "width");
 	m_height = cf.Value("resolution", "height");
 
+	picId = 0;
+	picNum = 0;
 
 	cuInit(0);
 	initGL(argc, argv);
@@ -209,6 +226,9 @@ int main(int argc, char** argv)
 	char* serverMessage = new char[100000];
 	CUVIDPARSERDISPINFO f;
 
+	picNum = 0;
+	measure = false;
+
 	//Sending Window Size
 	memcpy(message, &WINDOW_SIZE, sizeof(UINT8));
 	memcpy(message + sizeof(UINT8), &m_width, sizeof(int));
@@ -217,11 +237,18 @@ int main(int argc, char** argv)
 	memset(message, 0, sizeof(UINT8) + sizeof(int) * 2);
 	cout << j << " signs sent" << endl;
 
+	SYSTEMTIME fps;
+	DWORD fpsSec = 0, fpsMsec = 0;
+	GetSystemTime(&fps);
+
 	while (m_continue)
 	{
+		//fpsSec = fps.wSecond;
+		//fpsMsec = fps.wMilliseconds;
+		//GetSystemTime(&fps);
 		memset(serverMessage, 0, 100000);
 		int i = server->Receive(serverMessage, 100000);
-		printf("%d bytes received \n", i);
+		//#("FPS: %d  Byte: %d\n", fps.wMilliseconds - fpsMsec, i);
 		message = msgStart;
 
 		UINT8 identifyer;
@@ -233,6 +260,7 @@ int main(int argc, char** argv)
 			m_continue = false;
 			break;
 		case FRAME_DATA:
+			{
 			int size;
 			memcpy(&size, serverMessage+sizeof(UINT8), sizeof(int));
 			m_decoder->parseData((const unsigned char*)(serverMessage + sizeof(UINT8) + sizeof(int)), size);
@@ -241,6 +269,21 @@ int main(int argc, char** argv)
 				copyFrameToTexture(f);
 			}
 			break;
+			}
+		case FRAME_DATA_MEASURE:
+			{
+			int size;
+			memcpy(&size, serverMessage+sizeof(UINT8), sizeof(int));
+			m_decoder->parseData((const unsigned char*)(serverMessage + sizeof(UINT8) + sizeof(int)), size);
+			if(m_queue->dequeue(&f))
+			{
+				copyFrameToTexture(f);
+			}
+			DWORD lSec = 0; DWORD lMsec = 0;
+			memcpy(&lSec, serverMessage + sizeof(UINT8) + sizeof(int) + sizeof(unsigned char) * size, sizeof(DWORD));
+			memcpy(&remotePicId, serverMessage + sizeof(UINT8) + sizeof(int) + sizeof(unsigned char) * size + sizeof(DWORD), sizeof(UINT8));
+			break;
+			}
 		default:
 			break;
 		}
