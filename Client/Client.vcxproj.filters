@@ -21,9 +21,6 @@
     <ClInclude Include="Magicnumbers.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="RenderSocket.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="Decoder.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -42,12 +39,15 @@
     <ClInclude Include="ConfigFile.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="TcpSocket.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Socket.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderSocket.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Decoder.cpp">
@@ -63,6 +63,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="ConfigFile.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpSocket.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

@@ -33,6 +33,12 @@
     <ClInclude Include="types.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Socket.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="TcpSocket.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RemoteEncoderAPI.cpp">
@@ -42,6 +48,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="UdpSocket.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Socket.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="TcpSocket.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

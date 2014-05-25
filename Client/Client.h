@@ -10,7 +10,6 @@
 #include <cuda_gl_interop.h>
 #include <cuda_runtime_api.h>
 #include "Magicnumbers.h"
-#include "RenderSocket.h"
 #include "Decoder.h"
 #include <cudaGL.h>
 #include <nvcuvid.h>

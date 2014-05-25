@@ -119,7 +119,8 @@
     <ClInclude Include="FrameQueue.h" />
     <ClInclude Include="Magicnumbers.h" />
     <ClInclude Include="NV12toRGB.h" />
-    <ClInclude Include="RenderSocket.h" />
+    <ClInclude Include="Socket.h" />
+    <ClInclude Include="TcpSocket.h" />
     <ClInclude Include="UdpSocket.h" />
   </ItemGroup>
   <ItemGroup>
@@ -128,7 +129,8 @@
     <ClCompile Include="ConfigFile.cpp" />
     <ClCompile Include="Decoder.cpp" />
     <ClCompile Include="FrameQueue.cpp" />
-    <ClCompile Include="RenderSocket.cpp" />
+    <ClCompile Include="Socket.cpp" />
+    <ClCompile Include="TcpSocket.cpp" />
     <ClCompile Include="UdpSocket.cpp" />
   </ItemGroup>
   <ItemGroup>

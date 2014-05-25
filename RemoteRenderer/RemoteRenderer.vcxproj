@@ -127,12 +127,16 @@
     <ClInclude Include="RemoteEncoder.h" />
     <ClInclude Include="RemoteEncoderAPI.h" />
     <ClInclude Include="RGBtoYV12.h" />
+    <ClInclude Include="Socket.h" />
+    <ClInclude Include="TcpSocket.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="UdpSocket.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RemoteEncoder.cpp" />
     <ClCompile Include="RemoteEncoderAPI.cpp" />
+    <ClCompile Include="Socket.cpp" />
+    <ClCompile Include="TcpSocket.cpp" />
     <ClCompile Include="UdpSocket.cpp" />
   </ItemGroup>
   <ItemGroup>

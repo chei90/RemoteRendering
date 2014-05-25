@@ -5,6 +5,7 @@
 #include <ws2tcpip.h>
 #include <Windows.h>
 #include "Magicnumbers.h"
+#include "Socket.h"
 
 // Need to link with Ws2_32.lib
 #pragma comment (lib, "Ws2_32.lib")
@@ -18,22 +19,17 @@ typedef
 using std::cout;
 using std::endl;
 
-class UdpSocket{
+class UdpSocket : public Socket{
 
 private: 
-	int m_Sock;
 	int m_clientLen;
-	struct sockaddr_in m_SockAddr;
 	struct sockaddr_in m_clientAddr;
 
 public:
 	UdpSocket();
 	bool Create();
-	void SetToNonBlock();
-	bool Bind(string address, int port);
 	int Receive(char *buff, int buffSize);
 	int Send(const char *buff, int len);
 	void setClientSocket(string address, int port);
 	struct sockaddr_in getClientSocket();
-	bool Close();
 };
