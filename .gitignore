@@ -19,7 +19,7 @@ tmp/
 *.obj
 *.lastbuildstate
 *.unsuccessfulbuild
-\x64\*
+/x64/*
 
 
 local.properties
