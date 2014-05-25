@@ -33,8 +33,8 @@ bool TcpSocket::Accept(TcpSocket &clientSock)
 		(struct sockaddr *) &clientSock.m_SockAddr, (socklen_t *) &size);
 	if (clientSock.m_Sock == -1)
 		cout << "accept failed: " << WSAGetLastError() << endl;
-	printf("Accepting\n\n\n\n\n\n\n\n\n");
-	//WSACleanup();
+	WSACleanup();
+	return false;
 	return true;
 }
 
