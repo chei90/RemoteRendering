@@ -59,7 +59,11 @@ void render()
 	glutSwapBuffers();
 	glutPostRedisplay();
 
-	if(picId == remotePicId && picNum++ == 1)
+
+	
+	if(picId == remotePicId)
+		picNum++;
+	if(picNum == 3)
 	{
 		picNum = 0;
 		picId = (picId++) % 256;
@@ -67,7 +71,7 @@ void render()
 		DWORD tmpmsec = st.wMilliseconds;
 		if((st.wSecond - sec) > 0)
 			tmpmsec += 1000;
-		printf("Latency: %d ms", tmpmsec - msec);
+		printf("Latency: %d ms \n", tmpmsec - msec);
 	}
 }
 
@@ -297,8 +301,6 @@ int main(int argc, char** argv)
 				message++;
 				memcpy(message, &i, sizeof(char));
 				message++;
-
-				std::cout << msgStart[1] << std::endl;
 			}
 			if (!keyStates[i] && tmpKeyStates[i])
 			{
@@ -320,8 +322,6 @@ int main(int argc, char** argv)
 				message++;
 				memcpy(message, &i, sizeof(char));
 				message++;
-
-				std::cout << msgStart[1] << std::endl;
 			}
 			if (!keySpecialStates[i] && tmpKeySpecialStates[i])
 			{
