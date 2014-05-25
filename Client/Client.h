@@ -16,6 +16,7 @@
 #include <vector>
 #include "UdpSocket.h"
 #include "ConfigFile.h"
+#include "TcpSocket.h"
 
 #include <winsock2.h>
 #include <windows.h>

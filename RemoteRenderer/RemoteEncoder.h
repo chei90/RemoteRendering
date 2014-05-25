@@ -2,6 +2,7 @@
 #define REMOTEENCODER_H_
 
 #include "UdpSocket.h"
+#include "TcpSocket.h"
 #include <Windows.h>
 #include <NVEncoderAPI.h>
 #include <cuda.h>
@@ -49,6 +50,14 @@ public:
 	UdpSocket* getClient()
 	{
 		return client;
+	}	
+	void setClientTcp(TcpSocket* c)
+	{
+		tclient = c;
+	}
+	TcpSocket* getTClient()
+	{
+		return tclient;
 	}
 
 	void setMeasure(bool measure)
@@ -87,6 +96,7 @@ private:
 	UINT8 picId;
 
 	UdpSocket* client;
+	TcpSocket* tclient;
 	FILE* out;
 	//unsigned char* encodedFrame;
 

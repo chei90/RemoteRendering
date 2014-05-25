@@ -28,13 +28,13 @@ bool TcpSocket::Listen(int que)
 bool TcpSocket::Accept(TcpSocket &clientSock)
 {
 	int size = sizeof(struct sockaddr);
+	printf("Accepting\n");
 	clientSock.m_Sock = accept(m_Sock,
 		(struct sockaddr *) &clientSock.m_SockAddr, (socklen_t *) &size);
 	if (clientSock.m_Sock == -1)
 		cout << "accept failed: " << WSAGetLastError() << endl;
-
-	WSACleanup();
-	return false;
+	printf("Accepting\n\n\n\n\n\n\n\n\n");
+	//WSACleanup();
 	return true;
 }
 

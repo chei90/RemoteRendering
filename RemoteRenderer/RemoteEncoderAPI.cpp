@@ -9,6 +9,7 @@
 #include <cuda_d3d11_interop.h>
 #include <vector>
 #include "MagicNumbers.h"
+#include "TcpSocket.h"
 
 RREncoderDesc g_desc;
 RemoteEncoder* g_encoder;
@@ -17,7 +18,8 @@ int g_cuDevice;
 cudaGraphicsResource_t g_res;
 unsigned char* g_dyuv;
 std::vector<unsigned char> g_yuv;
-UdpSocket* g_serverSock; 
+TcpSocket* g_serverSock; 
+TcpSocket* clientSock;
 bool g_keyStates[256];
 int width, height;
 bool latencyMeasure;
@@ -75,10 +77,11 @@ bool CM_API RRInit(RREncoderDesc& desc)
 	g_yuv = std::vector<unsigned char>(g_desc.w * g_desc.h * 3 / 2);
 	cudaError_t res = cudaMalloc((void**) &g_dyuv, g_desc.w * g_desc.h * 3 /  2 * sizeof(char));
 	cuCtxPopCurrent(NULL);
-	g_serverSock = new UdpSocket();
+	g_serverSock = new TcpSocket();
+	clientSock = new TcpSocket();
 	g_serverSock->Create();
 	g_serverSock->Bind(g_desc.ip, g_desc.port);
-	g_encoder->setClientUdp(g_serverSock);
+	g_encoder->setClientTcp(clientSock);
 
 	latencyMeasure = false;
 	return true;
@@ -143,18 +146,24 @@ void CM_API RRWaitForConnection()
 {
 	std::cout << "Waiting for connection" << std::endl;	 
 	char message[64];
-	g_serverSock->Receive(message, 64);
-	UINT8 identifier;
+	bool list = g_serverSock->Listen(1);
+
+	if(g_serverSock->Accept(*clientSock))
+		printf("Verbindung Fehlgeschlagen!\n");
+	printf("Client erfolgreich verbunden!\n");
+	int i = clientSock->Receive(message, 64);
+	printf("%d signs received \n", i);
+	UINT8 identifier = 0;
 	memcpy(&identifier, message, sizeof(UINT8));
-	std::cout << "Client connected" << std::endl;
-	g_serverSock->SetToNonBlock();
+	printf("Identifyer is %d \n", identifier);
+	clientSock->SetToNonBlock();
 }
 
 void CM_API RRQueryClientEvents()
 {
 	static char msg[64];
 	memset(msg, 0, 64);
-	g_serverSock->Receive(msg, 64);
+	clientSock->Receive(msg, 64);
 
 	int key = 0, identifyer = 0, dx = 0, dy = 0;
 	memcpy(&identifyer, msg, sizeof(UINT8));

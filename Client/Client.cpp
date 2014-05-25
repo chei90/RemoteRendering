@@ -209,7 +209,7 @@ int main(int argc, char** argv)
 	cuInit(0);
 	initGL(argc, argv);
 	//	SOCKET STUFF
-	UdpSocket* server = new UdpSocket();
+	TcpSocket* server = new TcpSocket();
 	server->Create();
 
 	std::auto_ptr<FrameQueue> tmp_queue(new FrameQueue);
@@ -219,7 +219,9 @@ int main(int argc, char** argv)
 	m_decoder->initParser();
 
 	server->Bind(cIp, cPort);
-	server->setClientSocket(sIp, sPort);
+	//server->setClientSocket(sIp, sPort);
+	bool b = server->Connect(sIp, sPort);
+	printf("Connection succeeded? %d \n", b);
 	//PROCESS USER INPUT
 	char* message = new char[64];
 	char* msgStart = message;
@@ -234,6 +236,8 @@ int main(int argc, char** argv)
 	memcpy(message + sizeof(UINT8), &m_width, sizeof(int));
 	memcpy(message + sizeof(UINT8) + sizeof(int), &m_height, sizeof(int));
 	int j = server->Send(message, sizeof(UINT8) + sizeof(int) * 2);
+	int err = WSAGetLastError();
+	printf("Error Code: %d", err);
 	memset(message, 0, sizeof(UINT8) + sizeof(int) * 2);
 	cout << j << " signs sent" << endl;
 

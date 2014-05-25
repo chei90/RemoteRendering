@@ -23,7 +23,12 @@ public:
 	virtual int Send(const char *buff, int len) = 0;
 	bool Close();
 
-protected:
+	int getPort()
+	{
+		return ntohs(m_SockAddr.sin_port);
+	}
+
+public:
 	int m_Sock;
 	struct sockaddr_in m_SockAddr;
 };
