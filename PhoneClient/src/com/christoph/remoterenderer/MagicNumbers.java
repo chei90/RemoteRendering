@@ -10,5 +10,6 @@ public class MagicNumbers
 	static final byte FRAME_DATA = 6;
 	static final byte WINDOW_SIZE = 7;
 	static final byte MOUSE_PRESSED = 8;
-	static final byte MOUSE_RELEASED = 9;	
+	static final byte MOUSE_RELEASED = 9;
+	static final byte FRAME_DATA_MEASURE = 10;
 }

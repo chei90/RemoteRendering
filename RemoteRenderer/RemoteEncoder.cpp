@@ -138,7 +138,7 @@ RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 	m_EncoderParams->iAspectRatio[1] = ASPECT_HEIGHT;
 
 	// Fragwürdig:
-	m_EncoderParams->iP_Interval = 3;
+	m_EncoderParams->iP_Interval = 1;
 	m_EncoderParams->iIDR_Period = 1;
 	m_EncoderParams->iDynamicGOP = 1;
 	m_EncoderParams->RCType =  RC_VBR;
