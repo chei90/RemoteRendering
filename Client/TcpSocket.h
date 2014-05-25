@@ -1,5 +1,5 @@
-#ifndef RENDERSOCKET_H_
-#define RENDERSOCKET_H_
+#ifndef TCPSOCKET_H_
+#define TCPSOCKET_H_
 
 #include <iostream>
 #include <WinSock2.h>
@@ -19,19 +19,19 @@ typedef
 using std::cout;
 using std::endl;
 
-class RenderSocket{
+class TcpSocket{
 
 private: 
 	int m_Sock;
 	struct sockaddr_in m_SockAddr;
 
 public:
-	RenderSocket();
+	TcpSocket();
 	bool Create();
 	void SetToNonBlock();
 	bool Bind(string address, int port);
 	bool Listen(int que);
-	bool Accept(RenderSocket &clientSock);
+	bool Accept(TcpSocket &clientSock);
 	bool Connect(string address, int port);
 	int Receive(char *buff, int buffSize);
 	int Send(const char *buff, int len);

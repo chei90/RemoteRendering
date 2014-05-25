@@ -1,8 +1,8 @@
-#include "RenderSocket.h"
+#include "TcpSocket.h"
 
 
 
-RenderSocket::RenderSocket()
+TcpSocket::TcpSocket()
 {
 	WSADATA wsaData;
 
@@ -11,20 +11,20 @@ RenderSocket::RenderSocket()
 	m_Sock = -1;
 }
 
-bool RenderSocket::Create()
+bool TcpSocket::Create()
 {
 	if ((m_Sock = socket(AF_INET, SOCK_STREAM, 0)) > 0)
 		return true;
 	return false;
 }
 
-void RenderSocket::SetToNonBlock()
+void TcpSocket::SetToNonBlock()
 {
 	u_long iMode=1;
 	ioctlsocket(m_Sock,FIONBIO,&iMode);
 }
 
-bool RenderSocket::Bind(string address, int port)
+bool TcpSocket::Bind(string address, int port)
 {
 	m_SockAddr.sin_family = AF_INET;
 	m_SockAddr.sin_port = htons(port);
@@ -36,14 +36,14 @@ bool RenderSocket::Bind(string address, int port)
 	return false;
 }
 
-bool RenderSocket::Listen(int que)
+bool TcpSocket::Listen(int que)
 {
 	if (listen(m_Sock, que) == 0)
 		return true;
 	return false;
 }
 
-bool RenderSocket::Close()
+bool TcpSocket::Close()
 {
 	if (m_Sock > 0)
 	{
@@ -55,7 +55,7 @@ bool RenderSocket::Close()
 	return false;
 
 }
-bool RenderSocket::Accept(RenderSocket &clientSock)
+bool TcpSocket::Accept(TcpSocket &clientSock)
 {
 	int size = sizeof(struct sockaddr);
 	clientSock.m_Sock = accept(m_Sock,
@@ -68,7 +68,7 @@ bool RenderSocket::Accept(RenderSocket &clientSock)
 	return true;
 }
 
-bool RenderSocket::Connect(string address, int port)
+bool TcpSocket::Connect(string address, int port)
 {
 	struct in_addr *addr_ptr;
 	struct hostent *hostPtr;
@@ -101,12 +101,12 @@ bool RenderSocket::Connect(string address, int port)
 
 }
 
-int RenderSocket::Receive(char *buff, int buffLen)
+int TcpSocket::Receive(char *buff, int buffLen)
 {
 	return recv(m_Sock, buff, buffLen, 0);
 }
 
-int RenderSocket::Send(const char *buff, int len)
+int TcpSocket::Send(const char *buff, int len)
 {
 	return send(m_Sock, buff, len, 0);
 }

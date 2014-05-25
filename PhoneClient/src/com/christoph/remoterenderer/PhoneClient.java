@@ -8,11 +8,8 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.media.MediaCodec;
 import android.media.MediaCodec.BufferInfo;
-import android.media.MediaExtractor;
 import android.media.MediaFormat;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -25,6 +22,10 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 	protected int touchId = -1;
 	protected final int TOUCHED = 1;
 	protected final int RELEASED = 2;
+	
+	private long latency = 0;
+	private boolean measure = false;
+	private byte picNum = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -72,12 +73,11 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 	{
 		if(e.getAction() == MotionEvent.ACTION_DOWN)
 		{
-			System.out.println("TouchPressed");
 			touchId = TOUCHED;
+			latency = System.currentTimeMillis();
 		}
 		if(e.getAction() == MotionEvent.ACTION_UP)
 		{
-			System.out.println("TouchReleased");
 			touchId = RELEASED;
 		}
 		
@@ -102,7 +102,7 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 		@Override
 		public void run()
 		{
-			m_renderSock = new UdpSocket("131.173.192.228", 8080, "131.173.32.150", 8081);
+			m_renderSock = new UdpSocket("192.168.178.45", 8080, "192.168.178.50", 8081);
 			
 			ByteBuffer bBuffer = ByteBuffer.allocateDirect(64);
 			bBuffer.put(MagicNumbers.WINDOW_SIZE);
@@ -144,6 +144,15 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 					frameData = new byte[frameSize];
 					b.get(frameData);
 				}
+				if(identifyer == MagicNumbers.FRAME_DATA_MEASURE)
+				{
+					frameSize = b.getInt();
+					
+					frameData = new byte[frameSize];
+					b.get(frameData);
+					
+					measure = true;
+				}
 				
 				
 				int inIndex = codec.dequeueInputBuffer(10000);
@@ -163,17 +172,22 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 				{
 				case MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED:
 					codecOutputBuffers = codec.getOutputBuffers();
-					System.out.println("OB Changed");
 					break;
 				case MediaCodec.INFO_OUTPUT_FORMAT_CHANGED:
-					System.out.println("OF Changed");
 					break;
 				case MediaCodec.INFO_TRY_AGAIN_LATER:
-					System.out.println("l8r");
 					break;
 				default:
 					ByteBuffer buffer = codecOutputBuffers[outIndex];
 					codec.releaseOutputBuffer(outIndex, true);
+				}
+				if(measure)
+					picNum++;
+				if(picNum == 8)
+				{
+					measure = false;
+					picNum = 0;
+					System.out.println(System.currentTimeMillis() - latency);
 				}
 				
 				if(touchId >= 0)
