@@ -17,7 +17,7 @@ static unsigned char* __stdcall HandleAquireBitStream(int* pBuffersize, void* pU
 		cout << " Handle Aquire Bitstream fail!" << endl;
 	}
 	*pBuffersize = remo->getWidth()*remo->getHeight()*3/2;
-	return remo->GetCharBuf();		
+	return remo->getCharBuf();		
 
 }
 
@@ -153,8 +153,8 @@ RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 
 
 	//Bitrates
-	m_EncoderParams->iAvgBitrate =  2 * 100000;
-	m_EncoderParams->iPeakBitrate = 2 * 250000;
+	m_EncoderParams->iAvgBitrate =  5 * 100000;
+	m_EncoderParams->iPeakBitrate = 5 * 250000;
 
 	//Hardwarestuff
 	m_EncoderParams->GPUOffloadLevel = NVVE_GPU_OFFLOAD_ALL;
