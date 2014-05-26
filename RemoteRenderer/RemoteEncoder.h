@@ -23,90 +23,55 @@ class RemoteEncoder
 public:
 	RemoteEncoder(int o_width, int o_height);
 	~RemoteEncoder();
-	bool SetCBFunctions(NVVE_CallbackParams *pCB, void *pUserData);
-	//Initialize & Errorhandling
-
 
 	//Encoding
-	bool encode();
 	bool encodePB();
 	void handleCudaError(CUresult, const char* c);
 	void setDevicePtr(CUdeviceptr dptr);
 
-	unsigned char *GetCharBuf()
-	{
-		return outBuf;
-	}
-
-	FILE *GetFileOut()
-	{
-		return out;
-	}
-	void setClientUdp(UdpSocket* c)
-	{
-		client = c;
-	}
-	UdpSocket* getClient()
-	{
-		return client;
-	}
-
-	void setMeasure(bool measure)
-	{
-		this->latencyMeasure = measure;
-	}
-
-	bool getMeasure()
-	{
-		return this->latencyMeasure;
-	}
-
-	void incPicID()
-	{
-		picId = (picId++) % 256;
-	}
-
-	UINT8 getPicId()
-	{
-		return picId;
-	}
+	//Getter / Setter
+	unsigned char *GetCharBuf(){return outBuf;}
+	void setClientUdp(UdpSocket* c){client = c;}
+	UdpSocket* getClient(){return client;}
+	void setMeasure(bool measure){this->latencyMeasure = measure;}
+	bool getMeasure(){return this->latencyMeasure;}
+	void incPicID(){picId = (picId++) % 256;}
+	UINT8 getPicId(){return picId;}
 	int getWidth() {return width;}
 	int getHeight() {return height;}
 	void setPicBuf(unsigned char* buf){m_efParams.picBuf = buf;}
 
 private:
 
+	//Error Handling
 	void handleHR(HRESULT hr, const char* c);
+	//Create Cuda
 	void createCuda();
+	//Set Params
 	void setEncoderParams();
-	CUdevice getCudaDevice();
+	//Set Callbacks
+	bool setCBFunctions(NVVE_CallbackParams *pCB, void *pUserData);
+
+
+
 	// Encoding Stuff
 	NVEncoderParams*	m_EncoderParams;
-	int width, height;
-	//out
-	UINT8 picId;
-
-	UdpSocket* client;
-	FILE* out;
-	//unsigned char* encodedFrame;
-
-
-	//NVEncoder m_CudaEncoder;
-	void* m_CudaEncoder;
 	NVVE_CallbackParams m_cbParams;
 	NVVE_EncodeFrameParams m_efParams;
+	NVVE_CallbackParams m_NVCB;
+
+	//Cuda
 	CUdevice m_cuDevice;
 	CUcontext m_cuContext;
 	CUvideoctxlock m_cuCtxLock;
 	CUdeviceptr dptr;
-	// Buffer
-	unsigned char* m_VideoFrame;
-	unsigned char* outBuf;
+	void* m_CudaEncoder;
 
-	//Callbacks
-	NVVE_CallbackParams m_NVCB;
-	//void *m_pEncoder;
-	// Errorhandling
+	//General Stuff
+	int width, height;
+	UINT8 picId;
+	UdpSocket* client;
+	unsigned char* outBuf;
 	HRESULT errorHandling;
 	bool latencyMeasure;
 };

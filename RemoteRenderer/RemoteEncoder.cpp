@@ -83,7 +83,7 @@ static void __stdcall HandleReleaseBitStream(int nBytesInBuffer, unsigned char* 
 
 
 
-bool RemoteEncoder::SetCBFunctions(NVVE_CallbackParams *pCB, void *pUserData)
+bool RemoteEncoder::setCBFunctions(NVVE_CallbackParams *pCB, void *pUserData)
 {
 	m_NVCB = *pCB;
 	// 	cout << "kommen wir igentwann hier rein?<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< " << endl;
@@ -262,7 +262,7 @@ RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 	m_cbParams.pfnonendframe = HandleOnEndFrame;
 	m_cbParams.pfnreleasebitstream = HandleReleaseBitStream;
 
-	SetCBFunctions(&m_cbParams, (void*) m_CudaEncoder);
+	setCBFunctions(&m_cbParams, (void*) m_CudaEncoder);
 
 	errorHandling = NVCreateHWEncoder(m_CudaEncoder);
 	handleHR(errorHandling, "Creating HWEncoder:");
@@ -286,13 +286,6 @@ RemoteEncoder::~RemoteEncoder(void)
 
 }
 
-CUdevice RemoteEncoder::getCudaDevice()
-{
-
-	return m_cuDevice;
-
-}
-
 void RemoteEncoder::setEncoderParams()
 {
 	ZeroMemory(&m_efParams, sizeof(NVVE_EncodeFrameParams));
@@ -306,18 +299,6 @@ void RemoteEncoder::setEncoderParams()
 	m_efParams.topfieldfirst = (m_EncoderParams->iSurfaceFormat == 1) ? 1 : 0;
 	m_efParams.picBuf = NULL;
 	m_efParams.bLast = 0;
-}
-
-bool RemoteEncoder::encode()
-{
-	errorHandling = NVEncodeFrame(m_CudaEncoder, &m_efParams, 0, (void*) dptr);
-	if(errorHandling != S_OK)
-	{
-		//handleHR(errorHandling, "FrameEncoding:");
-		return false;
-	}
-
-	return true;
 }
 
 bool RemoteEncoder::encodePB()
