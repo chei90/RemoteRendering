@@ -26,11 +26,11 @@ public:
 
 	//Encoding
 	bool encodePB();
-	void handleCudaError(CUresult, const char* c);
+	void handleCudaError(CUresult cuRes, const char* c);
 	void setDevicePtr(CUdeviceptr dptr);
 
 	//Getter / Setter
-	unsigned char *GetCharBuf(){return outBuf;}
+	unsigned char *getCharBuf(){return outBuf;}
 	void setClientUdp(UdpSocket* c){client = c;}
 	UdpSocket* getClient(){return client;}
 	void setMeasure(bool measure){this->latencyMeasure = measure;}
