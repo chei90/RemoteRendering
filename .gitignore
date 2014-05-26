@@ -21,6 +21,7 @@ tmp/
 *.unsuccessfulbuild
 
 
+
 local.properties
 .classpath
 .settings/
@@ -55,6 +56,9 @@ local.properties
 build/
 [Bb]in/
 [Oo]bj/
+[xX]64/
+[Rr]elease/
+[Dd]ebug/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

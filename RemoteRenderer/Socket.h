@@ -28,7 +28,7 @@ public:
 		return ntohs(m_SockAddr.sin_port);
 	}
 
-public:
+protected:
 	int m_Sock;
 	struct sockaddr_in m_SockAddr;
 };
