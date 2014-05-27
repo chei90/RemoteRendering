@@ -22,6 +22,8 @@ TcpSocket* g_serverSock;
 TcpSocket* clientSock;
 bool g_keyStates[256];
 int width, height;
+
+int latencyCnt;
 bool latencyMeasure;
 
 typedef void (*encodeCB)(void);
@@ -84,6 +86,7 @@ bool CM_API RRInit(RREncoderDesc& desc)
 	g_encoder->setClientTcp(clientSock);
 
 	latencyMeasure = false;
+	latencyCnt = 0;
 	return true;
 }
 
@@ -130,14 +133,15 @@ void CM_API RREncode(void)
 	cudaDeviceSynchronize();
 	cudaGraphicsUnmapResources(1, &g_res, NULL);
 	cudaMemcpy(&g_yuv[0], g_dyuv, g_yuv.size(), cudaMemcpyDeviceToHost);
-	if(latencyMeasure)
+	if(latencyMeasure && latencyCnt++ == 1)
 	{
 		memset(&g_yuv[0], 0, g_yuv.size());
+		latencyCnt=0;
+		latencyMeasure=false;
 	}
 	g_encoder->setPicBuf(&g_yuv[0]);
 	g_encoder->setMeasure(latencyMeasure);
 	g_encoder->encodePB();
-	latencyMeasure = false;
 	cuCtxPopCurrent(NULL);
 }
 
