@@ -19,7 +19,7 @@ tmp/
 *.obj
 *.lastbuildstate
 *.unsuccessfulbuild
-
+*.ini
 
 
 
