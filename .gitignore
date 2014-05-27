@@ -56,9 +56,14 @@ local.properties
 build/
 [Bb]in/
 [Oo]bj/
-[xX]64/
-[Rr]elease/
-[Dd]ebug/
+[xX64]/Release/RemoteRendering.dll
+[xX64]/Release/RemoteRendering.exp
+[xX64]/Release/RemoteRendering.lib
+[xX64]/Debug/
+[xX64]/Release/Server.exe
+[xX64]/Release/Client.exe
+[xX64]/Release/RemoteRenderer.pdb
+
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
