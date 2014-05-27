@@ -59,19 +59,25 @@ void render()
 	glutSwapBuffers();
 	glutPostRedisplay();
 
-
-	
-	if(picId == remotePicId)
-		picNum++;
-	if(picNum == 3)
+	if(measure)
 	{
-		picNum = 0;
-		picId = (picId++) % 256;
-		GetLocalTime(&st);
-		DWORD tmpmsec = st.wMilliseconds;
-		if((st.wSecond - sec) > 0)
-			tmpmsec += 1000;
-		printf("Latency: %d ms \n", tmpmsec - msec);
+		unsigned char* measureBuf = new unsigned char[100];
+		cudaMemcpy(measureBuf, globalMem, sizeof(unsigned char) * 100, cudaMemcpyDeviceToHost);
+		
+		int cnt;
+		for(int i = 0; i < 100; i++)
+			if(measureBuf[i] == 0)
+				cnt++;
+
+		if(cnt > 40)
+		{
+			measure = 0;
+			GetLocalTime(&st);
+			DWORD tmpSec = st.wMilliseconds;
+			if((st.wSecond - sec) > 0)
+				tmpSec += 1000;
+			printf("Latency: %d \n", tmpSec - msec);
+		}
 	}
 }
 

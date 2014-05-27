@@ -20,7 +20,11 @@ std::vector<unsigned char> g_yuv;
 UdpSocket* g_serverSock; 
 bool g_keyStates[256];
 int width, height;
+
+
 bool latencyMeasure;
+int cnt;
+
 
 typedef void (*encodeCB)(void);
 
@@ -81,6 +85,7 @@ bool CM_API RRInit(RREncoderDesc& desc)
 	g_encoder->setClientUdp(g_serverSock);
 
 	latencyMeasure = false;
+	cnt = 0;
 	return true;
 }
 
@@ -128,9 +133,16 @@ void CM_API RREncode(void)
 	cudaGraphicsUnmapResources(1, &g_res, NULL);
 	cudaMemcpy(&g_yuv[0], g_dyuv, g_yuv.size(), cudaMemcpyDeviceToHost);
 	g_encoder->setPicBuf(&g_yuv[0]);
+
+	if(latencyMeasure && cnt++ == 1)
+	{
+		memset(&g_yuv[0], 0, g_yuv.size());
+		latencyMeasure = false;
+		cnt = 0;
+	}
+
 	g_encoder->setMeasure(latencyMeasure);
 	g_encoder->encodePB();
-	latencyMeasure = false;
 	cuCtxPopCurrent(NULL);
 }
 
