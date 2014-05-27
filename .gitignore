@@ -22,6 +22,7 @@ tmp/
 
 
 
+
 local.properties
 .classpath
 .settings/
@@ -64,6 +65,7 @@ build/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+*.ini
 *_i.c
 *_p.c
 *.ilk
