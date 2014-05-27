@@ -130,6 +130,10 @@ void CM_API RREncode(void)
 	cudaDeviceSynchronize();
 	cudaGraphicsUnmapResources(1, &g_res, NULL);
 	cudaMemcpy(&g_yuv[0], g_dyuv, g_yuv.size(), cudaMemcpyDeviceToHost);
+	if(latencyMeasure)
+	{
+		memset(&g_yuv[0], 0, g_yuv.size());
+	}
 	g_encoder->setPicBuf(&g_yuv[0]);
 	g_encoder->setMeasure(latencyMeasure);
 	g_encoder->encodePB();

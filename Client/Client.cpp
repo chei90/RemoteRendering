@@ -59,7 +59,30 @@ void render()
 	glutSwapBuffers();
 	glutPostRedisplay();
 
-	if(picId == remotePicId && picNum++ == 1)
+
+	if(measure)
+	{
+		unsigned char* tmpBuf = new unsigned char[100];
+		cudaMemcpy(tmpBuf, globalMem, 100 * sizeof(unsigned char), cudaMemcpyDeviceToHost);
+
+		int cnt;
+		for(int i = 0; i < 100; i++)
+		{
+			if(tmpBuf[i] == 0) cnt++;
+		}
+		if(cnt > 40)
+		{
+			GetLocalTime(&st);
+			DWORD tmpmsec = st.wMilliseconds;
+			if((st.wSecond - sec) > 0)
+				tmpmsec += 1000;
+			printf("Latency: %d ms", tmpmsec - msec);
+
+			measure = false;
+		}
+	}
+
+	/*if(picId == remotePicId && picNum++ == 1)
 	{
 		picNum = 0;
 		picId = (picId++) % 256;
@@ -68,7 +91,7 @@ void render()
 		if((st.wSecond - sec) > 0)
 			tmpmsec += 1000;
 		printf("Latency: %d ms", tmpmsec - msec);
-	}
+	}*/
 }
 
 void initCallbacks()
@@ -247,12 +270,8 @@ int main(int argc, char** argv)
 
 	while (m_continue)
 	{
-		//fpsSec = fps.wSecond;
-		//fpsMsec = fps.wMilliseconds;
-		//GetSystemTime(&fps);
 		memset(serverMessage, 0, 100000);
 		int i = server->Receive(serverMessage, 100000);
-		//#("FPS: %d  Byte: %d\n", fps.wMilliseconds - fpsMsec, i);
 		message = msgStart;
 
 		UINT8 identifyer;
