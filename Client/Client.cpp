@@ -273,8 +273,8 @@ int main(int argc, char** argv)
 		if(fps.wSecond != fpsSec && printLatency)
 		{
 			fpsSec++;
-			float bandWidthPrint = bandWidth / 1024.0f / 1024.0f;
-			printf("Fps: %d  Bandwidth: %f.3\n", fpsCounter, bandWidthPrint);
+			float bandWidthPrint = bandWidth * 8.0f / 1024.0f / 1024.0f;
+			printf("%d fps | %f.3 Mbit/s \n", fpsCounter, bandWidthPrint);
 			fpsCounter = 0;
 			bandWidth = 0;
 			if(fpsSec == 60)
