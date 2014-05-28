@@ -267,8 +267,8 @@ int main(int argc, char** argv)
 		if(fps.wSecond != fpsSec)
 		{
 			fpsSec++;
-			bandWidth /= (1024 * 1024);
-			printf("Fps: %d  Bandwidth: %d\n", fpsCounter, bandWidth);
+			float bandWidthPrint = bandWidth / 1024.0f / 1024.0f;
+			printf("Fps: %d  Bandwidth: %f.3\n", fpsCounter, bandWidthPrint);
 			fpsCounter = 0;
 			bandWidth = 0;
 			if(fpsSec == 60)
