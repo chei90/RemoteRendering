@@ -256,6 +256,7 @@ int main(int argc, char** argv)
 	DWORD fpsSec = 0, fpsMsec = 0;
 	GetSystemTime(&fps);
 	long fpsCounter = 0;
+	long bandWidth = 0;
 
 	while (m_continue)
 	{
@@ -264,8 +265,10 @@ int main(int argc, char** argv)
 		if(fps.wSecond != fpsSec)
 		{
 			fpsSec++;
-			printf("Fps: %d  FPSSec %d\n", fpsCounter, fpsSec);
+			bandWidth /= (1024 * 1024);
+			printf("Fps: %d  Bandwidth: %d\n", fpsCounter, bandWidth);
 			fpsCounter = 0;
+			bandWidth = 0;
 			if(fpsSec == 60)
 			{
 				fpsSec = 0;
@@ -274,6 +277,7 @@ int main(int argc, char** argv)
 
 		memset(serverMessage, 0, 100000);
 		int i = server->Receive(serverMessage, 100000);
+		bandWidth += i;
 		message = msgStart;
 
 		UINT8 identifyer;
