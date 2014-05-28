@@ -81,17 +81,6 @@ void render()
 			measure = false;
 		}
 	}
-
-	/*if(picId == remotePicId && picNum++ == 1)
-	{
-		picNum = 0;
-		picId = (picId++) % 256;
-		GetLocalTime(&st);
-		DWORD tmpmsec = st.wMilliseconds;
-		if((st.wSecond - sec) > 0)
-			tmpmsec += 1000;
-		printf("Latency: %d ms", tmpmsec - msec);
-	}*/
 }
 
 void initCallbacks()
@@ -242,7 +231,6 @@ int main(int argc, char** argv)
 	m_decoder->initParser();
 
 	server->Bind(cIp, cPort);
-	//server->setClientSocket(sIp, sPort);
 	bool b = server->Connect(sIp, sPort);
 	printf("Connection succeeded? %d \n", b);
 	//PROCESS USER INPUT
@@ -267,9 +255,23 @@ int main(int argc, char** argv)
 	SYSTEMTIME fps;
 	DWORD fpsSec = 0, fpsMsec = 0;
 	GetSystemTime(&fps);
+	long fpsCounter = 0;
 
 	while (m_continue)
 	{
+		GetSystemTime(&fps);
+		fpsCounter++;
+		if(fps.wSecond != fpsSec)
+		{
+			fpsSec++;
+			printf("Fps: %d  FPSSec %d\n", fpsCounter, fpsSec);
+			fpsCounter = 0;
+			if(fpsSec == 60)
+			{
+				fpsSec = 0;
+			}
+		}
+
 		memset(serverMessage, 0, 100000);
 		int i = server->Receive(serverMessage, 100000);
 		message = msgStart;
