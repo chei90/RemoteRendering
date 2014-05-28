@@ -136,12 +136,11 @@ void CM_API RREncode(void)
 
 	if(latencyMeasure && cnt++ == 1)
 	{
+		printf("Measuring\n");
 		memset(&g_yuv[0], 0, g_yuv.size());
 		latencyMeasure = false;
 		cnt = 0;
 	}
-
-	g_encoder->setMeasure(latencyMeasure);
 	g_encoder->encodePB();
 	cuCtxPopCurrent(NULL);
 }

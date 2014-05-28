@@ -300,20 +300,6 @@ int main(int argc, char** argv)
 			}
 			break;
 			}
-		case FRAME_DATA_MEASURE:
-			{
-			int size;
-			memcpy(&size, serverMessage+sizeof(UINT8), sizeof(int));
-			m_decoder->parseData((const unsigned char*)(serverMessage + sizeof(UINT8) + sizeof(int)), size);
-			if(m_queue->dequeue(&f))
-			{
-				copyFrameToTexture(f);
-			}
-			DWORD lSec = 0; DWORD lMsec = 0;
-			memcpy(&lSec, serverMessage + sizeof(UINT8) + sizeof(int) + sizeof(unsigned char) * size, sizeof(DWORD));
-			memcpy(&remotePicId, serverMessage + sizeof(UINT8) + sizeof(int) + sizeof(unsigned char) * size + sizeof(DWORD), sizeof(UINT8));
-			break;
-			}
 		default:
 			break;
 		}
