@@ -134,7 +134,6 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 			while(!Thread.interrupted())
 			{
 			
-				System.out.println(sv.getDrawingCache().getPixel(0, 0));
 				int frameSize = 0;
 				byte[] frameData = null;
 				
@@ -147,9 +146,10 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 				if(identifyer == MagicNumbers.FRAME_DATA)
 				{
 					frameSize = b.getInt();
-					
+				
 					frameData = new byte[frameSize];
 					b.get(frameData);
+					System.out.println(frameData[1000] == 133);
 				}
 				if(identifyer == MagicNumbers.FRAME_DATA_MEASURE)
 				{
