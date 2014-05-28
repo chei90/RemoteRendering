@@ -9,6 +9,9 @@ void keyPressed(unsigned char key, int x, int y)
 	GetLocalTime(&st);
 	sec = st.wSecond;
 	msec = st.wMilliseconds;
+
+	if(key == 50)
+		printLatency ^= true;
 }
 
 void keyReleased(unsigned char key, int x, int y)
@@ -76,7 +79,9 @@ void render()
 			DWORD tmpSec = st.wMilliseconds;
 			if((st.wSecond - sec) > 0)
 				tmpSec += 1000;
+			printf("----------------------------- \n");
 			printf("Latency: %d \n", tmpSec - msec);
+			printf("----------------------------- \n");
 		}
 	}
 }
@@ -247,18 +252,33 @@ int main(int argc, char** argv)
 	memset(message, 0, sizeof(UINT8) + sizeof(int) * 2);
 	cout << j << " signs sent" << endl;
 
+
 	SYSTEMTIME fps;
 	DWORD fpsSec = 0, fpsMsec = 0;
 	GetSystemTime(&fps);
+	long fpsCounter = 0;
+	long bandWidth = 0;
+	printLatency = true;
 
 	while (m_continue)
 	{
-		//fpsSec = fps.wSecond;
-		//fpsMsec = fps.wMilliseconds;
-		//GetSystemTime(&fps);
+		GetSystemTime(&fps);
+		fpsCounter++;
+		if(fps.wSecond != fpsSec && printLatency)
+		{
+			fpsSec++;
+			float bandWidthPrint = bandWidth * 8.0f / 1024.0f / 1024.0f;
+			printf("%d fps | %.3f Mbit/s \n", fpsCounter, bandWidthPrint);
+			fpsCounter = 0;
+			bandWidth = 0;
+			if(fpsSec == 60)
+			{
+				fpsSec = 0;
+			}
+		}
 		memset(serverMessage, 0, 100000);
 		int i = server->Receive(serverMessage, 100000);
-		//#("FPS: %d  Byte: %d\n", fps.wMilliseconds - fpsMsec, i);
+		bandWidth += i;
 		message = msgStart;
 
 		UINT8 identifyer;

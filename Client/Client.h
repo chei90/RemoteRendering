@@ -63,7 +63,7 @@ int picNum;
 SYSTEMTIME st;
 DWORD sec, msec;
 UINT8 picId, remotePicId;
-
+bool printLatency;
 
 GLuint currentFrameTex;
 cudaGraphicsResource_t cudaTex;
