@@ -64,6 +64,7 @@ int picNum;
 SYSTEMTIME st;
 DWORD sec, msec;
 UINT8 picId, remotePicId;
+long bandWidth;
 
 
 GLuint currentFrameTex;
