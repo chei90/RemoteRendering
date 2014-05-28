@@ -50,26 +50,6 @@ static void __stdcall HandleReleaseBitStream(int nBytesInBuffer, unsigned char* 
 
 	if (remo)
 	{
-		if(remo->getMeasure())
-		{
-			SYSTEMTIME st;
-			GetLocalTime(&st);
-
-			UINT8 id = remo->getPicId();
-			char* msg = new char[sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int) + sizeof(DWORD) * 2];
-			memcpy(msg, &FRAME_DATA_MEASURE, sizeof(UINT8));
-			memcpy(msg + sizeof(UINT8), &nBytesInBuffer, sizeof(int));
-			memcpy(msg + sizeof(UINT8) + sizeof(int), cb, sizeof(unsigned char) * nBytesInBuffer);
-			memcpy(msg + sizeof(UINT8) + sizeof(int) + nBytesInBuffer * sizeof(unsigned char), &(st.wSecond), sizeof(DWORD));
-			memcpy(msg + sizeof(UINT8) + sizeof(int) + nBytesInBuffer * sizeof(unsigned char) + sizeof(DWORD), &id, sizeof(UINT8));
-
-			remo->incPicID();
-
-			int numBytes = remo->getTClient()->Send(msg, sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int) + sizeof(DWORD) * 2);
-			delete [] msg;
-		}
-		else
-		{
 			char* msg = new char[sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int)];
 			memcpy(msg, &FRAME_DATA, sizeof(UINT8));
 			memcpy(msg + sizeof(UINT8), &nBytesInBuffer, sizeof(int));
@@ -77,7 +57,6 @@ static void __stdcall HandleReleaseBitStream(int nBytesInBuffer, unsigned char* 
 
 			int numBytes = remo->getTClient()->Send(msg, sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int));
 			delete [] msg;
-		}
 	}
 }
 

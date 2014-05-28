@@ -60,16 +60,6 @@ public:
 		return tclient;
 	}
 
-	void setMeasure(bool measure)
-	{
-		this->latencyMeasure = measure;
-	}
-
-	bool getMeasure()
-	{
-		return this->latencyMeasure;
-	}
-
 	void incPicID()
 	{
 		picId = (picId++) % 256;

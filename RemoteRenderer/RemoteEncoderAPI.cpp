@@ -140,7 +140,6 @@ void CM_API RREncode(void)
 		latencyMeasure=false;
 	}
 	g_encoder->setPicBuf(&g_yuv[0]);
-	g_encoder->setMeasure(latencyMeasure);
 	g_encoder->encodePB();
 	cuCtxPopCurrent(NULL);
 }
