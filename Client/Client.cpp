@@ -76,7 +76,9 @@ void render()
 			DWORD tmpmsec = st.wMilliseconds;
 			if((st.wSecond - sec) > 0)
 				tmpmsec += 1000;
-			printf("Latency: %d ms", tmpmsec - msec);
+			printf("----------------------------------- \n");
+			printf("Latency: %d ms \n", tmpmsec - msec);
+			printf("----------------------------------- \n");
 
 			measure = false;
 		}
