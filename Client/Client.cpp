@@ -9,9 +9,11 @@ void keyPressed(unsigned char key, int x, int y)
 	GetLocalTime(&st);
 	sec = st.wSecond;
 	msec = st.wMilliseconds;
-
-	if(key == '2')
+	
+	if(key == 50)
+	{
 		printLatency ^= true;
+	}
 }
 
 void keyReleased(unsigned char key, int x, int y)
@@ -262,7 +264,7 @@ int main(int argc, char** argv)
 	GetSystemTime(&fps);
 	long fpsCounter = 0;
 	long bandWidth = 0;
-	bool printLatency = true;
+	printLatency = false;
 
 	while (m_continue)
 	{
