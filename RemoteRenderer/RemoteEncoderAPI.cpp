@@ -134,7 +134,7 @@ void CM_API RREncode(void)
 	cudaMemcpy(&g_yuv[0], g_dyuv, g_yuv.size(), cudaMemcpyDeviceToHost);
 	g_encoder->setPicBuf(&g_yuv[0]);
 
-	if(latencyMeasure && cnt++ == 1)
+	if(latencyMeasure)
 	{
 		printf("Measuring\n");
 		memset(&g_yuv[0], 0, g_yuv.size());

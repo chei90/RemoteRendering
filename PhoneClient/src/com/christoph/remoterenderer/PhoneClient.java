@@ -27,12 +27,16 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 	private boolean measure = false;
 	private byte picNum = 0;
 	
+	private SurfaceHolder holder;
+	private SurfaceView sv;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		SurfaceView sv = new SurfaceView(this);
+		sv = new SurfaceView(this);
 		sv.getHolder().addCallback(this);
+		sv.setDrawingCacheEnabled(true);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(sv);
 	}
@@ -54,6 +58,7 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 		
 		if (remoteRenderer == null)
 		{
+			this.holder = holder;
 			remoteRenderer = new DisplayThread(holder.getSurface());
 			remoteRenderer.start();
 		}
@@ -128,6 +133,8 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 			
 			while(!Thread.interrupted())
 			{
+			
+				System.out.println(sv.getDrawingCache().getPixel(0, 0));
 				int frameSize = 0;
 				byte[] frameData = null;
 				
@@ -180,14 +187,6 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 				default:
 					ByteBuffer buffer = codecOutputBuffers[outIndex];
 					codec.releaseOutputBuffer(outIndex, true);
-				}
-				if(measure)
-					picNum++;
-				if(picNum == 8)
-				{
-					measure = false;
-					picNum = 0;
-					System.out.println(System.currentTimeMillis() - latency);
 				}
 				
 				if(touchId >= 0)

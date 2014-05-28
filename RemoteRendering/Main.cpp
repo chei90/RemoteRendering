@@ -66,12 +66,12 @@ void drawScene(void)
 	glUniformMatrix4fv(viewProjLoc, 1, false, glm::value_ptr(viewProj));
 	earth->draw();
 
-
 	glFinish();
 	//Buffer bei Cuda anmelden
 	glReadBuffer(GL_BACK);
 	glBindBuffer(GL_PIXEL_PACK_BUFFER, pbo);
 	glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+
 
 	RREncode();
 	glutSwapBuffers();
