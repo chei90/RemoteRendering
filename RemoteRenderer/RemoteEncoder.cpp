@@ -51,7 +51,15 @@ static void __stdcall HandleReleaseBitStream(int nBytesInBuffer, unsigned char* 
 	if (remo)
 	{
 			char* msg = new char[sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int)];
-			memcpy(msg, &FRAME_DATA, sizeof(UINT8));
+			if(remo->getMeasure())
+			{
+				memcpy(msg, &FRAME_DATA_MEASURE, sizeof(UINT8));
+				printf("Measuring bitch\n");
+			}
+			else
+			{
+				memcpy(msg, &FRAME_DATA, sizeof(UINT8));
+			}
 			memcpy(msg + sizeof(UINT8), &nBytesInBuffer, sizeof(int));
 			memcpy(msg + sizeof(UINT8) + sizeof(int), cb, sizeof(unsigned char) * nBytesInBuffer);
 
@@ -288,6 +296,11 @@ bool RemoteEncoder::encodePB()
 		handleHR(errorHandling, "FrameEncoding:");
 		return false;
 	}
+
+	int fullness;
+	NVGetParamValue(m_CudaEncoder, NVVE_STAT_QBUF_FULLNESS, (void * ) &fullness);
+
+	printf("%d samples queued \n", fullness);
 
 	return true;
 }

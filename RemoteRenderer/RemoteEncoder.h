@@ -41,6 +41,8 @@ public:
 	int getHeight() {return height;}
 	void setPicBuf(unsigned char* buf){m_efParams.picBuf = buf;}
 
+
+
 private:
 
 	//Error Handling

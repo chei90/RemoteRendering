@@ -77,6 +77,7 @@ bool CM_API RRInit(RREncoderDesc& desc)
 	//Allocating Buffers
 	cuCtxPushCurrent(g_cuCtx);
 	g_yuv = std::vector<unsigned char>(g_desc.w * g_desc.h * 3 / 2);
+	g_encoder->setPicBuf(&g_yuv[0]);
 	cudaError_t res = cudaMalloc((void**) &g_dyuv, g_desc.w * g_desc.h * 3 /  2 * sizeof(char));
 	cuCtxPopCurrent(NULL);
 	g_serverSock = new UdpSocket();
@@ -132,15 +133,11 @@ void CM_API RREncode(void)
 	cudaDeviceSynchronize();
 	cudaGraphicsUnmapResources(1, &g_res, NULL);
 	cudaMemcpy(&g_yuv[0], g_dyuv, g_yuv.size(), cudaMemcpyDeviceToHost);
-	g_encoder->setPicBuf(&g_yuv[0]);
 
-	if(latencyMeasure)
-	{
-		printf("Measuring\n");
-		memset(&g_yuv[0], 0, g_yuv.size());
-		latencyMeasure = false;
-		cnt = 0;
-	}
+
+	g_encoder->setMeasure(latencyMeasure);
+	latencyMeasure = false;	
+
 	g_encoder->encodePB();
 	cuCtxPopCurrent(NULL);
 }

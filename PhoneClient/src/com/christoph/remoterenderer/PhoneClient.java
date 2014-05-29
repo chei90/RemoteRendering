@@ -36,7 +36,6 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 		super.onCreate(savedInstanceState);
 		sv = new SurfaceView(this);
 		sv.getHolder().addCallback(this);
-		sv.setDrawingCacheEnabled(true);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(sv);
 	}
@@ -133,8 +132,6 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 			
 			while(!Thread.interrupted())
 			{
-			
-				System.out.println(sv.getDrawingCache().getPixel(0, 0));
 				int frameSize = 0;
 				byte[] frameData = null;
 				
@@ -157,8 +154,7 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 					
 					frameData = new byte[frameSize];
 					b.get(frameData);
-					
-					measure = true;
+					measure = true;		
 				}
 				
 				
@@ -188,6 +184,15 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 					ByteBuffer buffer = codecOutputBuffers[outIndex];
 					codec.releaseOutputBuffer(outIndex, true);
 				}
+				
+				if(measure && picNum++ == 1)
+				{
+					measure = false;
+					System.out.println(System.currentTimeMillis() - latency + 15 + 66);
+					picNum = 0;
+				}
+				
+
 				
 				if(touchId >= 0)
 				{
