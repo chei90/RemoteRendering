@@ -137,7 +137,7 @@ void CM_API RREncode(void)
 	if(latencyMeasure)
 	{
 		printf("Measuring\n");
-		memset(&g_yuv[0], 0, g_yuv.size());
+		memset(&g_yuv[0], 0, 100);
 		latencyMeasure = false;
 		cnt = 0;
 	}
