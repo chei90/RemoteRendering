@@ -50,34 +50,14 @@ static void __stdcall HandleReleaseBitStream(int nBytesInBuffer, unsigned char* 
 
 	if (remo)
 	{
-		if(remo->getMeasure())
-		{
-			SYSTEMTIME st;
-			GetLocalTime(&st);
 
-			UINT8 id = remo->getPicId();
-			char* msg = new char[sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int) + sizeof(DWORD) * 2];
-			memcpy(msg, &FRAME_DATA_MEASURE, sizeof(UINT8));
-			memcpy(msg + sizeof(UINT8), &nBytesInBuffer, sizeof(int));
-			memcpy(msg + sizeof(UINT8) + sizeof(int), cb, sizeof(unsigned char) * nBytesInBuffer);
-			memcpy(msg + sizeof(UINT8) + sizeof(int) + nBytesInBuffer * sizeof(unsigned char), &(st.wSecond), sizeof(DWORD));
-			memcpy(msg + sizeof(UINT8) + sizeof(int) + nBytesInBuffer * sizeof(unsigned char) + sizeof(DWORD), &id, sizeof(UINT8));
+		char* msg = new char[sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int)];
+		memcpy(msg, &FRAME_DATA, sizeof(UINT8));
+		memcpy(msg + sizeof(UINT8), &nBytesInBuffer, sizeof(int));
+		memcpy(msg + sizeof(UINT8) + sizeof(int), cb, sizeof(unsigned char) * nBytesInBuffer);
 
-			remo->incPicID();
-
-			int numBytes = remo->getClient()->Send(msg, sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int) + sizeof(DWORD) * 2);
-			delete [] msg;
-		}
-		else
-		{
-			char* msg = new char[sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int)];
-			memcpy(msg, &FRAME_DATA, sizeof(UINT8));
-			memcpy(msg + sizeof(UINT8), &nBytesInBuffer, sizeof(int));
-			memcpy(msg + sizeof(UINT8) + sizeof(int), cb, sizeof(unsigned char) * nBytesInBuffer);
-
-			int numBytes = remo->getClient()->Send(msg, sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int));
-			delete [] msg;
-		}
+		int numBytes = remo->getClient()->Send(msg, sizeof(UINT8) + sizeof(unsigned char) * nBytesInBuffer + sizeof(int));
+		delete [] msg;
 	}
 }
 
@@ -153,8 +133,8 @@ RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 
 
 	//Bitrates
-	m_EncoderParams->iAvgBitrate =  5 * 100000;
-	m_EncoderParams->iPeakBitrate = 5 * 250000;
+	m_EncoderParams->iAvgBitrate =  1 * 100000;
+	m_EncoderParams->iPeakBitrate = 1 * 250000;
 
 	//Hardwarestuff
 	m_EncoderParams->GPUOffloadLevel = NVVE_GPU_OFFLOAD_ALL;

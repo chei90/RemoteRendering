@@ -23,9 +23,9 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 	protected final int TOUCHED = 1;
 	protected final int RELEASED = 2;
 	
-	private long latency = 0;
-	private boolean measure = false;
-	private byte picNum = 0;
+	//Steuerung
+	private boolean left = false, tmpLeft = false, 
+			right = false, tmpRight = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -74,14 +74,16 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 		if(e.getAction() == MotionEvent.ACTION_DOWN)
 		{
 			touchId = TOUCHED;
-			latency = System.currentTimeMillis();
 		}
 		if(e.getAction() == MotionEvent.ACTION_UP)
 		{
 			touchId = RELEASED;
 		}
 		
-		
+		if(e.getX() <= 300)
+			left = true;
+		else if(e.getX() <= 600)
+			right = true;
 		
 		return true;
 	}
@@ -143,17 +145,7 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 					
 					frameData = new byte[frameSize];
 					b.get(frameData);
-				}
-				if(identifyer == MagicNumbers.FRAME_DATA_MEASURE)
-				{
-					frameSize = b.getInt();
-					
-					frameData = new byte[frameSize];
-					b.get(frameData);
-					
-					measure = true;
-				}
-				
+				}				
 				
 				int inIndex = codec.dequeueInputBuffer(10000);
 				if(inIndex >= 0)
@@ -181,14 +173,6 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 					ByteBuffer buffer = codecOutputBuffers[outIndex];
 					codec.releaseOutputBuffer(outIndex, true);
 				}
-				if(measure)
-					picNum++;
-				if(picNum == 8)
-				{
-					measure = false;
-					picNum = 0;
-					System.out.println(System.currentTimeMillis() - latency);
-				}
 				
 				if(touchId >= 0)
 				{
@@ -199,7 +183,18 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 					if(touchId == RELEASED)
 						keyMsg.put(MagicNumbers.KEY_RELEASED);
 					
-					keyMsg.put((byte) 'w');
+					if(left)
+					{
+						keyMsg.put((byte) 'q');
+						left = false;
+					} else
+					if(right)
+					{
+						keyMsg.put((byte) 'e');
+						right = false;
+					}
+					else
+						keyMsg.put((byte) 'w');
 					
 					m_renderSock.sentTo(keyMsg.array());
 					

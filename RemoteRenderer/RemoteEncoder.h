@@ -33,8 +33,6 @@ public:
 	unsigned char *getCharBuf(){return outBuf;}
 	void setClientUdp(UdpSocket* c){client = c;}
 	UdpSocket* getClient(){return client;}
-	void setMeasure(bool measure){this->latencyMeasure = measure;}
-	bool getMeasure(){return this->latencyMeasure;}
 	void incPicID(){picId = (picId++) % 256;}
 	UINT8 getPicId(){return picId;}
 	int getWidth() {return width;}
