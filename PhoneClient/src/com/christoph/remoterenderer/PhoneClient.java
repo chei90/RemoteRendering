@@ -104,7 +104,7 @@ public class PhoneClient extends Activity implements SurfaceHolder.Callback
 		@Override
 		public void run()
 		{
-			m_renderSock = new UdpSocket("192.168.178.45", 8080, "192.168.178.50", 8081);
+			m_renderSock = new UdpSocket("131.173.194.228", 8080, "131.173.32.150", 8081);
 			
 			ByteBuffer bBuffer = ByteBuffer.allocateDirect(64);
 			bBuffer.put(MagicNumbers.WINDOW_SIZE);

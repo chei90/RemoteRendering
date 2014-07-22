@@ -94,7 +94,7 @@ void RRMouseDummy(int dx, int dy, int button, int state)
 {
 	std::string tmp = state == 0 ? "released" : "pressed";
 	
-	("Pos: %d,%d; Button: %d, %s \n", dx, dy, button, tmp);
+	printf("Pos: %d,%d; Button: %d, %s \n", dx, dy, button, tmp);
 }
 
 void initOpenGL(int argc, char** argv)
