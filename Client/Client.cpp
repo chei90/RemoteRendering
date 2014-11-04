@@ -28,8 +28,11 @@ void specialKeyReleased(int key, int x, int y)
 
 void motionFunc(int x, int y)
 {
-	mouseDx = x - mouseDx;
-	mouseDy = y - mouseDy;
+	mouseDx = x - prevMouseX;
+	mouseDy = y - prevMouseY;
+
+	prevMouseX = x;
+	prevMouseY = y;
 }
 
 void mouseFunc(int button, int state, int dx, int dy)
@@ -244,9 +247,21 @@ int main(int argc, char** argv)
 	SYSTEMTIME fps;
 	DWORD fpsSec = 0, fpsMsec = 0;
 	GetSystemTime(&fps);
+	
+
+	int tmpX = 0, tmpY = 0;
 
 	while (m_continue)
 	{
+		
+		if(mouseDx == tmpX)
+			mouseDx = 0;
+		if(mouseDy == tmpY)
+			mouseDy = 0;
+
+		tmpX = mouseDx;
+		tmpY = mouseDy;
+
 		//fpsSec = fps.wSecond;
 		//fpsMsec = fps.wMilliseconds;
 		//GetSystemTime(&fps);
