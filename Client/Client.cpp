@@ -71,7 +71,6 @@ void renderD3D()
 		DWORD tmpmsec = st.wMilliseconds;
 		if((st.wSecond - sec) > 0)
 			tmpmsec += 1000;
-		printf("Latency: %d ms \n", tmpmsec - msec);
 	}
 }
 
