@@ -133,8 +133,8 @@ RemoteEncoder::RemoteEncoder(int o_width, int o_height)
 
 
 	//Bitrates
-	m_EncoderParams->iAvgBitrate =  1 * 100000;
-	m_EncoderParams->iPeakBitrate = 1 * 250000;
+	m_EncoderParams->iAvgBitrate =  5 * 100000;
+	m_EncoderParams->iPeakBitrate = 5 * 250000;
 
 	//Hardwarestuff
 	m_EncoderParams->GPUOffloadLevel = NVVE_GPU_OFFLOAD_ALL;
