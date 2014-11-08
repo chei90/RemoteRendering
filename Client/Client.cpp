@@ -40,7 +40,7 @@ void mouseFunc(int button, int state, int dx, int dy)
 	}
 }
 
-void render()
+void renderD3D()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glBindTexture(GL_TEXTURE_2D, currentFrameTex);
@@ -75,6 +75,38 @@ void render()
 	}
 }
 
+void renderGL()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glBindTexture(GL_TEXTURE_2D, currentFrameTex);
+	glBegin(GL_QUADS);
+
+
+	glTexCoord2f(0.0f, 0.0f); glVertex2f(-1.0f, -1.0f);
+	glTexCoord2f(1.0f, 0.0f); glVertex2f(1.0f, -1.0f);
+	glTexCoord2f(1.0f, 1.0f); glVertex2f(1.0f, 1.0f);
+	glTexCoord2f(0.0f, 1.0f); glVertex2f(-1.0f, 1.0f);
+	glEnd();
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glutSwapBuffers();
+	glutPostRedisplay();
+
+
+
+	if(picId == remotePicId)
+		picNum++;
+	if(picNum == 3)
+	{
+		picNum = 0;
+		picId = (picId++) % 256;
+		GetLocalTime(&st);
+		DWORD tmpmsec = st.wMilliseconds;
+		if((st.wSecond - sec) > 0)
+			tmpmsec += 1000;
+		printf("Latency: %d ms \n", tmpmsec - msec);
+	}
+}
+
 void initCallbacks()
 {
 	glutKeyboardFunc(keyPressed);
@@ -83,7 +115,7 @@ void initCallbacks()
 	glutSpecialUpFunc(specialKeyReleased);
 	glutMotionFunc(motionFunc);
 	glutMouseFunc(mouseFunc);
-	glutDisplayFunc(render);
+	glutDisplayFunc(renderFunc);
 }
 
 void checkCuErrors(CUresult res, const char* msg)
@@ -117,7 +149,7 @@ void initGL(int argc, char** argv)
 	glutInitWindowSize(m_width, m_height);
 	glutCreateWindow("RemoteRenderingClient!");
 	glewInit();	
-	initCallbacks();
+
 	
 	
 	checkCuErrors(cuGLCtxCreate(&m_ctx, CU_CTX_BLOCKING_SYNC, m_device), "initGL - cuGLCtxCreate");
@@ -210,6 +242,7 @@ int main(int argc, char** argv)
 	picId = 0;
 	picNum = 0;
 
+
 	cuInit(0);
 	initGL(argc, argv);
 	//	SOCKET STUFF
@@ -241,9 +274,33 @@ int main(int argc, char** argv)
 	memset(message, 0, sizeof(UINT8) + sizeof(int) * 2);
 	cout << j << " signs sent" << endl;
 
+	memset(message, 0, 64);
+	server->Receive(message, 64);
+
+	UINT8 gfx;
+	memcpy(&gfx, message, sizeof(UINT8));
+
+	if(gfx == GFX_GL)
+	{
+		std::cout << "Graphics API set to OpenGL" << std::endl;
+		renderFunc = renderGL;
+	}
+	else if(gfx == GFX_D3D)
+	{
+		std::cout << "Graphics API set to Direct3D" << std::endl;
+		renderFunc = renderD3D;
+	}
+	else
+	{
+		std:cout << "Failed to resolve graphical API" << std::endl;
+		exit (-1);
+	}
+
 	SYSTEMTIME fps;
 	DWORD fpsSec = 0, fpsMsec = 0;
 	GetSystemTime(&fps);
+	initCallbacks();
+
 
 	while (m_continue)
 	{

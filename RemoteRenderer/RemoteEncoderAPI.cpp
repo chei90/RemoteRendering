@@ -143,7 +143,27 @@ void CM_API RRWaitForConnection()
 	UINT8 identifier;
 	memcpy(&identifier, message, sizeof(UINT8));
 	std::cout << "Client connected" << std::endl;
+	printf("Identifier is %u \n", identifier);
 	g_serverSock->SetToNonBlock();
+
+
+	memset(message, 0, 64);
+	
+	if(g_desc.gfxapi == GL)
+	{
+		memcpy(message, &GFX_GL, sizeof(UINT8));
+	}
+	else if(g_desc.gfxapi == D3D)
+	{
+		memcpy(message, &GFX_D3D, sizeof(UINT8));
+	}
+	else
+	{
+		std:cerr << "Failed to resolve graphical API" << std::endl;
+		exit (-1);
+	}
+
+	g_serverSock->Send(message, 64);
 }
 
 void CM_API RRQueryClientEvents()
