@@ -77,4 +77,8 @@
       <Filter>Quelldateien</Filter>
     </CudaCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
 </Project>
