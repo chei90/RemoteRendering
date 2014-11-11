@@ -254,13 +254,7 @@ int main(int argc, char** argv)
 	while (m_continue)
 	{
 		
-		if(mouseDx == tmpX)
-			mouseDx = 0;
-		if(mouseDy == tmpY)
-			mouseDy = 0;
 
-		tmpX = mouseDx;
-		tmpY = mouseDy;
 
 		//fpsSec = fps.wSecond;
 		//fpsMsec = fps.wMilliseconds;
