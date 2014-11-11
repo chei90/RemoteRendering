@@ -16,6 +16,7 @@
 #include <vector>
 #include "UdpSocket.h"
 #include "ConfigFile.h"
+#include <iostream>
 
 #include <winsock2.h>
 #include <windows.h>
@@ -38,6 +39,8 @@
 #define MAXSTR 512
 #define DEFAULT_PORT 8080		// Default Port des Servers
 #define DEFAULT_IP "127.0.0.1"	// Default IP Adresse es Servers
+
+typedef void (*renderFuncPtr)(void);
 
 int keyStates[256];
 int tmpKeyStates[256];
@@ -68,5 +71,7 @@ UINT8 picId, remotePicId;
 GLuint currentFrameTex;
 cudaGraphicsResource_t cudaTex;
 unsigned char* globalMem;
+
+renderFuncPtr renderFunc;
 
 #endif

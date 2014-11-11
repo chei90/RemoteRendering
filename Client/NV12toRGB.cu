@@ -50,8 +50,8 @@ __global__ void NV12toRGB(unsigned char* nv12, unsigned char* rgba, int decodedP
 
 void callDecode(int width, int height, unsigned char* nv12, unsigned char* globalMem, int decodedPitch)
 {
-	dim3 blocks (10, 10);
-	dim3 numBlocks (width / 10, height / 10);
+	dim3 blocks (8, 8);
+	dim3 numBlocks (width / 8, height / 8);
 	//gpuErrchk(cudaGetLastError());
 	NV12toRGB<<<numBlocks, blocks>>>(nv12, globalMem, decodedPitch);
 	//gpuErrchk(cudaGetLastError());

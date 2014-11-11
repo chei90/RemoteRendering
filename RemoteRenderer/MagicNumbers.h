@@ -22,4 +22,8 @@ const UINT8 MOUSE_RELEASED = 9;
 const UINT8 FRAME_DATA = 6;
 const UINT8 FRAME_DATA_MEASURE = 10;
 
+//GFXAPI Settings
+const UINT8 GFX_GL = 11;
+const UINT8 GFX_D3D = 12;
+
 #endif
