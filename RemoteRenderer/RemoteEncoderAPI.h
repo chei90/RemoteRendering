@@ -34,6 +34,16 @@ typedef void (*KeyBoardHandler)(int key, bool pressed);
 */
 typedef void (*MouseHandler)(int dx, int dy, int button, int state);
 
+/**
+ * \brief API Callback to handle received UserInput    
+ * \param[in] key Indentifies which special Key (referring to GLUT_SPECIAL_KEY)
+ *			was pressed, eg. 'w' = 119
+ * \param[in] pressed Whether key was pressed or Released
+ * 
+ * \remarks Callback is only called once on KeyHit and KeyRelease
+*/
+typedef void (*SpecialKeyHandler)(int key, bool pressed);
+
 enum GFX_API
 {
 	D3D,
@@ -53,6 +63,8 @@ enum GFX_API
 */
 struct RREncoderDesc
 {
+	RREncoderDesc() : gfxapi(GL), w(800), h(600), ip("127.0.0.1"),
+	port (8080), keyHandler(NULL), mouseHandler(NULL), specialKeyHandler(NULL){}
 	GFX_API gfxapi;
 	unsigned int w;
 	unsigned int h;
@@ -60,6 +72,7 @@ struct RREncoderDesc
 	int port;
 	KeyBoardHandler keyHandler;
 	MouseHandler mouseHandler;
+	SpecialKeyHandler specialKeyHandler;
 };
 
 /**

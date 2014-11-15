@@ -19,12 +19,14 @@ unsigned char* g_dyuv;
 std::vector<unsigned char> g_yuv;
 UdpSocket* g_serverSock; 
 bool g_keyStates[256];
+bool g_specialKeyStates[246];
 int width, height;
 
 typedef void (*encodeCB)(void);
 
 encodeCB g_encodeCB;
 KeyBoardHandler g_keyHandler;
+SpecialKeyHandler g_specialKeyHandler;
 MouseHandler g_mouseHandler;
 
 void encodeD3D()
@@ -43,6 +45,9 @@ void encodeGL()
 	callKernelGL(width, height, g_dyuv, devPtr);
 }
 
+void dummyKey(int key, bool state){}
+void dummyMouse(int dx, int dy, int button, int state){}
+
 bool CM_API RRInit(RREncoderDesc& desc)
 {
 	//Register UdpSocket
@@ -51,10 +56,23 @@ bool CM_API RRInit(RREncoderDesc& desc)
 	height = g_desc.h;
 
 	g_encoder = new RemoteEncoder(desc.w, desc.h);
-	g_mouseHandler = desc.mouseHandler;
-	g_keyHandler = desc.keyHandler;
-	//Init Cuda for GL
 
+	if(desc.mouseHandler)
+		g_mouseHandler = desc.mouseHandler;
+	else
+		g_mouseHandler = dummyMouse;
+	
+	if(desc.keyHandler)
+		g_keyHandler = desc.keyHandler;
+	else
+		g_keyHandler = dummyKey;
+
+	if(desc.specialKeyHandler)
+		g_specialKeyHandler = desc.specialKeyHandler;
+	else
+		g_specialKeyHandler = dummyKey;
+
+	//Init Cuda for GL
 	cuInit(0);
 	g_cuDevice = 0;
 	if(g_desc.gfxapi == GL)
@@ -195,12 +213,14 @@ void CM_API RRQueryClientEvents()
 	case SPECIAL_KEY_PRESSED:
 		memcpy(&key, msg+sizeof(UINT8), sizeof(int));
 		if(key <= 246)
-			//keySpecialStates[key] = true;
+			g_specialKeyStates[key] = true;
+			g_specialKeyHandler(key, true);
 				break;
 	case SPECIAL_KEY_RELEASED:
 		memcpy(&key, msg+sizeof(UINT8), sizeof(int));
 		if(key <= 246)
-			//keySpecialStates[key] = false;
+			g_specialKeyStates[key] = false;
+			g_specialKeyHandler(key, false);
 				break;
 	case MOUSE_PRESSED:
 		memcpy(&dx, msg + sizeof(UINT8), sizeof(int));
