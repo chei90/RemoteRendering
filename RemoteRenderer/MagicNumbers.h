@@ -26,4 +26,7 @@ const UINT8 FRAME_DATA_MEASURE = 10;
 const UINT8 GFX_GL = 11;
 const UINT8 GFX_D3D = 12;
 
+//Message Broadcasting
+const UINT8 BROADCAST_MESSAGE = 13;
+
 #endif

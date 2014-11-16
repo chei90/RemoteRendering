@@ -10,6 +10,8 @@
 #include <vector>
 #include "MagicNumbers.h"
 
+#define BROADCASTLENGTH 512
+
 RREncoderDesc g_desc;
 RemoteEncoder* g_encoder;
 CUcontext g_cuCtx;
@@ -21,6 +23,7 @@ UdpSocket* g_serverSock;
 bool g_keyStates[256];
 bool g_specialKeyStates[246];
 int width, height;
+char broadCastMsg[BROADCASTLENGTH];
 
 typedef void (*encodeCB)(void);
 
@@ -238,4 +241,29 @@ void CM_API RRQueryClientEvents()
 bool CM_API RRIsKeyDown(char key)
 {
 	return g_keyStates[key];
+}
+
+bool CM_API RRIsSpecialKeyDown(int key)
+{
+	if(key >= 0 && key <= 246)
+	{
+		return g_specialKeyStates[key];
+	}
+}
+
+void CM_API RRBroadcastMsgToClient(const std::string msg)
+{
+	memset(broadCastMsg, 0, BROADCASTLENGTH * sizeof(char));
+	memcpy(broadCastMsg, &BROADCAST_MESSAGE, sizeof(UINT8));
+	size_t sLen = msg.length();
+	
+	if(sLen > BROADCASTLENGTH - sizeof(UINT8) - sizeof(size_t))
+		sLen -= (sizeof(UINT8) + sizeof(size_t));
+
+	memcpy(broadCastMsg + sizeof(UINT8), &sLen, sizeof(size_t));
+
+	memcpy(broadCastMsg + sizeof(UINT8) + sizeof(size_t), msg.c_str(), sLen * sizeof(char));
+
+
+	g_serverSock->Send(broadCastMsg, sizeof(UINT8) + sizeof(size_t) + sLen * sizeof(char));
 }

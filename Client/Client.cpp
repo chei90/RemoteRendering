@@ -351,6 +351,18 @@ int main(int argc, char** argv)
 			memcpy(&remotePicId, serverMessage + sizeof(UINT8) + sizeof(int) + sizeof(unsigned char) * size + sizeof(DWORD), sizeof(UINT8));
 			break;
 			}
+		case BROADCAST_MESSAGE:
+			{
+				size_t sLen;
+				memcpy(&sLen, serverMessage + sizeof(UINT8), sizeof(size_t));
+
+				char* broadCastMsg = new char [sLen];
+				memcpy(broadCastMsg, serverMessage + sizeof(UINT8) + sizeof(size_t), sLen * sizeof(char));
+
+				std::cout << broadCastMsg << std::ends;
+
+				delete [] broadCastMsg;
+			}
 		default:
 			break;
 		}

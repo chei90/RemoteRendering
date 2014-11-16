@@ -120,6 +120,19 @@ CM_DLL_API void CM_API RRWaitForConnection();
 CM_DLL_API void CM_API RRQueryClientEvents();
 
 /**
- *                                                                      
+ *	\brief Returns whether the given key is pressed or not
+ *			(refers to ASCII-Keys of 8Bit char)
 */
 CM_DLL_API bool CM_API RRIsKeyDown(char key);
+
+/**
+ *	\brief Returns whether the given key is pressed or not
+ *			(refers to GLUT_SPECIAL_KEY)
+*/
+CM_DLL_API bool CM_API RRIsSpecialKeyDown(int specialKey);
+
+/** 
+ *  \brief Broadcasts the given Msg to the Client
+ *  \param msg the message to be broadcasted
+*/
+CM_DLL_API void CM_API RRBroadcastMsgToClient(const std::string msg);
