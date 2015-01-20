@@ -1,5 +1,4 @@
-#ifndef TYPES_H
-#define TYPES_H
+#pragma once
 
 #include "NVEncodeDataTypes.h"
 
@@ -120,4 +119,3 @@ static _sNVVEEncodeParams sNVVE_EncodeParams[] =
 	{ "NVVE_DEVICE_MEMORY_INPUT", 1 },
 	{ "NVVE_DEVICE_CTX_LOCK", 1 }
 };
-#endif

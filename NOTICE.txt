@@ -1,0 +1,8 @@
+This software uses "FrameQueue.h" and "FrameQueue.cpp" published and licensed under
+NVIDIA end user license agreement (EULA). The NVIDIA EULA can be obtained at 
+
+http://developer.download.nvidia.com/compute/cuda/5_5/rel/docs/EULA.pdf
+
+
+
+This software uses "Chameleon.h" and "Chameleon.cpp" by René Nyffenegger.
