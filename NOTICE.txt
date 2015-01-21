@@ -1,6 +1,8 @@
 Remote Rendering
 Copyright 2014 Christoph Eichler
 
+This is free software. For further information please read the LICENSE.txt.
+
 This software uses "FrameQueue.h" and "FrameQueue.cpp" published and licensed under
 NVIDIA end user license agreement (EULA). The NVIDIA EULA can be obtained at 
 
