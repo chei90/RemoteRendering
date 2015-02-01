@@ -1,5 +1,4 @@
-#ifndef __CONFIG_FILE_H__
-#define __CONFIG_FILE_H__
+#pragma once
 
 #include <string>
 #include <map>
@@ -17,5 +16,3 @@ public:
 	Chameleon const& Value(std::string const& section, std::string const& entry, double value);
 	Chameleon const& Value(std::string const& section, std::string const& entry, std::string const& value);
 };
-
-#endif
