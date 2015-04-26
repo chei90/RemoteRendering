@@ -308,7 +308,7 @@ int main(int argc, char** argv)
 	while (m_continue)
 	{
 		
-
+		printf("Hi!");
 
 		//fpsSec = fps.wSecond;
 		//fpsMsec = fps.wMilliseconds;
