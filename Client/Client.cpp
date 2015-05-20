@@ -307,9 +307,6 @@ int main(int argc, char** argv)
 	int tmpX = 0, tmpY = 0;
 	while (m_continue)
 	{
-		
-		printf("Hi!");
-
 		//fpsSec = fps.wSecond;
 		//fpsMsec = fps.wMilliseconds;
 		//GetSystemTime(&fps);
